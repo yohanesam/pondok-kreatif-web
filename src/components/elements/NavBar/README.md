@@ -1,31 +1,37 @@
-React component example:
+# NavBar Class
+This is navbar component that implements Material-UI's AppBar. this component consist of :
+
+---
+
+## Styles
+object that controls the styles of all ```tag```. Requires ```theme```, which is Material-UI's css-in-js module.
 
 ```js
-<Button size="large">Push Me</Button>
+const styles = theme => ({
+    // the classname here
+)}
 ```
 
-You can add a custom props to an example wrapper:
+## Responsive NavBar
+this Navbar is responsive due to the function bellow
 
-```js { "props": { "className": "checks" } }
-<Button>I’m transparent!</Button>
+```js
+const renderMobileMenu = (
+    // stuff here
+)
 ```
 
-Or disable an editor by passing a `noeditor` modifier:
+and use it inside the return function
 
-```jsx noeditor
-<Button>Push Me</Button>
+```jsx
+return(
+
+    <AppBar>
+        <ToolBar>
+            //some stuff here
+            { renderMobileMenu }
+        </ToolBar>
+    </AppBar>
+        
+)
 ```
-
-To render an example as highlighted source code add a `static` modifier:
-
-```jsx static
-import React from 'react';
-```
-
-Examples with all other languages are rendered only as highlighted source code, not an actual component:
-
-```html
-<Button size="large">Push Me</Button>
-```
-
-Any [Markdown](http://daringfireball.net/projects/markdown/) is **allowed** _here_.
