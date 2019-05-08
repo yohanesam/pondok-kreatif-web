@@ -22,18 +22,26 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
+import { ListItem } from '@material-ui/core';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: 'flex',
   },
 
   drawer: {
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0,
+    },
+  },
+
+  appBar: {
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
     },
   },
 
@@ -44,6 +52,9 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
 
   title: {
@@ -109,6 +120,12 @@ const styles = theme => ({
       display: 'none',
     },
   },
+
+  toolbar: theme.mixins.toolbar,
+
+  drawerPaper: {
+    width: drawerWidth,
+  },
 });
 
 class NavBar extends Component {
@@ -142,8 +159,8 @@ class NavBar extends Component {
 
   render() {
 
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
+    const { anchorEl, mobileMoreAnchorEl, mobileOpen } = this.state;
+    const { classes, theme } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -202,15 +219,32 @@ class NavBar extends Component {
       </Menu>
     );
 
+    const renderResponsiveDrawer = (
+      <div>
+        <div className = { classes.toolbar } />
+        <Divider />
+
+        <List>
+          {[ 'Event', 'UMKM', 'Notification', 'Profile' ].map((text) => (
+            <ListItem button key={ text }>
+              <ListItemText primary={ text } />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    );
+
     return (
       <div className = { classes.root }>
-        <AppBar position = "static">
+        <CssBaseline />
+        <AppBar position = "fixed" className = { classes.appBar }>
           <Toolbar>
             
             <IconButton 
-              className = { classes.menuButton } 
               color = "inherit" 
-              aria-label = "Open drawer">
+              aria-label = "Open drawer"
+              onClick = { this.handleDrawerToggle }
+              className = { classes.menuButton }>
               <MenuIcon />
             </IconButton>
 
@@ -270,6 +304,29 @@ class NavBar extends Component {
 
           </Toolbar>
         </AppBar>
+        
+        <nav className = { classes.drawer }>
+          <Hidden smUp implementation = "css">
+            <Drawer
+              container = { this.props.container }
+              variant = "temporary"
+              anchor = { theme.direction === 'rtl' ? 'right' : 'left' }
+              open = { mobileOpen }
+              onClose = { this.handleDrawerToggle }
+              classes = {{ paper: classes.drawerPaper, }}>
+              { renderResponsiveDrawer }
+            </Drawer>
+          </Hidden>
+          
+          <Hidden xsDown implementation = "css">
+            <Drawer
+              classes = {{ paper: classes.drawerPaper, }}
+              variant = "permanent"
+              open>
+              { renderResponsiveDrawer }
+            </Drawer>
+          </Hidden>
+        </nav>
 
         { renderProfileMenuOption }
         { renderMobileMenu }
@@ -282,6 +339,10 @@ class NavBar extends Component {
 
 NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  // Injected by the documentation to work in an iframe.
+  // You won't need it on your project.
+  container: PropTypes.object,
+  theme: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(NavBar);
+export default withStyles(styles, { withTheme: true })(NavBar);
