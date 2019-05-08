@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -128,7 +128,7 @@ const styles = theme => ({
   },
 });
 
-class NavBar extends Component {
+class PrimaryAppBar extends Component {
 
   state = {
     anchorEl: null,
@@ -220,7 +220,7 @@ class NavBar extends Component {
     );
 
     const renderResponsiveDrawer = (
-      <div>
+      <Fragment>
         <div className = { classes.toolbar } />
         <Divider />
 
@@ -231,7 +231,7 @@ class NavBar extends Component {
             </ListItem>
           ))}
         </List>
-      </div>
+      </Fragment>
     );
 
     return (
@@ -337,7 +337,7 @@ class NavBar extends Component {
   
 }
 
-NavBar.propTypes = {
+PrimaryAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   // Injected by the documentation to work in an iframe.
   // You won't need it on your project.
@@ -345,4 +345,4 @@ NavBar.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles, { withTheme: true })(NavBar);
+export default withStyles(styles, { withTheme: true })(PrimaryAppBar);
