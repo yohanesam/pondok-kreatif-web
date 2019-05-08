@@ -1,4 +1,4 @@
-# NavBar Class
+# PrimaryAppBar
 This is navbar component that implements Material-UI's AppBar. this component consist of :
 
 ---
