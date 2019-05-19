@@ -1,13 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Router } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
-import Dashboard from '../pages/Dashboard';
-import PrimaryAppBar from '../elements/PrimaryAppBar/PrimaryAppBar'
+import Routes from './Routes'
 
 const styles = {
     root: {
-      width: 'flex',
+      display: 'flex',
     },
 };
 
@@ -20,10 +19,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className = { classes.root }>
-                    <PrimaryAppBar />
-                    <Switch>
-                        <Route path="/" component={Dashboard} exact />
-                    </Switch>
+                    <Routes />
                 </div>
             </BrowserRouter>
         );
