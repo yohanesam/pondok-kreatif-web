@@ -15,32 +15,13 @@ import DashBoardIcon from '@material-ui/icons/DashboardTwoTone';
 import MailIcon from '@material-ui/icons/MailTwoTone';
 import NotificationsIcon from '@material-ui/icons/NotificationsActiveTwoTone';
 import MoreIcon from '@material-ui/icons/ListOutlined';
-
-const drawerWidth = 64;
-
-const styles = theme => ({
-    
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
-    },
-
-    toolbar: theme.mixins.toolbar,
-
-    drawerPaper: {
-        width: drawerWidth,
-    },
-
-});
+import styles from '../../styles'
 
 class AppDrawer extends Component {
     
     render() {
 
         const { classes, 
-                theme, 
                 container, 
                 mobileOpen, 
                 toggleDrawer } = this.props;
@@ -84,6 +65,50 @@ class AppDrawer extends Component {
                 </List>
             </Fragment>
         );
+
+        const renderResponsiveMobileDrawer = (
+            <Fragment>
+                <div className = { classes.toolbar } />
+
+                <Divider />
+
+                <List>
+                    <ListItem button key = "Event">
+                        <ListItemIcon><DashBoardIcon /></ListItemIcon>
+                        <ListItemText primary = "Event"/>
+                    </ListItem>
+                </List>
+
+                <List>
+                    <ListItem button>
+                        <ListItemIcon><MoreIcon /></ListItemIcon>
+                        <ListItemText/>
+                    </ListItem>
+                </List>
+
+                <List>
+                    <ListItem button>
+                        <ListItemIcon><MailIcon /></ListItemIcon>
+                        <ListItemText/>
+                    </ListItem>
+                </List>
+
+                <List>
+                    <ListItem button>
+                        <ListItemIcon><NotificationsIcon /></ListItemIcon>
+                        <ListItemText/>
+                    </ListItem>
+                </List>
+
+                <Divider />
+                
+                <List>
+                    <ListItem button >
+                        <ListItemIcon><AccountCircle /></ListItemIcon>
+                    </ListItem>
+                </List>
+            </Fragment>
+        );
         
         return(
             <nav className = { classes.drawer }>
@@ -91,11 +116,11 @@ class AppDrawer extends Component {
                     <Drawer
                         container = { container }
                         variant = "temporary"
-                        anchor = { theme.direction === 'rtl' ? 'right' : 'left' }
+                        anchor = "left"
                         open = { mobileOpen }
                         onClose = { toggleDrawer }
                         classes = {{ paper: classes.drawerPaper, }}>
-                    { renderResponsiveDrawer }
+                    { renderResponsiveMobileDrawer }
                     </Drawer>
                 </Hidden>
                 
@@ -120,4 +145,4 @@ AppDrawer.propTypes = {
     mobileOpen: PropTypes.bool,
 }
 
-export default withStyles(styles, { withTheme: true })(AppDrawer)
+export default withStyles(styles)(AppDrawer)
