@@ -1,5 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App.js";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-ReactDOM.render(<App />, document.getElementById("root"));
+// Service worker
+import * as serviceWorker from './common/serviceWorker';
+
+// App
+import App from './App.jsx';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+serviceWorker.unregister();
