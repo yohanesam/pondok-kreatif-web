@@ -48,7 +48,7 @@ class TekaController extends Controller
         
         return Teka::create($teka);
     }
-
+    
     /**
      * Display the specified resource.
      *
