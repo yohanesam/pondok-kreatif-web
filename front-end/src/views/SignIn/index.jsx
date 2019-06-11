@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Link, withRouter } from 'react-router-dom';
 
 // Externals
@@ -107,7 +109,7 @@ class SignIn extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, authState } = this.props;
     const {
       values,
       touched,
@@ -120,7 +122,15 @@ class SignIn extends Component {
     const showEmailError = touched.email && errors.email;
     const showPasswordError = touched.password && errors.password;
 
+    if(authState.loggedIn) {
+      return (
+        <Redirect 
+          to = "/dashboard"/>
+      )
+    }
+
     return (
+      
       <div className={classes.root}>
         <Grid
           className={classes.grid}
@@ -301,7 +311,14 @@ SignIn.propTypes = {
   history: PropTypes.object.isRequired
 };
 
+
+const mapStateToProps = (state) => ({
+  ...state
+})
+
+
 export default compose(
   withRouter,
+  connect(mapStateToProps, {}),
   withStyles(styles)
 )(SignIn);

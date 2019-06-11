@@ -49,15 +49,16 @@ class TekaController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $teka = $this->validate(request(), [
-            'foto' => 'required',
+            //'foto' => 'required',
             'nama' => 'required',
             'nik' => 'required|numeric',
             // 'jenjang_id' => $request['jenjang_id'],
             // 'skill_set_key' => $request['skill_set_key'],
             'kelamin' => 'required',
-            'email' => 'required',
-            'no_telp' => 'required|numeric'
+            'email' => 'required'
+            //'no_telp' => 'required|numeric'
         ]);
 
         return Teka::create($teka);

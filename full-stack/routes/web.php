@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
 Auth::routes();
@@ -22,4 +22,5 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
 
 
-Route::resource('Teka','TekaController');
+Route::resource('teka','TekaController');
+Route::post('teka/regis', 'TekaController@store');
