@@ -40,6 +40,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="no_telp" class="col-md-4 col-form-label text-md-right">{{ __('No Telp') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="no_telp" type="text" class="form-control{{ $errors->has('no_telp') ? ' is-invalid' : '' }}" name="no_telp" value="{{ old('no_telp') }}" required autofocus>
+
+                                @if ($errors->has('no_telp'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('no_telp') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="alamat" class="col-md-4 col-form-label text-md-right">{{ __('Alamat') }}</label>
 
                             <div class="col-md-6">
@@ -59,7 +73,7 @@
                             <label for="tempat_lahir" class="col-md-4 col-form-label text-md-right">{{ __('Tempat Lahir') }}</label>
 
                             <div class="col-md-6">
-                                <input id="tempat_lahir" type="text" class="form-control{{ $errors->has('tempat_lahir') ? ' is-invalid' : '' }}" name="alamat" value="{{ old('tempat_lahir') }}" required autofocus>
+                                <input id="tempat_lahir" type="text" class="form-control{{ $errors->has('tempat_lahir') ? ' is-invalid' : '' }}" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required autofocus>
                             </div>
                         </div>
 

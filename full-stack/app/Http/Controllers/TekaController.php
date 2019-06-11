@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Teka;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TekaController extends Controller
 {
@@ -24,21 +26,7 @@ class TekaController extends Controller
      */
     public function create()
     {
-        
-        // return Teka::create([
-        //     'foto' => $request['foto'],
-        //     'nama' => $request['nama'],
-        //     'nik' => $request['nik'],
-        //     'alamat' => $request['alamat'],
-        //     // 'jenjang_id' => $request['jenjang_id'],
-        //     // 'skill_set_key' => $request['skill_set_key'],
-        //     'pengalaman' => $request['pengalaman'],
-        //     'deskripsi' => $request['deskripsi'],
-        //     'tempat_lahir' => $request['tempat_lahir'],
-        //     'kelamin' => $request['kelamin'],
-        //     'email' => $request['email'],
-        //     'no_telp' => $request['no_telp'],
-        // ]);
+        //
     }
 
     /**
@@ -48,22 +36,18 @@ class TekaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        dd($request);
-        $teka = $this->validate(request(), [
-            //'foto' => 'required',
-            'nama' => 'required',
-            'nik' => 'required|numeric',
-            // 'jenjang_id' => $request['jenjang_id'],
-            // 'skill_set_key' => $request['skill_set_key'],
-            'kelamin' => 'required',
-            'email' => 'required'
-            //'no_telp' => 'required|numeric'
+    {   
+        $teka = $request->all();
+        User::create([
+            'name' => $teka['name'],
+            'email' => $teka['email'],
+            'password' => Hash::make($teka['password']),
+            'role_id' => 1
         ]);
-
+        
         return Teka::create($teka);
     }
-
+    
     /**
      * Display the specified resource.
      *

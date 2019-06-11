@@ -59,13 +59,14 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         // $ror = array();
-        $user = Auth::guard('api')->user();
+        $user = Auth::guard()->user();
         // $ror = $user->toArray();
         // echo $ror;
         if ($user) {
             echo json_encode($user);
             $user->api_token = null;
             $user->save();
+            $request->session()->flush();
         }
         
 
