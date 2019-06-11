@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import compose from 'recompose/compose';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -34,7 +37,14 @@ const styles = theme => ({
 
 class Dashboard extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, authState } = this.props;
+
+    if(!authState.loggedIn) {
+      return (
+        <Redirect 
+          to = "/sign-in"/>
+      )
+    }
 
     return (
       <DashboardLayout title="Dashboard">
@@ -126,4 +136,11 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+const mapStateToProps = (state) => ({
+  ...state
+})
+
+export default compose(
+  connect(mapStateToProps, {}),
+  withStyles(styles)
+)(Dashboard)

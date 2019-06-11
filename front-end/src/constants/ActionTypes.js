@@ -1,0 +1,5 @@
+export const IS_LOGIN = "IS_LOGIN";
+export const IS_REGISTERED = "IS_REGISTERED";
+export const REQUEST_LOGIN = "REQUEST_LOGIN";
+export const REQUEST_REGISTER = "REQUEST_REGISTER";
+export const FETCH_USER_DATA = "FETCH_USER_DATA";

@@ -36,8 +36,7 @@ class TekaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    {   
         $teka = $request->all();
         User::create([
             'name' => $teka['name'],
