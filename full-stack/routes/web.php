@@ -23,3 +23,4 @@ Route::post('/login', 'Auth\LoginController@login');
 
 
 Route::resource('Teka','TekaController');
+Route::post('teka/regis','TekaController@store');

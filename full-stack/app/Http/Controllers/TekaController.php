@@ -45,6 +45,7 @@ class TekaController extends Controller
             'password' => Hash::make($teka['password']),
             'role_id' => 1
         ]);
+        $teka['nama'] = $teka['name'];
         
         return Teka::create($teka);
     }
