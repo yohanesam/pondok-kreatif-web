@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Link, withRouter } from 'react-router-dom';
+import { requestLogin } from '../../action/loginAction';
+import { bindActionCreators } from 'redux';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -88,24 +90,9 @@ class SignIn extends Component {
     this.setState(newState, this.validateForm);
   };
 
-  handleSignIn = async () => {
-    try {
-      const { history } = this.props;
-      const { values } = this.state;
-
-      this.setState({ isLoading: true });
-
-      await signIn(values.email, values.password);
-
-      localStorage.setItem('isAuthenticated', true);
-
-      history.push('/dashboard');
-    } catch (error) {
-      this.setState({
-        isLoading: false,
-        serviceError: error
-      });
-    }
+  handleSignIn = () => {
+    const { loginAction } = this.props;
+    loginAction(this.state.values.email, this.state.values.password);
   };
 
   render() {
@@ -316,9 +303,14 @@ const mapStateToProps = (state) => ({
   ...state
 })
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  loginAction: requestLogin
+}, dispatch)
+
+
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, {}),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(SignIn);
