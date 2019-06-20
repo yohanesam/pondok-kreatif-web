@@ -40,16 +40,27 @@ class UmkmController extends Controller
     {
         $user = $request->all();
         $user['password'] = Hash::make($user['password']);
-        $id_user = User::create($user);
-        $id_umkm = Umkm::create();
+        try{
+            $id_user = User::create($user);
+            $id_umkm = Umkm::create();
+    
+            Role::create([
+                'role_id' => 2,
+                'user_id' => $id_user->id,
+                'role_user_id' => $id_umkm->id
+            ]);
+        } catch(Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e
+            ]);
+        }
 
-        Role::create([
-            'role_id' => 2,
-            'user_id' => $id_user->id,
-            'role_user_id' => $id_umkm->id
+        return response()->json([
+            'error' => false,
+            'message' =>'Berhasil'
         ]);
         
-        return response()->json($user);
     }
 
     /**
