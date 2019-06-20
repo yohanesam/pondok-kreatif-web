@@ -36,6 +36,9 @@ class Sidebar extends Component {
 
     const rootClassName = classNames(classes.root, className);
 
+    console.log(classes.nameText);
+    
+
     return (
       <nav className={rootClassName}>
         <div className={classes.logoWrapper}>
@@ -69,7 +72,7 @@ class Sidebar extends Component {
             className={classes.bioText}
             variant="caption"
           >
-            Brain Director
+            Job Seeker
           </Typography>
         </div>
         <Divider className={classes.profileDivider} />
