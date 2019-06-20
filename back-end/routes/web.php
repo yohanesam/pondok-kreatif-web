@@ -27,5 +27,4 @@ Route::post('teka/apiRegis','TekaController@store');
 Route::get('teka/apiView','TekaController@index');
 
 
-Route::post('umkm/apiRegis','UmkmController@store');
 Route::get('umkm/apiView','UmkmController@index');
