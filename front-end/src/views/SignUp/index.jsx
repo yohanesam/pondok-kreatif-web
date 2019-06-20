@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import validate from 'validate.js';
+import axios from 'axios';
 import _ from 'underscore';
 
 // Material helpers
@@ -30,36 +31,49 @@ import styles from './styles';
 // Form validation schema
 import schema from './schema';
 
+// URL 
+import { 
+  BASE_URL, 
+  UMKM_REGISTER_URI 
+} from '../../config/Apis';
+
 validate.validators.checked = validators.checked;
 
 // Service methods
-const signUp = () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true);
-    }, 1500);
-  });
+const signUp = (request) => {
+  console.log("disini", request.password);
+
+  let bodyFormData = new FormData();
+
+  bodyFormData.append('email', request.email);
+  bodyFormData.append('password', request.password);
+
+  return axios({
+    method: 'POST',
+    url: `${BASE_URL}${UMKM_REGISTER_URI}`,
+    data: bodyFormData,
+  })
 };
 
 class SignUp extends Component {
   state = {
     values: {
-      firstName: '',
-      lastName: '',
+      // firstName: '',
+      // lastName: '',
       email: '',
       password: '',
       policy: false
     },
     touched: {
-      firstName: false,
-      lastName: false,
+      // firstName: false,
+      // lastName: false,
       email: false,
       password: false,
       policy: null
     },
     errors: {
-      firstName: null,
-      lastName: null,
+      // firstName: null,
+      // lastName: null,
       email: null,
       password: null,
       policy: null
@@ -105,14 +119,14 @@ class SignUp extends Component {
       this.setState({ isLoading: true });
 
       await signUp({
-        firstName: values.firstName,
-        lastName: values.lastName,
         email: values.email,
         password: values.password
       });
 
-      history.push('/sign-in');
+      history.push('/dashboard');
     } catch (error) {
+      console.log(error);
+      
       this.setState({
         isLoading: false,
         serviceError: error
@@ -131,10 +145,10 @@ class SignUp extends Component {
       isLoading
     } = this.state;
 
-    const showFirstNameError =
-      touched.firstName && errors.firstName ? errors.firstName[0] : false;
-    const showLastNameError =
-      touched.lastName && errors.lastName ? errors.lastName[0] : false;
+    // const showFirstNameError =
+    //   touched.firstName && errors.firstName ? errors.firstName[0] : false;
+    // const showLastNameError =
+    //   touched.lastName && errors.lastName ? errors.lastName[0] : false;
     const showEmailError =
       touched.email && errors.email ? errors.email[0] : false;
     const showPasswordError =
@@ -196,6 +210,7 @@ class SignUp extends Component {
               </div>
               <div className={classes.contentBody}>
                 <form className={classes.form}>
+                  @csrf
                   <Typography
                     className={classes.title}
                     variant="h2"
@@ -209,7 +224,7 @@ class SignUp extends Component {
                     Use your work email to create new account... it's free.
                   </Typography>
                   <div className={classes.fields}>
-                    <TextField
+                    {/* <TextField
                       className={classes.textField}
                       label="First name"
                       name="firstName"
@@ -243,7 +258,7 @@ class SignUp extends Component {
                       >
                         {errors.lastName[0]}
                       </Typography>
-                    )}
+                    )} */}
                     <TextField
                       className={classes.textField}
                       label="Email address"
@@ -265,6 +280,7 @@ class SignUp extends Component {
                     <TextField
                       className={classes.textField}
                       label="Password"
+                      name="password"
                       onChange={event =>
                         this.handleFieldChange('password', event.target.value)
                       }
@@ -285,7 +301,6 @@ class SignUp extends Component {
                         checked={values.policy}
                         className={classes.policyCheckbox}
                         color="primary"
-                        name="policy"
                         onChange={() =>
                           this.handleFieldChange('policy', !values.policy)
                         }

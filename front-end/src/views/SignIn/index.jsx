@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { Link, withRouter } from 'react-router-dom';
-import { requestLogin } from '../../action/loginAction';
-import { bindActionCreators } from 'redux';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -90,13 +86,28 @@ class SignIn extends Component {
     this.setState(newState, this.validateForm);
   };
 
-  handleSignIn = () => {
-    const { loginAction } = this.props;
-    loginAction(this.state.values.email, this.state.values.password);
+  handleSignIn = async () => {
+    try {
+      const { history } = this.props;
+      const { values } = this.state;
+
+      this.setState({ isLoading: true });
+
+      await signIn(values.email, values.password);
+
+      localStorage.setItem('isAuthenticated', true);
+
+      history.push('/dashboard');
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+        serviceError: error
+      });
+    }
   };
 
   render() {
-    const { classes, authState } = this.props;
+    const { classes } = this.props;
     const {
       values,
       touched,
@@ -108,13 +119,6 @@ class SignIn extends Component {
 
     const showEmailError = touched.email && errors.email;
     const showPasswordError = touched.password && errors.password;
-
-    if(authState.loggedIn) {
-      return (
-        <Redirect 
-          to = "/dashboard"/>
-      )
-    }
 
     return (
       
@@ -298,19 +302,7 @@ SignIn.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-
-const mapStateToProps = (state) => ({
-  ...state
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  loginAction: requestLogin
-}, dispatch)
-
-
-
 export default compose(
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(SignIn);
