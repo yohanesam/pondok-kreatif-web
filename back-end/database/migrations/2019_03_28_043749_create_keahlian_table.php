@@ -15,8 +15,8 @@ class CreateKeahlianTable extends Migration
     {
         Schema::create('keahlian', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
-            $table->integer('bidang_id');
+            $table->string('nama')->nullable();
+            $table->integer('bidang_id')->nullable();
             $table->timestamps();
         });
     }

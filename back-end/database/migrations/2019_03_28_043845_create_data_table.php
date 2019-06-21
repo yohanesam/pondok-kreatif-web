@@ -15,7 +15,7 @@ class CreateDataTable extends Migration
     {
         Schema::create('data', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
+            $table->string('nama')->nullable();
             $table->timestamps();
         });
     }

@@ -15,12 +15,12 @@ class CreateHistoriTkTable extends Migration
     {
         Schema::create('histori_tk', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tk_id');
-            $table->string('target_data_id');
-            $table->string('aktifitas');
-            $table->timestamp('waktu');
-            $table->integer('target_object_id');
-            $table->longText('deskripsi');+
+            $table->integer('tk_id')->nullable();
+            $table->string('target_data_id')->nullable();
+            $table->string('aktifitas')->nullable();
+            $table->timestamp('waktu')->nullable();
+            $table->integer('target_object_id')->nullable();
+            $table->longText('deskripsi')->nullable();
             $table->timestamps();
         });
     }

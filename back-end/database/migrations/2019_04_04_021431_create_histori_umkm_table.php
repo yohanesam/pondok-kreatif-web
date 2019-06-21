@@ -15,10 +15,10 @@ class CreateHistoriUmkmTable extends Migration
     {
         Schema::create('histori_umkm', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('umkm_id');
-            $table->string('data_id');
-            $table->string('aktifitas');
-            $table->date('tanggal');
+            $table->string('umkm_id')->nullable();
+            $table->string('data_id')->nullable();
+            $table->string('aktifitas')->nullable();
+            $table->date('tanggal')->nullable();
             $table->timestamps();
         });
     }

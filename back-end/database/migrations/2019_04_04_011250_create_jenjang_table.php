@@ -15,8 +15,8 @@ class CreateJenjangTable extends Migration
     {
         Schema::create('jenjang', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
-            $table->integer('tingkat');
+            $table->string('nama')->nullable();
+            $table->integer('tingkat')->nullable();
             $table->timestamps();
         });
     }

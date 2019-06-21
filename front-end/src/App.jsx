@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 
 // Externals
@@ -20,9 +19,6 @@ import './assets/scss/index.scss';
 // Routes
 import Routes from './Routes';
 
-// The store configuration
-import configureStore from './store';
-
 // Browser history
 const browserHistory = createBrowserHistory();
 
@@ -30,15 +26,14 @@ const browserHistory = createBrowserHistory();
 Chart.helpers.extend(Chart.elements.Rectangle.prototype, { draw });
 
 export default class App extends Component {
+
   render() {
     return (
-      <Provider store = { configureStore() }>
-        <MuiThemeProvider theme={theme}>
-          <Router history={browserHistory}>
-            <Routes />
-          </Router>
-        </MuiThemeProvider>
-      </Provider>
+      <MuiThemeProvider theme={theme}>
+        <Router history={browserHistory}>
+          <Routes />
+        </Router>
+      </MuiThemeProvider>
     );
   }
 }
