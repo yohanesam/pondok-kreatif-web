@@ -20,3 +20,4 @@ Route::middleware('auth:api')
 
 Route::post('logout', 'Auth\LoginController@logout');
 Route::post('umkm','UmkmController@store');
+Route::post('login', 'Auth\LoginController@login');
