@@ -15,21 +15,21 @@ class CreateUmkmTable extends Migration
     {
         Schema::create('umkms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_usaha');
-            $table->string('nama_pemilik');
-            $table->string('no_izin_usaha');
-            $table->integer('bidang_id');
-            $table->string('alamat');
-            $table->string('koordinat');
-            $table->string('no_telp');
-            $table->longText('deskripsi');
-            $table->integer('kelurahan_id');
-            $table->integer('kecamatan_id');
-            $table->bigInteger('omzset');
-            $table->integer('jumlah_karyawan');
-            $table->date('tanggal_berdiri');
-            $table->string('status');
-            $table->boolean('status_imb');
+            $table->string('nama_usaha')->nullable();
+            $table->string('nama_pemilik')->nullable();
+            $table->string('no_izin_usaha')->nullable();
+            $table->integer('bidang_id')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('koordinat')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->longText('deskripsi')->nullable();
+            $table->integer('kelurahan_id')->nullable();
+            $table->integer('kecamatan_id')->nullable();
+            $table->bigInteger('omzset')->nullable();
+            $table->integer('jumlah_karyawan')->nullable();
+            $table->date('tanggal_berdiri')->nullable();
+            $table->string('status')->nullable();
+            $table->boolean('status_imb')->nullable();
             $table->timestamps();
         });
     }

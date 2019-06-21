@@ -18,5 +18,6 @@ Route::middleware('auth:api')
         return $request->user();
     });
 
+Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 Route::post('umkm','UmkmController@store');

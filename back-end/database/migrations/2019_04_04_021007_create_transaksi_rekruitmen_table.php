@@ -15,11 +15,11 @@ class CreateTransaksiRekruitmenTable extends Migration
     {
         Schema::create('transaksi_rekruitmen', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('rekruitmen_id');
-            $table->string('tk_id');
-            $table->string('status');
-            $table->string('transaksi_key');
-            $table->timestamp('waktu');
+            $table->integer('rekruitmen_id')->nullable();
+            $table->string('tk_id')->nullable();
+            $table->string('status')->nullable();
+            $table->string('transaksi_key')->nullable();
+            $table->timestamp('waktu')->nullable();
             $table->timestamps();
         });
     }

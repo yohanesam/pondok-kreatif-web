@@ -31,6 +31,10 @@ class DashboardLayout extends Component {
     };
   }
 
+  componentDidMount() {
+    this.checkIfUserLogin();
+  }
+
   handleClose = () => {
     this.setState({ isOpen: false });
   };
@@ -40,6 +44,12 @@ class DashboardLayout extends Component {
       isOpen: !prevState.isOpen
     }));
   };
+
+  checkIfUserLogin = () => {
+    try {
+
+    }
+  }
 
   render() {
     const { classes, width, title, children } = this.props;

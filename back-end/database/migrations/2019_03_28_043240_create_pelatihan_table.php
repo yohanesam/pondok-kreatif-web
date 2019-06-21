@@ -16,25 +16,25 @@ class CreatePelatihanTable extends Migration
     {
         Schema::create('pelatihan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('foto');
-            $table->string('nama');
-            $table->integer('bidang_id');
-            $table->integer('dinas_id');
-            $table->longText('deskripsi');
-            $table->string('skill_set_key');
-            $table->integer('umkm_set_key');
-            $table->string('email');
-            $table->string('lokasi');
-            $table->string('koordinat');
-            $table->integer('tanggal');
-            $table->integer('tanggal_buat');
-            $table->integer('tanggal_akhir');
-            $table->integer('tanggal_acara');
-            $table->longText('pengisi_acara');
-            $table->integer('status_pelatihan');
-            $table->integer('tipe_pelatihan');
-            $table->string('no_telp_cp');
-            $table->integer('kuota_pelatihan');
+            $table->string('foto')->nullable();
+            $table->string('nama')->nullable();
+            $table->integer('bidang_id')->nullable();
+            $table->integer('dinas_id')->nullable();
+            $table->longText('deskripsi')->nullable();
+            $table->string('skill_set_key')->nullable();
+            $table->integer('umkm_set_key')->nullable();
+            $table->string('email')->nullable();
+            $table->string('lokasi')->nullable();
+            $table->string('koordinat')->nullable();
+            $table->integer('tanggal')->nullable();
+            $table->integer('tanggal_buat')->nullable();
+            $table->integer('tanggal_akhir')->nullable();
+            $table->integer('tanggal_acara')->nullable();
+            $table->longText('pengisi_acara')->nullable();
+            $table->integer('status_pelatihan')->nullable();
+            $table->integer('tipe_pelatihan')->nullable();
+            $table->string('no_telp_cp')->nullable();
+            $table->integer('kuota_pelatihan')->nullable();
             $table->timestamps();
         });
     }
