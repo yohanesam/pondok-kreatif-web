@@ -20,5 +20,10 @@ Route::middleware('auth:api')
 
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
+
 Route::post('umkm','UmkmController@store');
-Route::post('login', 'Auth\LoginController@login');
+Route::post('umkm','UmkmController@store');
+Route::get('umkm','UmkmController@index');
+
+Route::post('teka','TekaController@store');
+Route::get('teka','TekaController@index');
