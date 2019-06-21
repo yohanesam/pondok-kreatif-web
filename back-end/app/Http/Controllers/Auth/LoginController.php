@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 // use Auth;
+use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -47,13 +48,14 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
             $user = $this->guard()->user();
             $user->generateToken();
-
+            $role = Role::where('role_user_id', $user->id)->first();
             return response()->json([
-                'data' => $user->toArray(),
+                'role_id' => $role->role_id,
+                'token' => $user->api_token
             ]);
         }
 
-        return $this->sendFailedLoginResponse($request);
+        return response()->json(["error", "data tidak sesuai"]);
     }
 
     public function logout(Request $request)

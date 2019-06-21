@@ -26,6 +26,7 @@ const browserHistory = createBrowserHistory();
 Chart.helpers.extend(Chart.elements.Rectangle.prototype, { draw });
 
 export default class App extends Component {
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>

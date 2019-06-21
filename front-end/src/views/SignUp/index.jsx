@@ -41,17 +41,13 @@ validate.validators.checked = validators.checked;
 
 // Service methods
 const signUp = (request) => {
-  console.log("disini", request.password);
-
-  let bodyFormData = new FormData();
-
-  bodyFormData.append('email', request.email);
-  bodyFormData.append('password', request.password);
-
   return axios({
     method: 'POST',
     url: `${BASE_URL}${UMKM_REGISTER_URI}`,
-    data: bodyFormData,
+    data: {
+      "email": request.email,
+      "password": request.password
+    },
   })
 };
 

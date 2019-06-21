@@ -15,23 +15,23 @@ class CreateTenagaKerjaTable extends Migration
     {
         Schema::create('tenaga_kerja', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('foto');
-            $table->string('nama');
-            $table->string('nik');
-            $table->string('alamat');
-            $table->string('koordinat_alamat');
-            $table->integer('kelurahan_id');
-            $table->integer('kecamatan_id');
-            $table->string('rt');
-            $table->string('rw');
-            $table->integer('jenjang_id');
-            $table->string('skill_set_key');
-            $table->string('pengalaman');
-            $table->longText('deskripsi');
-            $table->string('tempat_lahir');
-            $table->string('kelamin');
-            $table->string('email');
-            $table->string('no_telp');
+            $table->string('foto')->nullable();
+            $table->string('nama')->nullable();
+            $table->string('nik')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('koordinat_alamat')->nullable();
+            $table->integer('kelurahan_id')->nullable();
+            $table->integer('kecamatan_id')->nullable();
+            $table->string('rt')->nullable();
+            $table->string('rw')->nullable();
+            $table->integer('jenjang_id')->nullable();
+            $table->string('skill_set_key')->nullable();
+            $table->string('pengalaman')->nullable();
+            $table->longText('deskripsi')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->string('kelamin')->nullable();
+            $table->string('email')->nullable();
+            $table->string('no_telp')->nullable();
             $table->timestamps();
         });
     }

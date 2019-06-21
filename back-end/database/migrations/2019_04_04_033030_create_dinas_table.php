@@ -15,16 +15,16 @@ class CreateDinasTable extends Migration
     {
         Schema::create('dinas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_dinas');
-            $table->string('no_telp');
-            $table->string('nama_ketua_dinas');
-            $table->string('alamat');
-            $table->string('koordinat');
-            $table->longText('deskripsi');
-            $table->string('tahun_berdiri');
-            $table->integer('kelurahan_id');
-            $table->integer('kecamatan_id');
-            $table->integer('data_id');
+            $table->string('nama_dinas')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->string('nama_ketua_dinas')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('koordinat')->nullable();
+            $table->longText('deskripsi')->nullable();
+            $table->string('tahun_berdiri')->nullable();
+            $table->integer('kelurahan_id')->nullable();
+            $table->integer('kecamatan_id')->nullable();
+            $table->integer('data_id')->nullable();
             $table->timestamps();
         });
     }

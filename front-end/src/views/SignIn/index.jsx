@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import validate from 'validate.js';
+import axios from 'axios';
 import _ from 'underscore';
 
 // Material helpers
@@ -30,13 +31,24 @@ import styles from './styles';
 // Form validation schema
 import schema from './schema';
 
+// URL 
+import { 
+  BASE_URL, 
+  LOGIN_URI 
+} from '../../config/Apis';
+
 // Service methods
 const signIn = () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true);
-    }, 1500);
-  });
+  axios({
+    method: 'POST',
+    url: `${BASE_URL}${LOGIN_URI}`,
+    data: {
+      "email": request.email,
+      "password": request.password
+    },
+  }).then(res => {
+    this.setState({ isLogin: true })
+  })
 };
 
 class SignIn extends Component {
@@ -53,6 +65,7 @@ class SignIn extends Component {
       email: null,
       password: null
     },
+    isLogin: false,
     isValid: false,
     isLoading: false,
     submitError: null
@@ -89,13 +102,16 @@ class SignIn extends Component {
   handleSignIn = async () => {
     try {
       const { history } = this.props;
-      const { values } = this.state;
+      const { values, isLogin } = this.state;
 
       this.setState({ isLoading: true });
 
-      await signIn(values.email, values.password);
+      await signIn({
+        email: values.email, 
+        password: values.password
+      });
 
-      localStorage.setItem('isAuthenticated', true);
+      localStorage.setItem('userInfoState', JSON.stringify(isLogin));
 
       history.push('/dashboard');
     } catch (error) {

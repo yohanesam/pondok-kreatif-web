@@ -15,11 +15,11 @@ class CreateTransaksiPelatihanTable extends Migration
     {
         Schema::create('transaksi_pelatihan', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pelatihan_id');
-            $table->string('status');
-            $table->string('transaksi_key');
-            $table->string('tk_set_key');
-            $table->timestamp('waktu');
+            $table->integer('pelatihan_id')->nullable();
+            $table->string('status')->nullable();
+            $table->string('transaksi_key')->nullable();
+            $table->string('tk_set_key')->nullable();
+            $table->timestamp('waktu')->nullable();
             $table->timestamps();
         });
     }

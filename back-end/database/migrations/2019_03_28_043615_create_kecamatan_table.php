@@ -15,12 +15,12 @@ class CreateKecamatanTable extends Migration
     {
         Schema::create('kecamatan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
-            $table->integer('jumlah_penduduk');
-            $table->string('alamat_kantor');
-            $table->string('koordinat');
-            $table->string('nama_camat');
-            $table->longText('deskripsi');
+            $table->string('nama')->nullable();
+            $table->integer('jumlah_penduduk')->nullable();
+            $table->string('alamat_kantor')->nullable();
+            $table->string('koordinat')->nullable();
+            $table->string('nama_camat')->nullable();
+            $table->longText('deskripsi')->nullable();
             $table->timestamps();
         });
     }

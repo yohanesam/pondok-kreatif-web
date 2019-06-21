@@ -15,13 +15,13 @@ class CreateKelurahanTable extends Migration
     {
         Schema::create('kelurahan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_lurah');
-            $table->integer('data_id');
-            $table->string('alamat_kantor');
-            $table->string('koordinat');
-            $table->integer('jumlah_penduduk');
-            $table->string('no_telp');
-            $table->string('deskripsi');
+            $table->string('nama_lurah')->nullable();
+            $table->integer('data_id')->nullable();
+            $table->string('alamat_kantor')->nullable();
+            $table->string('koordinat')->nullable();
+            $table->integer('jumlah_penduduk')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }
