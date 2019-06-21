@@ -9,7 +9,8 @@ import Typography from './views/Typography';
 import Icons from './views/Icons';
 import Account from './views/Account';
 import Settings from './views/Settings';
-import SignUp from './views/SignUp';
+import UmkmSignUp from './views/UmkmSignUp';
+import TekaSignUp from './views/TekaSignUp';
 import SignIn from './views/SignIn';
 import UnderDevelopment from './views/UnderDevelopment';
 import NotFound from './views/NotFound';
@@ -59,9 +60,14 @@ export default class Routes extends Component {
           path="/settings"
         />
         <Route
-          component={SignUp}
+          component={TekaSignUp}
           exact
-          path="/sign-up"
+          path="/teka-sign-up"
+        />
+        <Route
+          component={UmkmSignUp}
+          exact
+          path="/umkm-sign-up"
         />
         <Route
           component={SignIn}
