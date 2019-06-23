@@ -2511,10 +2511,12 @@ class UmkmsTableSeeder extends Seeder
             'nama_usaha' => $umkm[$i][0],
             'no_izin_usaha' => $umkm[$i][2],
             'no_telp' => $umkm[$i][7],
-            'alamat' => $umkm[$i][6],
+            'alamat' => $umkm[$i][5],
+            'koordinat' => $umkm[$i][6],
             'deskripsi' => $umkm[$i][3],
             'jumlah_karyawan' => $umkm[$i][12],
             'status' => 'aktif',
+            'jam_operasi' => $umkm[$i][9],
             'gambar' => $umkm[$i][10],
             'website' => $umkm[$i][11]
         ]);
