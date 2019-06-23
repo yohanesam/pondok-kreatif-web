@@ -17,7 +17,7 @@ class CreatePenduduksTable extends Migration
             $table->increments('id');
             $table->string('nik')->nullable();
             $table->string('nama')->nullable();
-            $table->integer('jumlah_anggota_keluarga')->nullable();
+            $table->string('jumlah_anggota_keluarga')->nullable();
             $table->timestamps();
         });
     }
