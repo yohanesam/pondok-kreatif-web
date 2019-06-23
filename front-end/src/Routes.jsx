@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 // Views
 import Dashboard from './views/Dashboard';
 import ProductList from './views/ProductList';
+import UmkmDetail from './views/UmkmDetail';
 import UserList from './views/UserList';
 import Typography from './views/Typography';
 import Icons from './views/Icons';
@@ -40,6 +41,11 @@ export default class Routes extends Component {
           path="/products"
         />
         <Route
+          component={UmkmDetail}
+          exact
+          path="/umkm-detail"
+        />
+        <Route
           component={Typography}
           exact
           path="/typography"
@@ -63,6 +69,11 @@ export default class Routes extends Component {
           component={TekaSignUp}
           exact
           path="/teka-sign-up"
+        />
+        <Route
+          component={UmkmSignUp}
+          exact
+          path="/umkm-sign-up"
         />
         <Route
           component={UmkmSignUp}
