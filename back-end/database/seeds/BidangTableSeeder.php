@@ -17,17 +17,21 @@ class BidangTableSeeder extends Seeder
             'tekstil',
             'desain',
             'kerajinan',
-            'kesehatan',
             'teknologi',
             'mesin',
-            'musik'
+            'musik',
+            "Kesehatan",
+            "Pendidikan",
+            "Perekonomian",
+            "Sosial",
+            "Parawisata",
+            "Olahraga",
+            "Transportasi"
         ];
 
         for ($i = 0; $i < count($bidang); $i++) {
             DB::table('bidang')->insert([
-                'nik' => $bidang[$i][2],
-                'nama' => $bidang[$i][1],
-                'jumlah_anggota_keluarga' => $bidang[$i][0]
+                'nama' => $bidang[$i],
             ]);
         }
     }
