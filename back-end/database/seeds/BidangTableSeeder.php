@@ -24,7 +24,7 @@ class BidangTableSeeder extends Seeder
         ];
 
         for ($i = 0; $i < count($bidang); $i++) {
-            DB::table('bidang ')->insert([
+            DB::table('bidang')->insert([
                 'nik' => $bidang[$i][2],
                 'nama' => $bidang[$i][1],
                 'jumlah_anggota_keluarga' => $bidang[$i][0]
