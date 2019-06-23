@@ -17,6 +17,7 @@ class CreateUmkmTable extends Migration
             $table->increments('id');
             $table->string('nama_usaha')->nullable();
             $table->string('nama_pemilik')->nullable();
+            $table->string('kategori')->nullable();
             $table->string('no_izin_usaha')->nullable();
             $table->string('jam_operasi')->nullable();
             $table->longText('gambar')->nullable();
