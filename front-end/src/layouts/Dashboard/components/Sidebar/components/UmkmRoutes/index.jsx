@@ -34,6 +34,22 @@ class UmkmRoutes extends Component {
         component="div"
         disablePadding
         >
+
+            <ListItem
+            activeClassName={classes.activeListItem}
+            className={classes.listItem}
+            component={NavLink}
+            to="/users"
+            >
+                <ListItemIcon className={classes.listItemIcon}>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText
+                    classes={{ primary: classes.listItemText }}
+                    primary="Users"
+                />
+            </ListItem>
+
             <ListItem
             activeClassName={classes.activeListItem}
             className={classes.listItem}

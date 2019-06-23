@@ -4,12 +4,14 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 // Views
 import Dashboard from './views/Dashboard';
 import ProductList from './views/ProductList';
+import UmkmDetail from './views/UmkmDetail';
 import UserList from './views/UserList';
 import Typography from './views/Typography';
 import Icons from './views/Icons';
 import Account from './views/Account';
 import Settings from './views/Settings';
-import SignUp from './views/SignUp';
+import UmkmSignUp from './views/UmkmSignUp';
+import TekaSignUp from './views/TekaSignUp';
 import SignIn from './views/SignIn';
 import UnderDevelopment from './views/UnderDevelopment';
 import NotFound from './views/NotFound';
@@ -39,6 +41,11 @@ export default class Routes extends Component {
           path="/products"
         />
         <Route
+          component={UmkmDetail}
+          exact
+          path="/umkm-detail"
+        />
+        <Route
           component={Typography}
           exact
           path="/typography"
@@ -59,9 +66,19 @@ export default class Routes extends Component {
           path="/settings"
         />
         <Route
-          component={SignUp}
+          component={TekaSignUp}
           exact
-          path="/sign-up"
+          path="/teka-sign-up"
+        />
+        <Route
+          component={UmkmSignUp}
+          exact
+          path="/umkm-sign-up"
+        />
+        <Route
+          component={UmkmSignUp}
+          exact
+          path="/umkm-sign-up"
         />
         <Route
           component={SignIn}

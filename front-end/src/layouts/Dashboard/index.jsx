@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
 // Externals
 import classNames from 'classnames';
@@ -27,7 +28,9 @@ class DashboardLayout extends Component {
     const isMobile = ['xs', 'sm', 'md'].includes(props.width);
 
     this.state = {
-      isOpen: !isMobile
+      isOpen: !isMobile,
+      isLoggedin: false,
+      role_id: "",
     };
   }
 
@@ -46,14 +49,24 @@ class DashboardLayout extends Component {
   };
 
   checkIfUserLogin = () => {
-    try {
+    const { history } = this.props;
+    if(localStorage.getItem('userInfoState')) {
+      const state = JSON.parse(localStorage.getItem('userInfoState'));
 
+      if(state.isLoggedin) {
+        this.setState({ isLoggedin: state.isLoggedin });
+      } else {
+        history.push('/sign-in');
+      }
+    } else {
+      history.push('/sign-in');
     }
+    
   }
 
   render() {
     const { classes, width, title, children } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, role_id } = this.state;
 
     const isMobile = ['xs', 'sm', 'md'].includes(width);
     const shiftTopbar = isOpen && !isMobile;
@@ -76,7 +89,9 @@ class DashboardLayout extends Component {
           open={isOpen}
           variant={isMobile ? 'temporary' : 'persistent'}
         >
-          <Sidebar className={classes.sidebar} />
+          <Sidebar 
+            className={classes.sidebar} 
+            roleId={role_id}/>
         </Drawer>
         <main
           className={classNames(classes.content, {
@@ -100,6 +115,7 @@ DashboardLayout.propTypes = {
 };
 
 export default compose(
+  withRouter,
   withStyles(styles),
   withWidth()
 )(DashboardLayout);

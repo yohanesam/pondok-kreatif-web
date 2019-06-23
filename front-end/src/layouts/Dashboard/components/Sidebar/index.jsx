@@ -37,28 +37,8 @@ import UmkmRoutes from './components/UmkmRoutes';
 import styles from './styles';
 
 class Sidebar extends Component {
-
-  state = {
-    isLoading: false,
-    isLoggedIn : false,
-    user: {
-      role_id: '',
-      email: '',
-      password: '',
-      token: '',
-    }
-  }
-
-  componentDidMount = () => {
-    if(localStorage.getItem('userInfoState')) {
-      const state = JSON.parse(localStorage.getItem('userInfoState'));
-      this.setState(state);
-    }
-  }
-
   render() {
-    const { classes, className } = this.props;
-    const { user } = this.state
+    const { classes, className, roleId } = this.props;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -103,7 +83,7 @@ class Sidebar extends Component {
         </div>
         <Divider className={classes.profileDivider} />
         {
-          user.role_id === '1' ? <TekaRoutes /> : <UmkmRoutes />
+          roleId === '1' ? <TekaRoutes /> : <UmkmRoutes />
         }
         <Divider className={classes.listDivider} />
         <List

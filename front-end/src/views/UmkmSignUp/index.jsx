@@ -9,21 +9,21 @@ import axios from 'axios';
 import _ from 'underscore';
 
 // Material helpers
-import { withStyles } from '@material-ui/core/styles/index';
+import { withStyles } from '@material-ui/core/styles';
 
 // Material components
-import Grid from '@material-ui/core/Grid/index';
-import Button from '@material-ui/core/Button/index';
-import CircularProgress from '@material-ui/core/CircularProgress/index';
-import IconButton from '@material-ui/core/IconButton/index';
-import TextField from '@material-ui/core/TextField/index';
-import Typography from '@material-ui/core/Typography/index';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-// Shared components
-import FacebookIcon from '../../icons/Facebook';
-import GoogleIcon from '../../icons/Google';
+// Shared utilities
+import validators from '../../common/validators';
 
 // Component styles
 import styles from './styles';
@@ -34,34 +34,45 @@ import schema from './schema';
 // URL 
 import { 
   BASE_URL, 
-  LOGIN_URI 
+  UMKM_REGISTER_URI 
 } from '../../config/Apis';
 
+validate.validators.checked = validators.checked;
+
 // Service methods
-const signIn = (request) => {
+const signUp = (request) => {
   return axios({
     method: 'POST',
-    url: `${BASE_URL}${LOGIN_URI}`,
+    url: `${BASE_URL}${UMKM_REGISTER_URI}`,
     data: {
       "email": request.email,
       "password": request.password
     },
-  });
+  })
 };
 
-class SignIn extends Component {
+class SignUp extends Component {
   state = {
     values: {
+      // firstName: '',
+      // lastName: '',
       email: '',
-      password: ''
+      password: '',
+      policy: false
     },
     touched: {
+      // firstName: false,
+      // lastName: false,
       email: false,
-      password: false
+      password: false,
+      policy: null
     },
     errors: {
+      // firstName: null,
+      // lastName: null,
       email: null,
-      password: null
+      password: null,
+      policy: null
     },
     isValid: false,
     isLoading: false,
@@ -96,22 +107,22 @@ class SignIn extends Component {
     this.setState(newState, this.validateForm);
   };
 
-  handleSignIn = async () => {
+  handleSignUp = async () => {
     try {
       const { history } = this.props;
       const { values } = this.state;
 
       this.setState({ isLoading: true });
 
-      const res = await signIn({ email: values.email, password: values.password });
-      
-      localStorage.setItem('userInfoState', JSON.stringify({
-        isLoggedin: true,
-        role_id: res.data.role_id,
-      }));
+      await signUp({
+        email: values.email,
+        password: values.password
+      });
 
       history.push('/dashboard');
     } catch (error) {
+      console.log(error);
+      
       this.setState({
         isLoading: false,
         serviceError: error
@@ -130,11 +141,18 @@ class SignIn extends Component {
       isLoading
     } = this.state;
 
-    const showEmailError = touched.email && errors.email;
-    const showPasswordError = touched.password && errors.password;
+    // const showFirstNameError =
+    //   touched.firstName && errors.firstName ? errors.firstName[0] : false;
+    // const showLastNameError =
+    //   touched.lastName && errors.lastName ? errors.lastName[0] : false;
+    const showEmailError =
+      touched.email && errors.email ? errors.email[0] : false;
+    const showPasswordError =
+      touched.password && errors.password ? errors.password[0] : false;
+    const showPolicyError =
+      touched.policy && errors.policy ? errors.policy[0] : false;
 
     return (
-      
       <div className={classes.root}>
         <Grid
           className={classes.grid}
@@ -188,44 +206,55 @@ class SignIn extends Component {
               </div>
               <div className={classes.contentBody}>
                 <form className={classes.form}>
+                  @csrf
                   <Typography
                     className={classes.title}
                     variant="h2"
                   >
-                    Sign in
+                    Create new account
                   </Typography>
                   <Typography
                     className={classes.subtitle}
                     variant="body1"
                   >
-                    Sign in with social media
-                  </Typography>
-                  <Button
-                    className={classes.facebookButton}
-                    color="primary"
-                    onClick={this.handleSignIn}
-                    size="large"
-                    variant="contained"
-                  >
-                    <FacebookIcon className={classes.facebookIcon} />
-                    Login with Facebook
-                  </Button>
-                  <Button
-                    className={classes.googleButton}
-                    onClick={this.handleSignIn}
-                    size="large"
-                    variant="contained"
-                  >
-                    <GoogleIcon className={classes.googleIcon} />
-                    Login with Google
-                  </Button>
-                  <Typography
-                    className={classes.sugestion}
-                    variant="body1"
-                  >
-                    or login with email address
+                    Use your work email to create new account... it's free.
                   </Typography>
                   <div className={classes.fields}>
+                    {/* <TextField
+                      className={classes.textField}
+                      label="First name"
+                      name="firstName"
+                      onChange={event =>
+                        this.handleFieldChange('firstName', event.target.value)
+                      }
+                      value={values.firstName}
+                      variant="outlined"
+                    />
+                    {showFirstNameError && (
+                      <Typography
+                        className={classes.fieldError}
+                        variant="body2"
+                      >
+                        {errors.firstName[0]}
+                      </Typography>
+                    )}
+                    <TextField
+                      className={classes.textField}
+                      label="Last name"
+                      onChange={event =>
+                        this.handleFieldChange('lastName', event.target.value)
+                      }
+                      value={values.lastName}
+                      variant="outlined"
+                    />
+                    {showLastNameError && (
+                      <Typography
+                        className={classes.fieldError}
+                        variant="body2"
+                      >
+                        {errors.lastName[0]}
+                      </Typography>
+                    )} */}
                     <TextField
                       className={classes.textField}
                       label="Email address"
@@ -233,7 +262,6 @@ class SignIn extends Component {
                       onChange={event =>
                         this.handleFieldChange('email', event.target.value)
                       }
-                      type="text"
                       value={values.email}
                       variant="outlined"
                     />
@@ -264,6 +292,37 @@ class SignIn extends Component {
                         {errors.password[0]}
                       </Typography>
                     )}
+                    <div className={classes.policy}>
+                      <Checkbox
+                        checked={values.policy}
+                        className={classes.policyCheckbox}
+                        color="primary"
+                        onChange={() =>
+                          this.handleFieldChange('policy', !values.policy)
+                        }
+                      />
+                      <Typography
+                        className={classes.policyText}
+                        variant="body1"
+                      >
+                        I have read the &nbsp;
+                        <Link
+                          className={classes.policyUrl}
+                          to="#"
+                        >
+                          Terms and Conditions
+                        </Link>
+                        .
+                      </Typography>
+                    </div>
+                    {showPolicyError && (
+                      <Typography
+                        className={classes.fieldError}
+                        variant="body2"
+                      >
+                        {errors.policy[0]}
+                      </Typography>
+                    )}
                   </div>
                   {submitError && (
                     <Typography
@@ -277,33 +336,26 @@ class SignIn extends Component {
                     <CircularProgress className={classes.progress} />
                   ) : (
                     <Button
-                      className={classes.signInButton}
+                      className={classes.signUpButton}
                       color="primary"
                       disabled={!isValid}
-                      onClick={this.handleSignIn}
+                      onClick={this.handleSignUp}
                       size="large"
                       variant="contained"
                     >
-                      Sign in now
+                      Sign up now
                     </Button>
                   )}
                   <Typography
-                    className={classes.signUp}
+                    className={classes.signIn}
                     variant="body1"
                   >
-                    Don't have an account ? Choose wether you {' '}
+                    Have an account?{' '}
                     <Link
-                      className={classes.signUpUrl}
-                      to="/teka-sign-up"
+                      className={classes.signInUrl}
+                      to="/sign-in"
                     >
-                      Job Seeker
-                    </Link> {' '} or {' '}
-                    
-                    <Link
-                      className={classes.signUpUrl}
-                      to="/umkm-sign-up"
-                    >
-                      Job Owner
+                      Sign In
                     </Link>
                   </Typography>
                 </form>
@@ -316,7 +368,7 @@ class SignIn extends Component {
   }
 }
 
-SignIn.propTypes = {
+SignUp.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
@@ -325,4 +377,4 @@ SignIn.propTypes = {
 export default compose(
   withRouter,
   withStyles(styles)
-)(SignIn);
+)(SignUp);
