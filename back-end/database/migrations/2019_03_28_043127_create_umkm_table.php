@@ -25,7 +25,7 @@ class CreateUmkmTable extends Migration
             $table->string('koordinat')->nullable();
             $table->string('no_telp')->nullable();
             $table->longText('deskripsi')->nullable();
-            $table->bigInteger('website')->nullable();
+            $table->string('website')->nullable();
             $table->integer('jumlah_karyawan')->nullable();
             $table->date('tanggal_berdiri')->nullable();
             $table->string('status')->nullable();
