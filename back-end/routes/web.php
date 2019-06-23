@@ -23,8 +23,3 @@ Route::post('/register', 'Auth\RegisterController@register');
 
 
 Route::resource('Teka','TekaController');
-Route::post('teka/apiRegis','TekaController@store');
-Route::get('teka/apiView','TekaController@index');
-
-
-Route::get('umkm/apiView','UmkmController@index');
