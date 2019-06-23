@@ -393,7 +393,7 @@ class BeritasTableSeeder extends Seeder
         '30 September 2018 – UKM IKM Nusantara akan selalu mencari segala kesempatan untuk berkolaborasi ke organisasi masyarakat lainnya. Kali ini UIN berkerja sama dengan Organisasi Kesejahteraan Rakyat (Orkestra) yang akan membuat gerakan – gerakan visioner untuk memberikan kemudahan – kemudahan kepada anggota UIN dan Orkestra.Bersama dengan Poempida Hidayatulloh sebagai Ketua Umum Orkestra, Ibu Chandra Manggih akan menggali segala potensi – potensi yang bisa di kembangkan bersama. Potensi tersebut salah satunya adalah pencarian dana CSR yang terdapat di beberapa kementerian dan perusahaan bumn yang nantinya akan digunakan untuk membantu pelaku UKM dan IKM dalam berita permodalan. Karena permodalan adalah salah satu dari hambatan umum jika ingin berbisnis. Tetapi untuk mendapatkan dana CSR tersebut bukan hal yang mudah, oleh karena itu UIN dan Orkestra menyatukan pikiran dan tujuan untuk mendapatkan dana tersebut. Dalam acara kali ini di Menara Jamsostek, Orkestra menyelenggarakan Rakernas untuk membahas regulasi – regulasi untuk menjaga utuh kesatuan Orkestra dalam hal berorganisasi. UKM IKM Nusantara akan melaksanakan Rakernas di awal tahun 2019 yang berlokasi di Bandung, Jawa Barat. Karena Rakernas adalah sebuah kegiatan satu tahun sekali yang biasanya dilakukan oleh sebuah organisasi masyarakat untuk mengevaluasi hal – hal yang telah terjadi selama 1 tahun']];
 
         for ($i = 0; $i < count($berita); $i++) {
-            DB::table('beritas')->insert([
+            DB::table('berita')->insert([
                 'judul' => $berita[$i][0],
                 'gambar' => $berita[$i][1],
                 'author' => $berita[$i][3],
