@@ -13,10 +13,11 @@ class CreatePenduduksTable extends Migration
      */
     public function up()
     {
-        Schema::create('Penduduk', function (Blueprint $table) {
+        Schema::create('penduduk', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nik');
-            $table->string('nama');
+            $table->string('nik')->nullable();
+            $table->string('nama')->nullable();
+            $table->integer('jumlah_anggota_keluarga')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreatePenduduksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Penduduk');
+        Schema::dropIfExists('penduduk');
     }
 }
