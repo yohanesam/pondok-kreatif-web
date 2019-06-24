@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Umkm;
-use App\Role;
+use App\Keahlian;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class UmkmController extends Controller
+class KeahlianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +20,9 @@ class UmkmController extends Controller
 
     public function index()
     {
-        $umkm = Umkm::all();
+        $keahlian = Keahlian::all();
         return response()->json([
-            'data' => $umkm->toArray()
+            'data' => $keahlian->toArray()
         ]);
     }
 
@@ -47,17 +44,9 @@ class UmkmController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->all();
-        $user['password'] = Hash::make($user['password']);
+        $keahlian = $request->all();
         try{
-            $id_user = User::create($user);
-            $id_umkm = Umkm::create();
-    
-            Role::create([
-                'role_id' => 2,
-                'user_id' => $id_user->id,
-                'role_user_id' => $id_umkm->id
-            ]);
+            Keahlian::create($keahlian);
         } catch(Exception $e) {
             return response()->json([
                 'error' => true,
@@ -79,8 +68,8 @@ class UmkmController extends Controller
      */
     public function show($id)
     {
-        $umkm = Umkm::find($id);
-        return response()->json(['data' => $umkm->toArray()], 201);
+        $keahlian = keahlian::find($id);
+        return response()->json(['data' => $keahlian->toArray()], 201);
     }
 
     /**
@@ -91,25 +80,12 @@ class UmkmController extends Controller
      */
     public function edit($id)
     {
-        $umkm = Umkm::find($id);
+        $keahlian = keahlian::find($id);
         
-        $umkm->nama_usaha = $request->post('nama_usaha');
-        $umkm->nama_pemilik = $request->post('nama_pemilik');
-        $umkm->no_izin_usaha = $request->post('no_izin_usaha');
-        $umkm->bidang_id = $request->post('bidang_id');
-        $umkm->alamat = $request->post('alamat');
-        $umkm->koordinat = $request->post('koordinat');
-        $umkm->no_telp = $request->post('no_telp');
-        $umkm->deskripsi = $request->post('deskripsi');
-        $umkm->kelurahan_id = $request->post('kelurahan_id');
-        $umkm->kecamatan_id = $request->post('kecamatan_id');
-        $umkm->omzet = $request->post('omzet');
-        $umkm->jumlah_karyawan = $request->post('jumlah_karyawan');
-        $umkm->tanggal_berdiri = $request->post('tanggal_berdiri');
-        $umkm->status = $request->post('status');
-        $umkm->status_imb = $request->post('status_imb');
-        $umkm->save();
-        return $umkm;
+        $keahlian->nama = $request->post('nama');
+        $keahlian->bidang_id = $request->post('bidang_id');
+        $keahlian->save();
+        return $keahlian;
     }
 
     /**
@@ -132,8 +108,8 @@ class UmkmController extends Controller
      */
     public function destroy($id)
     {
-        $umkm = Umkm::find($id);
-        $umkm->delete();
+        $keahlian = keahlian::find($id);
+        $keahlian->delete();
         return true;
     }
 }

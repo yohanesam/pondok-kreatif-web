@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Umkm;
-use App\Role;
+use App\Rekruitmen;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class UmkmController extends Controller
+class RekruitmenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +20,9 @@ class UmkmController extends Controller
 
     public function index()
     {
-        $umkm = Umkm::all();
+        $rekruitmen = Rekruitmen::all();
         return response()->json([
-            'data' => $umkm->toArray()
+            'data' => $rekruitmen->toArray()
         ]);
     }
 
@@ -47,17 +44,9 @@ class UmkmController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->all();
-        $user['password'] = Hash::make($user['password']);
+        $rekruitmen = $request->all();
         try{
-            $id_user = User::create($user);
-            $id_umkm = Umkm::create();
-    
-            Role::create([
-                'role_id' => 2,
-                'user_id' => $id_user->id,
-                'role_user_id' => $id_umkm->id
-            ]);
+            Rekruitmen::create($rekruitmen);
         } catch(Exception $e) {
             return response()->json([
                 'error' => true,
@@ -79,8 +68,8 @@ class UmkmController extends Controller
      */
     public function show($id)
     {
-        $umkm = Umkm::find($id);
-        return response()->json(['data' => $umkm->toArray()], 201);
+        $rekruitmen = Rekruitmen::find($id);
+        return response()->json(['data' => $rekruitmen->toArray()], 201);
     }
 
     /**
@@ -91,25 +80,21 @@ class UmkmController extends Controller
      */
     public function edit($id)
     {
-        $umkm = Umkm::find($id);
+        $rekruitmen = Rekruitmen::find($id);
         
-        $umkm->nama_usaha = $request->post('nama_usaha');
-        $umkm->nama_pemilik = $request->post('nama_pemilik');
-        $umkm->no_izin_usaha = $request->post('no_izin_usaha');
-        $umkm->bidang_id = $request->post('bidang_id');
-        $umkm->alamat = $request->post('alamat');
-        $umkm->koordinat = $request->post('koordinat');
-        $umkm->no_telp = $request->post('no_telp');
-        $umkm->deskripsi = $request->post('deskripsi');
-        $umkm->kelurahan_id = $request->post('kelurahan_id');
-        $umkm->kecamatan_id = $request->post('kecamatan_id');
-        $umkm->omzet = $request->post('omzet');
-        $umkm->jumlah_karyawan = $request->post('jumlah_karyawan');
-        $umkm->tanggal_berdiri = $request->post('tanggal_berdiri');
-        $umkm->status = $request->post('status');
-        $umkm->status_imb = $request->post('status_imb');
-        $umkm->save();
-        return $umkm;
+        $rekruitmen->umkm_id = $request->post('umkm_id');
+        $rekruitmen->posisi = $request->post('posisi');
+        $rekruitmen->skill_set_key = $request->post('skill_set_key');
+        $rekruitmen->jenjang_minimal = $request->post('jenjang_minimal');
+        $rekruitmen->gaji = $request->post('gaji');
+        $rekruitmen->kuota = $request->post('kuota');
+        $rekruitmen->tanggal_mulai = $request->post('tanggal_mulai');
+        $rekruitmen->tanggal_akhir = $request->post('tanggal_akhir');
+        $rekruitmen->gaji_maksimal = $request->post('gaji_maksimal');
+        $rekruitmen->status = $request->post('status');
+        $rekruitmen->deskripsi = $request->post('deskripsi');
+        $rekruitmen->save();
+        return $rekruitmen;
     }
 
     /**
@@ -132,8 +117,8 @@ class UmkmController extends Controller
      */
     public function destroy($id)
     {
-        $umkm = Umkm::find($id);
-        $umkm->delete();
+        $rekruitmen = rekruitmen::find($id);
+        $rekruitmen->delete();
         return true;
     }
 }
