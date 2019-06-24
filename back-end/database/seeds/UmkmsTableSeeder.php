@@ -2518,7 +2518,8 @@ class UmkmsTableSeeder extends Seeder
             'status' => 'aktif',
             'jam_operasi' => $umkm[$i][9],
             'gambar' => $umkm[$i][10],
-            'website' => $umkm[$i][11]
+            'website' => $umkm[$i][11],
+            'kategori' => $umkm[$i][4]
         ]);
        }
 

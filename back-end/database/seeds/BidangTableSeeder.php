@@ -13,7 +13,7 @@ class BidangTableSeeder extends Seeder
     public function run()
     {
         $bidang = [
-            'pangan',
+            'Tata Boga',
             'tekstil',
             'desain',
             'kerajinan',
@@ -26,7 +26,9 @@ class BidangTableSeeder extends Seeder
             "Sosial",
             "Parawisata",
             "Olahraga",
-            "Transportasi"
+            "Transportasi",
+            "Teknik",
+            "Tata rias"
         ];
 
         for ($i = 0; $i < count($bidang); $i++) {

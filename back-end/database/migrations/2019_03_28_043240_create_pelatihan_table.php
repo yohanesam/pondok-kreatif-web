@@ -22,7 +22,7 @@ class CreatePelatihanTable extends Migration
             $table->integer('dinas_id')->nullable();
             $table->longText('deskripsi')->nullable();
             $table->string('skill_set_key')->nullable();
-            $table->integer('umkm_set_key')->nullable();
+            $table->string('umkm_set_key')->nullable();
             $table->string('email')->nullable();
             $table->string('lokasi')->nullable();
             $table->string('koordinat')->nullable();
@@ -34,7 +34,7 @@ class CreatePelatihanTable extends Migration
             $table->integer('status_pelatihan')->nullable();
             $table->integer('tipe_pelatihan')->nullable();
             $table->string('no_telp_cp')->nullable();
-            $table->integer('kuota_pelatihan')->nullable();
+            $table->string('kuota_pelatihan')->nullable();
             $table->timestamps();
         });
     }
