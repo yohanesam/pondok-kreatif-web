@@ -89,8 +89,8 @@ class Account extends Component {
       >
         <PortletHeader>
           <PortletLabel
-            subtitle="The information can be edited"
-            title="Profile"
+            subtitle="Informasi dapat di ubah"
+            title="Profil"
           />
         </PortletHeader>
         <PortletContent noPadding>
@@ -316,7 +316,7 @@ class Account extends Component {
             color="primary"
             variant="contained"
           >
-            Save details
+            Simpan Perubahan
           </Button>
         </PortletFooter>
       </Portlet>
