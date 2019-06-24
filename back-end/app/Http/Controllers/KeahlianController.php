@@ -11,10 +11,19 @@ class KeahlianController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
+     */ 
+
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
     public function index()
     {
-        //
+        $keahlian = Keahlian::all();
+        return response()->json([
+            'data' => $keahlian->toArray()
+        ]);
     }
 
     /**
@@ -35,51 +44,72 @@ class KeahlianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $keahlian = $request->all();
+        try{
+            Keahlian::create($keahlian);
+        } catch(Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e
+            ]);
+        }
+
+        return response()->json([
+            'error' => false,
+            'message' =>'Berhasil'
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Keahlian  $keahlian
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Keahlian $keahlian)
+    public function show($id)
     {
-        //
+        $keahlian = keahlian::find($id);
+        return response()->json(['data' => $keahlian->toArray()], 201);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Keahlian  $keahlian
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Keahlian $keahlian)
+    public function edit($id)
     {
-        //
+        $keahlian = keahlian::find($id);
+        
+        $keahlian->nama = $request->post('nama');
+        $keahlian->bidang_id = $request->post('bidang_id');
+        $keahlian->save();
+        return $keahlian;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Keahlian  $keahlian
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Keahlian $keahlian)
+    public function update(Request $request, $id)
     {
-        //
+        // 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Keahlian  $keahlian
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Keahlian $keahlian)
+    public function destroy($id)
     {
-        //
+        $keahlian = keahlian::find($id);
+        $keahlian->delete();
+        return true;
     }
 }

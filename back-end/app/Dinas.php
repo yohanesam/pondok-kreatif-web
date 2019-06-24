@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dinas extends Model
 {
-    protected $table = 'role';
+    protected $table = 'dinas';
+    
+    protected $guarded = [];
 }

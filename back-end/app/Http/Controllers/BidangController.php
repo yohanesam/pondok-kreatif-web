@@ -11,10 +11,19 @@ class BidangController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
+     */ 
+
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
     public function index()
     {
-        //
+        $bidang = Bidang::all();
+        return response()->json([
+            'data' => $bidang->toArray()
+        ]);
     }
 
     /**
@@ -35,51 +44,73 @@ class BidangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bidang = $request->all();
+        try{
+            Bidang::create($bidang);
+        } catch(Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e
+            ]);
+        }
+
+        return response()->json([
+            'error' => false,
+            'message' =>'Berhasil'
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Bidang  $bidang
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Bidang $bidang)
+    public function show($id)
     {
-        //
+        $bidang = Bidang::find($id);
+        return response()->json(['data' => $bidang->toArray()], 201);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Bidang  $bidang
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bidang $bidang)
+    public function edit($id)
     {
-        //
+        $bidang = Bidang::find($id);
+        
+        $bidang->nama = $request->post('nama');
+        $bidang->dinas_id = $request->post('dinas_id');
+        $bidang->data_id = $request->post('data_id');
+        $bidang->save();
+        return $bidang;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Bidang  $bidang
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bidang $bidang)
+    public function update(Request $request, $id)
     {
-        //
+        // 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Bidang  $bidang
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bidang $bidang)
+    public function destroy($id)
     {
-        //
+        $bidang = Bidang::find($id);
+        $bidang->delete();
+        return true;
     }
 }
