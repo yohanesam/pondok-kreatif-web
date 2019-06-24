@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Berita;
+use App\Penduduk;
 use Illuminate\Http\Request;
 
-class BeritaController extends Controller
+class PendudukController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +20,9 @@ class BeritaController extends Controller
 
     public function index()
     {
-        $berita = Berita::all();
+        $penduduk = Penduduk::all();
         return response()->json([
-            'data' => $berita->toArray()
+            'data' => $penduduk->toArray()
         ]);
     }
 
@@ -44,9 +44,9 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
-        $berita = $request->all();
+        $penduduk = $request->all();
         try{
-            Berita::create($berita);
+            Penduduk::create($penduduk);
         } catch(Exception $e) {
             return response()->json([
                 'error' => true,
@@ -68,8 +68,8 @@ class BeritaController extends Controller
      */
     public function show($id)
     {
-        $berita = Berita::find($id);
-        return response()->json(['data' => $berita->toArray()], 201);
+        $penduduk = Penduduk::find($id);
+        return response()->json(['data' => $penduduk->toArray()], 201);
     }
 
     /**
@@ -80,15 +80,13 @@ class BeritaController extends Controller
      */
     public function edit($id)
     {
-        $berita = Berita::find($id);
+        $penduduk = Penduduk::find($id);
         
-        $berita->judul = $request->post('judul');
-        $berita->gambar = $request->post('gambar');
-        $berita->author = $request->post('author');
-        $berita->konten = $request->post('konten');
-        $berita->tanggal = $request->post('tanggal');
-        $berita->save();
-        return $berita;
+        $penduduk->nik = $request->post('nik');
+        $penduduk->nama = $request->post('nama');
+        $penduduk->jumlah_anggota_keluarga = $request->post('jumlah_anggota_keluarga');
+        $penduduk->save();
+        return $penduduk;
     }
 
     /**
@@ -111,8 +109,8 @@ class BeritaController extends Controller
      */
     public function destroy($id)
     {
-        $berita = Berita::find($id);
-        $berita->delete();
+        $penduduk = penduduk::find($id);
+        $penduduk->delete();
         return true;
     }
 }
