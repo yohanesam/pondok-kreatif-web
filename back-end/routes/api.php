@@ -21,9 +21,15 @@ Route::middleware('auth:api')
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 
-Route::post('umkm','UmkmController@store');
-Route::post('umkm','UmkmController@store');
-Route::get('umkm','UmkmController@index');
-
-Route::post('teka','TekaController@store');
-Route::get('teka','TekaController@index');
+Route::apiResource(
+    ['berita' => 'BeritaController'],
+    ['bidang' => 'BidangController'],
+    ['home' => 'HomeController'],
+    ['jenjang' => 'JenjangController'],
+    ['keahlian' => 'KeahlianController'],
+    ['pelatihan' => 'PelatihanController'],
+    ['penduduk' => 'PendudukController'],
+    ['rekruitmen' => 'RekruitmenController'],
+    ['teka' => 'TekaController'],
+    ['umkm' => 'UmkmController']
+);
