@@ -14,6 +14,7 @@ import DashboardLayout from '../../layouts/Dashboard';
 
 // Custom components
 import AccountProfile from './components/AccountProfile';
+import AccountOverview from './components/AccountOverview';
 import AccountDetails from './components/AccountDetails';
 
 // Component styles
