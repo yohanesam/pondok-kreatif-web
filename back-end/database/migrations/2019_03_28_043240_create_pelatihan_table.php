@@ -30,7 +30,7 @@ class CreatePelatihanTable extends Migration
             $table->date('tanggal')->nullable();
             $table->string('waktu')->nullable();
             $table->string('kategori')->nullable();
-            $table->string('status_pelatihan')->nullable();
+            $table->boolean('status')->nullable();
             $table->string('tipe_pelatihan')->nullable();
             $table->string('no_telp')->nullable();
             $table->timestamps();

@@ -1642,7 +1642,7 @@ class PelatihanTableSeeder extends Seeder
                 'koordinat' => $pelatihan[$i][7],
                 'deskripsi' => $pelatihan[$i][5],
                 'kuota' => $pelatihan[$i][3],
-                'status' => 'upcoming',
+                'status' => true,
                 'waktu' => $pelatihan[$i][8],
                 'foto' => $pelatihan[$i][10],
                 'email' => $pelatihan[$i][9],
