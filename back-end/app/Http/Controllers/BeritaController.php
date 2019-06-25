@@ -80,15 +80,7 @@ class BeritaController extends Controller
      */
     public function edit($id)
     {
-        $berita = Berita::find($id);
-        
-        $berita->judul = $request->post('judul');
-        $berita->gambar = $request->post('gambar');
-        $berita->author = $request->post('author');
-        $berita->konten = $request->post('konten');
-        $berita->tanggal = $request->post('tanggal');
-        $berita->save();
-        return $berita;
+        // 
     }
 
     /**
@@ -100,7 +92,15 @@ class BeritaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        $berita = Berita::find($id);
+        
+        $berita->judul = $request->post('judul');
+        $berita->gambar = $request->post('gambar');
+        $berita->author = $request->post('author');
+        $berita->konten = $request->post('konten');
+        $berita->tanggal = $request->post('tanggal');
+        $berita->save();
+        return $berita;
     }
 
     /**

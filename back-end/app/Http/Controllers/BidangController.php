@@ -80,13 +80,7 @@ class BidangController extends Controller
      */
     public function edit($id)
     {
-        $bidang = Bidang::find($id);
-        
-        $bidang->nama = $request->post('nama');
-        $bidang->dinas_id = $request->post('dinas_id');
-        $bidang->data_id = $request->post('data_id');
-        $bidang->save();
-        return $bidang;
+        // 
     }
 
     /**
@@ -98,7 +92,13 @@ class BidangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        $bidang = Bidang::find($id);
+        
+        $bidang->nama = $request->post('nama');
+        $bidang->dinas_id = $request->post('dinas_id');
+        $bidang->data_id = $request->post('data_id');
+        $bidang->save();
+        return $bidang;
     }
 
     /**
