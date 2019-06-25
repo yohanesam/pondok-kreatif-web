@@ -52,10 +52,7 @@ class DashboardLayout extends Component {
     const { history } = this.props;
     if(localStorage.getItem('userInfoState')) {
       const state = JSON.parse(localStorage.getItem('userInfoState'));
-
-      if(state.isLoggedin) {
-        this.setState({ isLoggedin: state.isLoggedin });
-      } else {
+      if(!state.token) {
         history.push('/sign-in');
       }
     } else {

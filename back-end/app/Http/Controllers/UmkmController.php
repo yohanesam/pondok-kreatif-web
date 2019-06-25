@@ -51,8 +51,8 @@ class UmkmController extends Controller
         $user['password'] = Hash::make($user['password']);
         try{
             $id_user = User::create($user);
-            $id_umkm = Umkm::create();
-    
+            $id_umkm = Umkm::where('id', $id_user->id)->fist();
+            
             Role::create([
                 'role_id' => 2,
                 'user_id' => $id_user->id,
