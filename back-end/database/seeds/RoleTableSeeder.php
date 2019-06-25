@@ -375,7 +375,7 @@ class RoleTableSeeder extends Seeder
         for ($i = 0; $i < count($role); $i++) {
             DB::table('role')->insert([
                 'role_id' => $role[$i][0],
-                'role_role_id' => $role[$i][1],
+                'role_user_id' => $role[$i][1],
                 'role_id' => $role[$i][2]
             ]);
         }
