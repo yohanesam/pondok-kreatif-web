@@ -80,7 +80,7 @@ class UmkmController extends Controller
     public function show($id)
     {
         $umkm = Umkm::find($id);
-        return response()->json(['data' => $umkm->toArray()], 201);
+        return response()->json($umkm->toArray(), 201);
     }
 
     /**
@@ -110,6 +110,7 @@ class UmkmController extends Controller
         $umkm->no_izin_usaha = $request->post('no_izin_usaha');
         $umkm->kategori = $request->post('kategori');
         $umkm->jam_operasi = $request->post('jam_operasi');
+        $umkm->gambar = $request->post('gambar');
         $umkm->bidang_id = $request->post('bidang_id');
         $umkm->alamat = $request->post('alamat');
         $umkm->koordinat = $request->post('koordinat');
