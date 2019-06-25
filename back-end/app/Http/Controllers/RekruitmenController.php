@@ -80,6 +80,18 @@ class RekruitmenController extends Controller
      */
     public function edit($id)
     {
+        // 
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
         $rekruitmen = Rekruitmen::find($id);
         
         $rekruitmen->umkm_id = $request->post('umkm_id');
@@ -95,18 +107,6 @@ class RekruitmenController extends Controller
         $rekruitmen->deskripsi = $request->post('deskripsi');
         $rekruitmen->save();
         return $rekruitmen;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // 
     }
 
     /**

@@ -91,6 +91,18 @@ class UmkmController extends Controller
      */
     public function edit($id)
     {
+        // 
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
         $umkm = Umkm::find($id);
         
         $umkm->nama_usaha = $request->post('nama_usaha');
@@ -110,18 +122,6 @@ class UmkmController extends Controller
         $umkm->status_imb = $request->post('status_imb');
         $umkm->save();
         return $umkm;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // 
     }
 
     /**
