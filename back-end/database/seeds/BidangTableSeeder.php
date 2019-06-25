@@ -28,7 +28,8 @@ class BidangTableSeeder extends Seeder
             "Olahraga",
             "Transportasi",
             "Teknik",
-            "Tata rias"
+            "Tata rias",
+            "Jasa"
         ];
 
         for ($i = 0; $i < count($bidang); $i++) {
