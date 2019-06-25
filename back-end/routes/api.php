@@ -36,3 +36,6 @@ Route::apiResources(
         'umkm' => 'UmkmController'
     ]
 );
+
+
+Route: get('checking/{nik}', 'SearchController@checkPenduduk');
