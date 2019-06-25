@@ -65,7 +65,8 @@ class SignIn extends Component {
     },
     isValid: false,
     isLoading: false,
-    submitError: null
+    submitError: null,
+    serviceError: ''
   };
 
   handleBack = () => {
@@ -101,20 +102,30 @@ class SignIn extends Component {
       const { history } = this.props;
       const { values } = this.state;
 
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: true, serviceError: '' });
 
       const res = await signIn({ email: values.email, password: values.password });
-      
-      localStorage.setItem('userInfoState', JSON.stringify({
-        isLoggedin: true,
-        role_id: res.data.role_id,
-      }));
+      console.log(res.data);
+      if (res.data.role_user_id = 2) {
+        console.log("benar");
+        localStorage.setItem('userInfoState', JSON.stringify({
+          role_id: res.data.role_id,
+          role_user_id:  res.data.role_user_id,
+          token: res.data.token,
+        }));
 
-      history.push('/dashboard');
-    } catch (error) {
+        history.push('/beranda');
+      } else {
+        console.log("salah");
+        this.setState({
+          isLoading: false,
+          serviceError: "Tenaga Kerja tidak Boleh Masuk"
+        });
+      }
+    } catch (res) {
       this.setState({
         isLoading: false,
-        serviceError: error
+        serviceError: res.error
       });
     }
   };
@@ -127,7 +138,8 @@ class SignIn extends Component {
       errors,
       isValid,
       submitError,
-      isLoading
+      serviceError,
+      isLoading,
     } = this.state;
 
     const showEmailError = touched.email && errors.email;
@@ -273,8 +285,17 @@ class SignIn extends Component {
                       {submitError}
                     </Typography>
                   )}
+                  {serviceError && (
+                      <Typography
+                        className={classes.submitError}
+                        variant="body2"
+                      >
+                        {serviceError}
+                      </Typography>
+                    )}
                   {isLoading ? (
                     <CircularProgress className={classes.progress} />
+                    
                   ) : (
                     <Button
                       className={classes.signInButton}
@@ -291,19 +312,13 @@ class SignIn extends Component {
                     className={classes.signUp}
                     variant="body1"
                   >
-                    Don't have an account ? Choose wether you {' '}
-                    <Link
-                      className={classes.signUpUrl}
-                      to="/teka-sign-up"
-                    >
-                      Job Seeker
-                    </Link> {' '} or {' '}
+                    Tidak punya akun ? Daftar {' '} 
                     
                     <Link
                       className={classes.signUpUrl}
                       to="/umkm-sign-up"
                     >
-                      Job Owner
+                      disini
                     </Link>
                   </Typography>
                 </form>

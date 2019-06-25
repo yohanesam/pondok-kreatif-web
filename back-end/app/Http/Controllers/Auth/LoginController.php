@@ -50,7 +50,7 @@ class LoginController extends Controller
             $user->generateToken();
             $role = Role::where('role_user_id', $user->id)->first();
             return response()->json([
-                'user_id' => $user->id,
+                'role_user_id' => $role->role_user_id,
                 'role_id' => $role->role_id,
                 'token' => $user->api_token
             ]);

@@ -13,7 +13,6 @@ import Account from './views/Account';
 import AddJob from './views/AddJob';
 import Settings from './views/Settings';
 import UmkmSignUp from './views/UmkmSignUp';
-import TekaSignUp from './views/TekaSignUp';
 import SignIn from './views/SignIn';
 import UnderDevelopment from './views/UnderDevelopment';
 import NotFound from './views/NotFound';
@@ -25,12 +24,12 @@ export default class Routes extends Component {
         <Redirect
           exact
           from="/"
-          to="/dashboard"
+          to="/beranda"
         />
         <Route
           component={Dashboard}
           exact
-          path="/dashboard"
+          path="/beranda"
         />
         <Route
           component={JobList}
@@ -76,16 +75,6 @@ export default class Routes extends Component {
           component={Settings}
           exact
           path="/settings"
-        />
-        <Route
-          component={TekaSignUp}
-          exact
-          path="/teka-sign-up"
-        />
-        <Route
-          component={UmkmSignUp}
-          exact
-          path="/umkm-sign-up"
         />
         <Route
           component={UmkmSignUp}
