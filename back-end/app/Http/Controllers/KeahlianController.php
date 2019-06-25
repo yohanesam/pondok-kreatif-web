@@ -80,12 +80,7 @@ class KeahlianController extends Controller
      */
     public function edit($id)
     {
-        $keahlian = keahlian::find($id);
-        
-        $keahlian->nama = $request->post('nama');
-        $keahlian->bidang_id = $request->post('bidang_id');
-        $keahlian->save();
-        return $keahlian;
+        // 
     }
 
     /**
@@ -97,7 +92,12 @@ class KeahlianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        $keahlian = keahlian::find($id);
+        
+        $keahlian->nama = $request->post('nama');
+        $keahlian->bidang_id = $request->post('bidang_id');
+        $keahlian->save();
+        return $keahlian;
     }
 
     /**

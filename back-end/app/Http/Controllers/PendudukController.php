@@ -80,13 +80,7 @@ class PendudukController extends Controller
      */
     public function edit($id)
     {
-        $penduduk = Penduduk::find($id);
-        
-        $penduduk->nik = $request->post('nik');
-        $penduduk->nama = $request->post('nama');
-        $penduduk->jumlah_anggota_keluarga = $request->post('jumlah_anggota_keluarga');
-        $penduduk->save();
-        return $penduduk;
+        // 
     }
 
     /**
@@ -98,7 +92,13 @@ class PendudukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        $penduduk = Penduduk::find($id);
+        
+        $penduduk->nik = $request->post('nik');
+        $penduduk->nama = $request->post('nama');
+        $penduduk->jumlah_anggota_keluarga = $request->post('jumlah_anggota_keluarga');
+        $penduduk->save();
+        return $penduduk;
     }
 
     /**

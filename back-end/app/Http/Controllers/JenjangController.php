@@ -80,12 +80,7 @@ class JenjangController extends Controller
      */
     public function edit($id)
     {
-        $jenjang = Jenjang::find($id);
-        
-        $jenjang->nama = $request->post('nama');
-        $jenjang->tingkat = $request->post('tingkat');
-        $jenjang->save();
-        return $jenjang;
+        // 
     }
 
     /**
@@ -97,7 +92,12 @@ class JenjangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        $jenjang = Jenjang::find($id);
+        
+        $jenjang->nama = $request->post('nama');
+        $jenjang->tingkat = $request->post('tingkat');
+        $jenjang->save();
+        return $jenjang;
     }
 
     /**
