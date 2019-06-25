@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 // Externals
+import axios from 'axios';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -21,6 +22,20 @@ import PortletFooter from '../../../../components/PortletFooter';
 
 // Component styles
 import styles from './styles';
+
+// URL 
+import { 
+  BASE_URL, 
+  PROFILE_URI 
+} from '../../../../config/Apis';
+
+// Service methods
+const getUmkm = (id) => {
+  return axios({
+    method: 'GET',
+    url: `${BASE_URL}${PROFILE_URI}${id}`
+  });
+};
 
 const states = [
   {
@@ -55,6 +70,35 @@ class Account extends Component {
     status: '',
     statusImb: '',
   };
+
+  componentDidMount = () => {
+    this.getUmkmComponent();
+  }
+
+  getUmkmComponent = async () => {
+    const state = JSON.parse(localStorage.getItem('userInfoState'));
+    const res = await getUmkm(state.role_id);
+    console.log(res.data.data);
+    
+    this.setState({
+      namaUsaha: res.data.data.nama_usaha,
+      namaPemilik: res.data.data.nama_pemilik,
+      noIzinUsaha: res.data.data.no_izin_usaha,
+      bidang: '',
+      alamat: '',
+      koordinat: '',
+      noTelp: '',
+      deskripsi: '',
+      kelurahan: '',
+      kecamatan: '',
+      omzet: '',
+      jumlahKaryawan: '',
+      tanggalBerdiri: '',
+      status: '',
+      statusImb: '',
+    })
+    
+  }
 
   handleChange = (field, value) => {
     const newState = { ...this.state };
