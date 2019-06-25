@@ -108,18 +108,26 @@ class UmkmController extends Controller
         $umkm->nama_usaha = $request->post('nama_usaha');
         $umkm->nama_pemilik = $request->post('nama_pemilik');
         $umkm->no_izin_usaha = $request->post('no_izin_usaha');
+        $umkm->kategori = $request->post('kategori');
+        $umkm->jam_operasi = $request->post('jam_operasi');
         $umkm->bidang_id = $request->post('bidang_id');
         $umkm->alamat = $request->post('alamat');
         $umkm->koordinat = $request->post('koordinat');
         $umkm->no_telp = $request->post('no_telp');
         $umkm->deskripsi = $request->post('deskripsi');
-        $umkm->kelurahan_id = $request->post('kelurahan_id');
-        $umkm->kecamatan_id = $request->post('kecamatan_id');
-        $umkm->omzet = $request->post('omzet');
+        $umkm->website = $request->post('website');
         $umkm->jumlah_karyawan = $request->post('jumlah_karyawan');
         $umkm->tanggal_berdiri = $request->post('tanggal_berdiri');
         $umkm->status = $request->post('status');
-        $umkm->status_imb = $request->post('status_imb');
+        $umkm->save();
+        return $umkm;
+    }
+
+    public function up_gambar(Request $request, $id)
+    {
+        $umkm = Umkm::find($id);
+        
+        $umkm->gambar = $request->post('gambar');
         $umkm->save();
         return $umkm;
     }
