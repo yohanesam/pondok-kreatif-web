@@ -3,9 +3,6 @@ export default theme => ({
   field: {
     margin: theme.spacing.unit * 3
   },
-  fieldTitle: {
-    marginBottom: theme.spacing.unit * 2
-  },
   textField: {
     width: '420px',
     maxWidth: '100%',
