@@ -18,8 +18,8 @@ class CreateRekruitmentTable extends Migration
             $table->integer('umkm_id')->nullable();
             $table->string('posisi')->nullable();
             $table->string('skill_set_key')->nullable();
-            $table->integer('jenjang_minimal')->nullable();
-            $table->string('gaji_minimal')->nullable();
+            $table->string('jenjang_minimal')->nullable();
+            $table->integer('gaji_minimal')->nullable();
             $table->integer('kuota')->nullable();
             $table->date('tanggal_mulai')->nullable();
             $table->date('tanggal_akhir')->nullable();
