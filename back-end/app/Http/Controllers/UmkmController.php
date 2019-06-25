@@ -124,6 +124,15 @@ class UmkmController extends Controller
         return $umkm;
     }
 
+    public function up_gambar(Request $request, $id)
+    {
+        $umkm = Umkm::find($id);
+        
+        $umkm->gambar = $request->post('gambar');
+        $umkm->save();
+        return $umkm;
+    }
+
     /**
      * Remove the specified resource from storage.
      *
