@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 // Externals
+import compose from 'recompose/compose';
 import axios from 'axios';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -37,6 +39,31 @@ const getUmkm = (id) => {
   });
 };
 
+const updateUmkm = (request) => {
+  console.log(request.status);
+  return axios({
+    method: 'PUT',
+    url: `${BASE_URL}${PROFILE_URI}${request.id}`,
+    data: {
+      "nama_usaha": request.namaUsaha,
+      "nama_pemilik": request.namaPemilik,
+      "no_izin_usaha": request.noIzinUsaha,
+      'kategori': request.kategori,
+      "jam_operasi": request.jamOperasi,
+      "gambar": request.gambar,
+      "bidang_id": request.bidangId,
+      "alamat": request.alamat,
+      "koordinat": request.koordinat,
+      "no_telp": request.noTelp,
+      "deskripsi": request.deskripsi,
+      "website": request.website,
+      "jumlah_karyawan": request.jumlahKaryawan,
+      "tanggal_berdiri": request.tanggalBerdiri,
+      "status": request.status,
+    }
+  });
+}
+
 const states = [
   {
     value: 'alabama',
@@ -52,23 +79,24 @@ const states = [
   }
 ];
 
-class Account extends Component {
+class AccountDetails extends Component {
   state = {
+    id: '',
     namaUsaha: '',
     namaPemilik: '',
     noIzinUsaha: '',
-    bidang: '',
+    kategori: '',
+    jamOperasi: '',
+    gambar: '',
+    bidangId: '',
     alamat: '',
     koordinat: '',
     noTelp: '',
     deskripsi: '',
-    kelurahan: '',
-    kecamatan: '',
-    omzet: '',
+    website: '',
     jumlahKaryawan: '',
     tanggalBerdiri: '',
     status: '',
-    statusImb: '',
   };
 
   componentDidMount = () => {
@@ -77,27 +105,25 @@ class Account extends Component {
 
   getUmkmComponent = async () => {
     const state = JSON.parse(localStorage.getItem('userInfoState'));
-    const res = await getUmkm(state.role_id);
-    console.log(res.data.data);
-    
-    this.setState({
-      namaUsaha: res.data.data.nama_usaha,
-      namaPemilik: res.data.data.nama_pemilik,
-      noIzinUsaha: res.data.data.no_izin_usaha,
-      bidang: '',
-      alamat: '',
-      koordinat: '',
-      noTelp: '',
-      deskripsi: '',
-      kelurahan: '',
-      kecamatan: '',
-      omzet: '',
-      jumlahKaryawan: '',
-      tanggalBerdiri: '',
-      status: '',
-      statusImb: '',
+    const res = await getUmkm(state.role_user_id);
+    this.setState({ 
+      id: res.data.id,
+      namaUsaha: res.data.nama_usaha,
+      namaPemilik: res.data.nama_pemilik,
+      noIzinUsaha: res.data.no_izin_usaha,
+      kategori: res.data.kategori,
+      jamOperasi: res.data.jam_operasi,
+      gambar: res.data.gambar,
+      bidangId: res.data.bidang_id,
+      alamat: res.data.alamat,
+      koordinat: res.data.koordinat,
+      noTelp: res.data.no_telp,
+      deskripsi: res.data.deskripsi,
+      website: res.data.website,
+      jumlahKaryawan: res.data.jumlah_karyawan,
+      tanggalBerdiri: res.data.tanggal_berdiri,
+      status: res.data.status,
     })
-    
   }
 
   handleChange = (field, value) => {
@@ -106,24 +132,50 @@ class Account extends Component {
     this.setState(newState);
   };
 
+  handleSubmit = async () => {
+    const { history } = this.props;
+    try{
+      await updateUmkm({
+        id: this.state.id,
+        namaUsaha: this.state.namaUsaha,
+        namaPemilik: this.state.namaPemilik,
+        noIzinUsaha: this.state.noIzinUsaha,
+        kategori: this.state.kategori,
+        jamOperasi: this.state.jamOperasi,
+        gambar: this.state.gambar,
+        bidangId: this.state.bidangId,
+        alamat: this.state.alamat,
+        koordinat: this.state.koordinat,
+        noTelp: this.state.noTelp,
+        deskripsi: this.state.deskripsi,
+        website: this.state.website,
+        jumlahKaryawan: this.state.jumlahKaryawan,
+        tanggalBerdiri: this.state.tanggalBerdiri,
+        status: this.state.status,
+      });
+      history.push("/account");
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
   render() {
     const { classes, className, ...rest } = this.props;
     const { 
       namaUsaha,
       namaPemilik,
       noIzinUsaha,
-      bidang,
+      kategori,
+      jamOperasi,
+      bidangId,
       alamat,
       koordinat,
       noTelp,
       deskripsi,
-      kelurahan,
-      kecamatan,
-      omzet,
+      website,
       jumlahKaryawan,
       tanggalBerdiri,
-      status,
-      statusImb, } = this.state;
+      status, } = this.state;
     const rootClassName = classNames(classes.root, className);
 
     return (
@@ -145,7 +197,7 @@ class Account extends Component {
             <div className={classes.field}>
               <Typography
                 className={classes.fieldTitle}
-                variant={"display2"}
+                variant={"body2"}
               >
                 Overview Usaha
               </Typography>
@@ -162,6 +214,24 @@ class Account extends Component {
               />
               <TextField
                 className={classes.textField}
+                onChange={e => {this.handleChange("kategori", e.target.value)}}
+                label="Kategori Usaha"
+                margin="dense"
+                required
+                value={kategori}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.textField}
+                onChange={e => {this.handleChange("jamOperasi", e.target.value)}}
+                label="Jam Operasi Usaha"
+                margin="dense"
+                required
+                value={jamOperasi}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.textField}
                 onChange={e => {this.handleChange("namaPemilik", e.target.value)}}
                 label="Nama Pemilik"
                 margin="dense"
@@ -171,11 +241,11 @@ class Account extends Component {
               />
               <TextField
                 className={classes.textField}
-                onChange={e => {this.handleChange("bidang", e.target.value)}}
+                onChange={e => {this.handleChange("bidangId", e.target.value)}}
                 label="Bidang"
                 margin="dense"
                 required
-                value={bidang}
+                value={bidangId}
                 variant="outlined"
               />
               <TextField
@@ -201,24 +271,25 @@ class Account extends Component {
                 onChange={e => {this.handleChange("jumlahKaryawan", e.target.value)}}
                 label="Jumlah Karyawan"
                 margin="dense"
+                type="number"
                 required
                 value={jumlahKaryawan}
                 variant="outlined"
               />
               <TextField
                 className={classes.textField}
-                onChange={e => {this.handleChange("omzet", e.target.value)}}
-                label="Omzet Usaha"
+                onChange={e => {this.handleChange("website", e.target.value)}}
+                label="Website"
                 margin="dense"
                 required
-                value={omzet}
+                value={website}
                 variant="outlined"
               />
             </div>
             <div className={classes.field}>
               <Typography
                 className={classes.fieldTitle}
-                variant={"display2"}
+                variant={"body2"}
               >
                 Detail Daerah
               </Typography>
@@ -233,28 +304,9 @@ class Account extends Component {
               />
               <TextField
                 className={classes.textField}
-                onChange={e => {this.handleChange("alamat", e.target.value)}}
-                label="Kelurahan"
-                margin="dense"
-                type="number"
-                value={kelurahan}
-                variant="outlined"
-              />
-              <TextField
-                className={classes.textField}
-                onChange={e => {this.handleChange("kecamatan", e.target.value)}}
-                label="kecamatan"
-                margin="dense"
-                type="number"
-                value={kecamatan}
-                variant="outlined"
-              />
-              <TextField
-                className={classes.textField}
                 onChange={e => {this.handleChange("koordinat", e.target.value)}}
                 label="koordinat"
                 margin="dense"
-                type="number"
                 value={koordinat}
                 variant="outlined"
               />
@@ -262,7 +314,7 @@ class Account extends Component {
             <div className={classes.field}>
               <Typography
                 className={classes.fieldTitle}
-                variant={"display2"}
+                variant={"body2"}
               >
                 Keabsahan Usaha
               </Typography>
@@ -280,33 +332,14 @@ class Account extends Component {
                 onChange={e => {this.handleChange("status", e.target.value)}}
                 label="Status Usaha"
                 margin="dense"
-                type="number"
                 value={status}
-                variant="outlined"
-              />
-              <TextField
-                className={classes.textField}
-                onChange={e => {this.handleChange("statusImb", e.target.value)}}
-                label="Status IMB"
-                margin="dense"
-                type="number"
-                value={statusImb}
-                variant="outlined"
-              />
-              <TextField
-                className={classes.textField}
-                onChange={e => {this.handleChange("koordinat", e.target.value)}}
-                label="koordinat"
-                margin="dense"
-                type="number"
-                value={koordinat}
                 variant="outlined"
               />
             </div>
             <div className={classes.field}>
               <Typography
                 className={classes.fieldTitle}
-                variant={"display2"}
+                variant={"body2"}
               >
                 Deskripsi Usaha
               </Typography>
@@ -359,6 +392,7 @@ class Account extends Component {
           <Button
             color="primary"
             variant="contained"
+            onClick={this.handleSubmit}
           >
             Simpan Perubahan
           </Button>
@@ -368,9 +402,12 @@ class Account extends Component {
   }
 }
 
-Account.propTypes = {
+AccountDetails.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Account);
+export default compose(
+  withRouter,
+  withStyles(styles)
+)(AccountDetails);
