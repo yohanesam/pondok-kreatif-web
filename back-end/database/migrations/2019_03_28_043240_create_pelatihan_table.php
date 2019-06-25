@@ -27,7 +27,7 @@ class CreatePelatihanTable extends Migration
             $table->string('lokasi')->nullable();
             $table->integer('kuota')->nullable();
             $table->string('koordinat')->nullable();
-            $table->date('tanggal')->nullable();
+            $table->string('tanggal')->nullable();
             $table->string('waktu')->nullable();
             $table->string('kategori')->nullable();
             $table->boolean('status')->nullable();
