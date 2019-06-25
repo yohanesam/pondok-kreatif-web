@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 // Externals
+import axios from 'axios';
+import compose from 'recompose/compose';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -19,49 +22,118 @@ import PortletLabel from '../../../../components/PortletLabel';
 import PortletContent from '../../../../components/PortletContent';
 import PortletFooter from '../../../../components/PortletFooter';
 
+// URL 
+import { 
+  BASE_URL, 
+  ADD_JOB_URI 
+} from '../../../../config/Apis';
+
 // Component styles
 import styles from './styles';
 
-const states = [
+const skillKey = [
   {
-    value: 'alabama',
-    label: 'Alabama'
+    value: '1',
+    label: 'Jasa'
   },
   {
-    value: 'new-york',
-    label: 'New York'
+    value: '2',
+    label: 'Memasak'
   },
   {
-    value: 'san-francisco',
-    label: 'San Francisco'
+    value: '3',
+    label: 'Menjahit'
   }
 ];
 
+const statusKey = [
+  {
+    value: true,
+    label: 'Aktif'
+  },
+  {
+    value: false,
+    label: 'Tidak Aktif'
+  },
+];
+
+// Service methods
+const createJob = (request) => {
+  console.log(request);
+  return axios({
+    method: 'POST',
+    url: `${BASE_URL}${ADD_JOB_URI}`,
+    data: {
+      "umkm_id": request.umkmId,
+      "posisi": request.posisi,
+      "skill_set_key": request.skillSetKey,
+      "jenjang_minimal": request.jenjangMinimal,
+      "gaji_minimal": request.gajiMinimal,
+      "kuota": request.kuota,
+      "tanggal_mulai": request.tanggalMulai,
+      "tanggal_akhir": request.tanggalAkhir,
+      "gaji_maksimal": request.gajiMaksimal,
+      "status": request.status,
+      "deskripsi": request.deskripsi,
+    },
+  });
+};
+
 class JobForm extends Component {
   state = {
-    umkmId: '',
-    posisi: '',
-    skillSetKey: '',
-    jenjangMinimal: '',
-    gajiMinimal: '',
-    gajiMaksimal: '',
-    deskripsi: '',
-    tanggalMulai: '',
-    tanggalAkhir: '',
-    status: '',
+    value: {
+      umkmId: '',
+      posisi: '',
+      kuota: '',
+      skillSetKey: '',
+      jenjangMinimal: '',
+      gajiMinimal: '',
+      gajiMaksimal: '',
+      deskripsi: '',
+      tanggalMulai: '',
+      tanggalAkhir: '',
+      status: '',
+    },
+    serviceError: null,
   };
 
   handleChange = (field, value) => {
     const newState = { ...this.state };
-    newState[field] = value;
+    newState.value[field] = value;
     this.setState(newState);
   };
 
+  handleSubmit = async () => {
+    const { value } = this.state;
+    const { history } = this.props;
+    const state = JSON.parse(localStorage.getItem('userInfoState'))
+    try {
+      await createJob({
+        umkmId: state.role_user_id,
+        posisi: value.posisi,
+        skillSetKey: value.skillSetKey,
+        jenjangMinimal: value.jenjangMinimal,
+        gajiMinimal: value.gajiMinimal,
+        gajiMaksimal: value.gajiMaksimal,
+        deskripsi: value.deskripsi,
+        tanggalMulai: value.tanggalMulai,
+        tanggalAkhir: value.tanggalAkhir,
+        status: value.status,
+      });
+
+      history.push("/view-pekerjaan");
+    } catch(error) {
+      this.setState({
+        serviceError: error
+      });
+    }
+  }
+
   render() {
     const { classes, className, ...rest } = this.props;
-    const { 
-      umkmId,
+    const {
       posisi,
+      kuota,
       skillSetKey,
       jenjangMinimal,
       gajiMinimal,
@@ -71,6 +143,8 @@ class JobForm extends Component {
       tanggalAkhir,
       status, } = this.state;
     const rootClassName = classNames(classes.root, className);
+
+    console.log(this.state.serviceError);
 
     return (
       <Portlet
@@ -91,21 +165,53 @@ class JobForm extends Component {
             <div className={classes.field}>
               <Typography
                 className={classes.fieldTitle}
-                variant={"display2"}
+                variant={"h2"}
               >
                 Detail Pekerjaan
               </Typography>
               <TextField
                 className={classes.textField}
                 helperText="Contoh: Office Boy"
-                onChange={e => {this.handleChange("namaUsaha", e.target.value)}}
+                onChange={e => {this.handleChange("posisi", e.target.value)}}
                 label="Posisi"
                 margin="dense"
-                multiline={true}
                 required
                 value={posisi}
                 variant="outlined"
               />
+              <TextField
+                className={classes.textField}
+                helperText="Contoh: 100 (dalam angka)"
+                onChange={e => {this.handleChange("kuota", e.target.value)}}
+                label="Kuota Pegawai"
+                margin="dense"
+                type="number"
+                required
+                value={kuota}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.textField}
+                helperText="Contoh: Memasak"
+                label="Keahlian"
+                margin="dense"
+                onChange={e => {this.handleChange("skillSetKey", e.target.value)}}
+                required
+                select
+                SelectProps={{
+                  native: true
+                }}
+                value={skillSetKey}
+                variant="outlined">
+                {skillKey.map(option => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
               <TextField
                 className={classes.textField}
                 helperText="Contoh: SMP/SMA"
@@ -118,20 +224,22 @@ class JobForm extends Component {
               />
               <TextField
                 className={classes.textField}
-                helperText="Contoh: 1000000"
+                helperText="Contoh: 1000000 (dalam angka)"
                 onChange={e => {this.handleChange("gajiMinimal", e.target.value)}}
                 label="Gaji Minimal"
                 margin="dense"
+                type="number"
                 required
                 value={gajiMinimal}
                 variant="outlined"
               />
               <TextField
                 className={classes.textField}
-                helperText="Contoh: 1250000"
+                helperText="Contoh: 1250000 (dalam angka)"
                 onChange={e => {this.handleChange("gajiMaksimal", e.target.value)}}
                 label="Gaji Maksimal"
                 margin="dense"
+                type="number"
                 required
                 value={gajiMaksimal}
                 variant="outlined"
@@ -142,6 +250,8 @@ class JobForm extends Component {
                 onChange={e => {this.handleChange("tanggalMulai", e.target.value)}}
                 label="Tanggal Mulai"
                 margin="dense"
+                type="date"
+                defaultValue="2019-01-01"
                 required
                 value={tanggalMulai}
                 variant="outlined"
@@ -152,15 +262,39 @@ class JobForm extends Component {
                 onChange={e => {this.handleChange("tanggalAkhir", e.target.value)}}
                 label="Tanggal Akhir"
                 margin="dense"
+                type="date"
+                defaultValue="2019-01-01"
                 required
                 value={tanggalAkhir}
                 variant="outlined"
               />
+              <TextField
+                className={classes.textField}
+                label="Status Pekerjaan"
+                helperText="Contoh: Aktif/Tidak Aktif"
+                margin="dense"
+                onChange={e => {this.handleChange("status", e.target.value)}}
+                required
+                select
+                SelectProps={{
+                  native: true
+                }}
+                value={status}
+                variant="outlined">
+                {statusKey.map(option => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
             </div>
             <div className={classes.field}>
               <Typography
                 className={classes.fieldTitle}
-                variant={"display2"}
+                variant={"h2"}
               >
                 Deskripsi Pekerjaan
               </Typography>
@@ -214,8 +348,9 @@ class JobForm extends Component {
           <Button
             color="primary"
             variant="contained"
+            onClick={this.handleSubmit}
           >
-            Save details
+            Simpan Perubahan
           </Button>
         </PortletFooter>
       </Portlet>
@@ -228,4 +363,7 @@ JobForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(JobForm);
+export default compose(
+  withRouter,
+  withStyles(styles)
+)(JobForm);
