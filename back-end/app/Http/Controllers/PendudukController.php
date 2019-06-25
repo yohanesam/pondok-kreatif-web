@@ -11,7 +11,7 @@ class PendudukController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */ 
+     */
 
     // public function __construct()
     // {
@@ -72,6 +72,8 @@ class PendudukController extends Controller
         return response()->json(['data' => $penduduk->toArray()], 201);
     }
 
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -80,7 +82,7 @@ class PendudukController extends Controller
      */
     public function edit($id)
     {
-        // 
+        //
     }
 
     /**
@@ -93,7 +95,7 @@ class PendudukController extends Controller
     public function update(Request $request, $id)
     {
         $penduduk = Penduduk::find($id);
-        
+
         $penduduk->nik = $request->post('nik');
         $penduduk->nama = $request->post('nama');
         $penduduk->jumlah_anggota_keluarga = $request->post('jumlah_anggota_keluarga');

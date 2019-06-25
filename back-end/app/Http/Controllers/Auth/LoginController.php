@@ -45,7 +45,9 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
-        if ($this->attemptLogin($request)) {
+        $login = $this->attemptLogin($request);
+
+        if ($login) {
             $user = $this->guard()->user();
             $user->generateToken();
             $role = Role::where('role_user_id', $user->id)->first();
@@ -54,9 +56,18 @@ class LoginController extends Controller
                 'role_id' => $role->role_id,
                 'token' => $user->api_token
             ]);
-        }
 
-        return response()->json(["error", "data tidak sesuai"]);
+            return response()->json([
+                "error" => false,
+                "message" => "welcome"
+            ]);
+        } else {
+
+            return response()->json([
+                "error" => true,
+                "message" => "data tidak sesuai"
+            ]);
+        }
     }
 
     public function logout(Request $request)
@@ -71,7 +82,7 @@ class LoginController extends Controller
             $user->save();
             $request->session()->flush();
         }
-        
+
 
         return response()->json(['data' => 'User logged out.'], 200);
     }
