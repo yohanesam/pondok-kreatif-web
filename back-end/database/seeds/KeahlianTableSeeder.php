@@ -11,6 +11,8 @@ class KeahlianTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $keahlian = [
+            
+        ];
     }
 }
