@@ -19,6 +19,8 @@ function lookupUser(user) {
 }
 
 export const getUsers = (limit = 10) => {
+  console.log(users);
+  
   return new Promise(resolve => {
     setTimeout(() => {
       const usersLookup = users.slice(0, limit).map(lookupUser);

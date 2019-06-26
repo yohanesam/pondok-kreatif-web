@@ -110,10 +110,10 @@ class UsersTable extends Component {
                       }
                       onChange={this.handleSelectAll}
                     />
-                    Name
+                    Nama
                   </TableCell>
-                  <TableCell align="left">ID</TableCell>
-                  <TableCell align="left">State</TableCell>
+                  <TableCell align="left">Jenjang Pendidikan</TableCell>
+                  <TableCell align="left">Kuota</TableCell>
                   <TableCell align="left">Phone</TableCell>
                   <TableCell align="left">Registration date</TableCell>
                 </TableRow>
@@ -149,33 +149,33 @@ class UsersTable extends Component {
                             }
                             value="true"
                           />
-                          <Avatar
+                          {/* <Avatar
                             className={classes.avatar}
                             src={user.avatarUrl}
                           >
                             {getInitials(user.name)}
-                          </Avatar>
+                          </Avatar> */}
                           <Link to="#">
                             <Typography
                               className={classes.nameText}
                               variant="body1"
                             >
-                              {user.name}
+                              {user.posisi}
                             </Typography>
                           </Link>
                         </div>
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.id}
+                        {user.jenjang_minimal}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.address.state}
+                        {user.kuota}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.phone}
+                        {user.gaji}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {moment(user.createdAt).format('DD/MM/YYYY')}
+                        {moment(user.update_at).format('DD/MM/YYYY')}
                       </TableCell>
                     </TableRow>
                   ))}
