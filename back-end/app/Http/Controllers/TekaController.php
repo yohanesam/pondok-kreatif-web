@@ -130,13 +130,20 @@ class TekaController extends Controller
         
         $teka->nama = $request->post('nama');
         $teka->nim = $request->post('nik');
-        $teka->email = $request->post('email');
         $teka->alamat = $request->post('alamat');
-        $teka->no_telp = $request->post('no_telp');
+        $teka->koordinat_alamat = $request->post('koordinat_alamat');
+        $teka->kelurahan_id = $request->post('kelurahan_id');
+        $teka->kecamatan_id = $request->post('kecamatan_id');
+        $teka->rt = $request->post('rt');
+        $teka->rw = $request->post('rw');
+        $teka->jenjang_id = $request->post('jenjang_id');
+        $teka->skill_set_key = $request->post('skill_set_key');
+        $teka->pengalaman = $request->post('pengalaman');
         $teka->deskripsi = $request->post('deskripsi');
         $teka->tempat_lahir = $request->post('tempat_lahir');
         $teka->kelamin = $request->post('kelamin');
-        $teka->pengalaman = $request->post('pengalaman');
+        $teka->email = $request->post('email');
+        $teka->no_telp = $request->post('no_telp');
         $teka->save();
         return $teka;
     }
