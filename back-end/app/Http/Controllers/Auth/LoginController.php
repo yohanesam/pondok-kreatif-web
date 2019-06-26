@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 // use Auth;
+use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,10 +37,10 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
 
     public function login(Request $request)
     {
@@ -73,17 +74,17 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         // $ror = array();
-        $user = Auth::guard()->user();
+        $user = User::find($request)->first();
         // $ror = $user->toArray();
         // echo $ror;
         if ($user) {
-            echo json_encode($user);
             $user->api_token = null;
             $user->save();
-            $request->session()->flush();
+            // $request->session()->flush();
+            return response()->json(['data' => 'User logged out.'], 200);
         }
 
+        return response()->json(['error' => $user]);
 
-        return response()->json(['data' => 'User logged out.'], 200);
     }
 }
