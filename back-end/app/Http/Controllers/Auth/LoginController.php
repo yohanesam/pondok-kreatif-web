@@ -55,13 +55,11 @@ class LoginController extends Controller
             return response()->json([
                 'role_user_id' => $role->role_user_id,
                 'role_id' => $role->role_id,
-                'token' => $user->api_token
-            ]);
-
-            return response()->json([
+                'token' => $user->api_token,
                 "error" => false,
                 "message" => "welcome"
             ]);
+
         } else {
 
             return response()->json([
