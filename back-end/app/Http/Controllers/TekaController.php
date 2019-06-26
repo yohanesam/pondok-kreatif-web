@@ -60,25 +60,17 @@ class TekaController extends Controller
     {
         $user = $request->all();
 
-        $lastUser = User::orderBy('id', 'desc')->first();
-        if ($lastUser == null) {
-            $id = 1;
-        } else {
-            $id = $lastUser->id + 1;
-        }
-
-        User::create([
-            'id'=> $id,
+        $id_user = User::create([
             'email' => $user['email'],
             'password' => Hash::make($user['password'])
         ]);
 
-        $teka = $request->except('password', 'password_confirmation');
+        $teka = $request->except('password','password_confirmation');
         $id_teka = Teka::create($teka);
 
         Role::create([
             'role_id' => 1,
-            'user_id' => $id,
+            'user_id' => $id_user->id,
             'role_user_id' => $id_teka->id
         ]);
 
