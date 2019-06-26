@@ -32,7 +32,7 @@ class TekaController extends Controller
      */
     public function create()
     {
-        
+
         // return Teka::create([
         //     'foto' => $request['foto'],
         //     'nama' => $request['nama'],
@@ -60,7 +60,7 @@ class TekaController extends Controller
     {
         $user = $request->all();
 
-        $id_user = User::create([
+       User::create([
             'email' => $user['email'],
             'password' => Hash::make($user['password'])
         ]);
@@ -68,14 +68,21 @@ class TekaController extends Controller
         $teka = $request->except('password','password_confirmation');
         $id_teka = Teka::create($teka);
 
+        $lastUser = User::orderBy('id', 'desc')->first();
+        if ($lastUser == null) {
+            $id = 1;
+        } else {
+            $id = $lastUser->id + 1;
+        }
+
         Role::create([
             'role_id' => 1,
-            'user_id' => $id_user->id,
+            'user_id' => $id,
             'role_user_id' => $id_teka->id
         ]);
-        
+
         return response()->json($teka);
-        
+
         // $this->guard()->login($user);
 
         // And finally this is the hook that we want. If there is no
@@ -85,7 +92,7 @@ class TekaController extends Controller
         // return $this->registered($request, $user)
         //                 ?: redirect($this->redirectPath());
     }
-    
+
     protected function registered(Request $request, $user)
     {
         $user->generateToken();
@@ -101,7 +108,7 @@ class TekaController extends Controller
      */
     public function show($id)
     {
-        
+
         $teka = Teka::find($id);
         return response()->json(['data' => $teka->toArray()], 201);
     }
@@ -127,7 +134,7 @@ class TekaController extends Controller
     public function update(Request $request, $id)
     {
         $teka = Teka::find($id);
-        
+
         $teka->nama = $request->post('nama');
         $teka->nim = $request->post('nik');
         $teka->email = $request->post('email');

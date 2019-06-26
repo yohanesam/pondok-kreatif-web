@@ -36,5 +36,4 @@ Route::apiResources(
     ]
 );
 
-
 Route::get('checking/{nik}', 'SearchController@checkPenduduk');
