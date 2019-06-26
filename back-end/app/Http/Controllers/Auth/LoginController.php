@@ -51,7 +51,7 @@ class LoginController extends Controller
         if ($login) {
             $user = $this->guard()->user();
             $user->generateToken();
-            $role = Role::select('role_user_id, role_id')->where('role_user_id', $user->id)->first();
+            $role = Role::select('role_user_id', 'role_id')->where('role_user_id', $user->id)->first();
 
             return response()->json([
                 'role_user_id' => $role->role_user_id,
