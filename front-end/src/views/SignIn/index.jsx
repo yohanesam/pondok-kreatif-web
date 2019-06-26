@@ -106,7 +106,7 @@ class SignIn extends Component {
 
       const res = await signIn({ email: values.email, password: values.password });
       console.log(res.data);
-      if (res.data.role_user_id = 2) {
+      if (res.data.role_id == 2) {
         console.log("benar");
         localStorage.setItem('userInfoState', JSON.stringify({
           role_id: res.data.role_id,
@@ -125,7 +125,7 @@ class SignIn extends Component {
     } catch (res) {
       this.setState({
         isLoading: false,
-        serviceError: res.error
+        serviceError: "Koneksi Error, Silahkan coba lagi"
       });
     }
   };

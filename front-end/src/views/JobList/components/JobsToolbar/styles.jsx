@@ -13,6 +13,9 @@ export default theme => ({
     color: theme.palette.danger.main,
     marginRight: theme.spacing.unit
   },
+  EditButton: {
+    marginRight: theme.spacing.unit,
+  },
   importButton: {
     marginRight: theme.spacing.unit
   },

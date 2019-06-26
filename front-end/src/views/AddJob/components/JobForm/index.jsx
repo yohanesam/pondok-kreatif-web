@@ -25,13 +25,17 @@ import PortletFooter from '../../../../components/PortletFooter';
 // URL 
 import { 
   BASE_URL, 
-  ADD_JOB_URI 
+  JOB_URI 
 } from '../../../../config/Apis';
 
 // Component styles
 import styles from './styles';
 
 const skillKey = [
+  {
+    value: null,
+    label: 'Pilih Skill'
+  },
   {
     value: '1',
     label: 'Jasa'
@@ -48,11 +52,15 @@ const skillKey = [
 
 const statusKey = [
   {
-    value: true,
+    value: null,
+    label: 'Pilih Status'
+  },
+  {
+    value: 1,
     label: 'Aktif'
   },
   {
-    value: false,
+    value: 0,
     label: 'Tidak Aktif'
   },
 ];
@@ -62,7 +70,7 @@ const createJob = (request) => {
   console.log(request);
   return axios({
     method: 'POST',
-    url: `${BASE_URL}${ADD_JOB_URI}`,
+    url: `${BASE_URL}${JOB_URI}`,
     data: {
       "umkm_id": request.umkmId,
       "posisi": request.posisi,
@@ -143,8 +151,6 @@ class JobForm extends Component {
       tanggalAkhir,
       status, } = this.state;
     const rootClassName = classNames(classes.root, className);
-
-    console.log(this.state.serviceError);
 
     return (
       <Portlet
@@ -251,7 +257,7 @@ class JobForm extends Component {
                 label="Tanggal Mulai"
                 margin="dense"
                 type="date"
-                defaultValue="2019-01-01"
+                defaultValue=""
                 required
                 value={tanggalMulai}
                 variant="outlined"
@@ -263,7 +269,7 @@ class JobForm extends Component {
                 label="Tanggal Akhir"
                 margin="dense"
                 type="date"
-                defaultValue="2019-01-01"
+                defaultValue=""
                 required
                 value={tanggalAkhir}
                 variant="outlined"

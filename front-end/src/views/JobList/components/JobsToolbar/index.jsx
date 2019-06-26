@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -36,6 +36,18 @@ class UsersToolbar extends Component {
             >
               <DeleteIcon />
             </IconButton>
+          )}
+          {selectedUsers.length === 1 && (
+            <Link href="/buat-pekerjaan">
+              <Button 
+                className={classes.EditButton}
+                color="primary"
+                size="small"
+                variant="outlined"
+              >
+                Edit Pekerjaan
+              </Button>
+            </Link>
           )}
           <Link href="/buat-pekerjaan">
             <Button 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserTableSeeder extends Seeder
 {
@@ -375,7 +376,7 @@ class UserTableSeeder extends Seeder
         for ($i = 0; $i < count($user); $i++) {
             DB::table('users')->insert([
                 'email' => $user[$i][0],
-                'password' => $user[$i][1]
+                'password' => Hash::make($user[$i][1])
             ]);
         }
     }
