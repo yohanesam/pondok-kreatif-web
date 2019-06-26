@@ -129,7 +129,7 @@ class TekaController extends Controller
         $teka = Teka::find($id);
         
         $teka->nama = $request->post('nama');
-        $teka->nim = $request->post('nik');
+        $teka->nik = $request->post('nik');
         $teka->alamat = $request->post('alamat');
         $teka->koordinat_alamat = $request->post('koordinat_alamat');
         $teka->kelurahan_id = $request->post('kelurahan_id');
