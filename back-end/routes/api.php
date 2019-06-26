@@ -33,7 +33,8 @@ Route::apiResources(
         'penduduk' => 'PendudukController',
         'rekruitmen' => 'RekruitmenController',
         'teka' => 'TekaController',
-        'umkm' => 'UmkmController'
+        'umkm' => 'UmkmController',
+        'queue' => 'QueueController'
     ]
 );
 
