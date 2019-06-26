@@ -5,13 +5,14 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Dashboard from './views/Dashboard';
 import ProductList from './views/ProductList';
 import UmkmDetail from './views/UmkmDetail';
+import JobList from './views/JobList';
 import UserList from './views/UserList';
 import Typography from './views/Typography';
 import Icons from './views/Icons';
 import Account from './views/Account';
+import AddJob from './views/AddJob';
 import Settings from './views/Settings';
 import UmkmSignUp from './views/UmkmSignUp';
-import TekaSignUp from './views/TekaSignUp';
 import SignIn from './views/SignIn';
 import UnderDevelopment from './views/UnderDevelopment';
 import NotFound from './views/NotFound';
@@ -23,12 +24,17 @@ export default class Routes extends Component {
         <Redirect
           exact
           from="/"
-          to="/dashboard"
+          to="/beranda"
         />
         <Route
           component={Dashboard}
           exact
-          path="/dashboard"
+          path="/beranda"
+        />
+        <Route
+          component={JobList}
+          exact
+          path="/view-pekerjaan"
         />
         <Route
           component={UserList}
@@ -61,19 +67,14 @@ export default class Routes extends Component {
           path="/account"
         />
         <Route
+          component={AddJob}
+          exact
+          path="/buat-pekerjaan"
+        />
+        <Route
           component={Settings}
           exact
           path="/settings"
-        />
-        <Route
-          component={TekaSignUp}
-          exact
-          path="/teka-sign-up"
-        />
-        <Route
-          component={UmkmSignUp}
-          exact
-          path="/umkm-sign-up"
         />
         <Route
           component={UmkmSignUp}

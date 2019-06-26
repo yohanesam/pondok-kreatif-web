@@ -27,12 +27,6 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 
-// Route Link for Teka User
-import TekaRoutes from './components/TekaRoutes';
-
-// Route Link for Umkm User
-import UmkmRoutes from './components/UmkmRoutes';
-
 // Component styles
 import styles from './styles';
 
@@ -82,9 +76,68 @@ class Sidebar extends Component {
           </Typography>
         </div>
         <Divider className={classes.profileDivider} />
-        {
-          roleId === '1' ? <TekaRoutes /> : <UmkmRoutes />
-        }
+        <List
+        component="div"
+        disablePadding
+        >
+            <ListItem
+            activeClassName={classes.activeListItem}
+            className={classes.listItem}
+            component={NavLink}
+            to="/dashboard"
+            >
+                <ListItemIcon className={classes.listItemIcon}>
+                    <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText
+                    classes={{ primary: classes.listItemText }}
+                    primary="Beranda"
+                />
+            </ListItem>
+
+            <ListItem
+            activeClassName={classes.activeListItem}
+            className={classes.listItem}
+            component={NavLink}
+            to="/view-pekerjaan"
+            >
+                <ListItemIcon className={classes.listItemIcon}>
+                    <ShoppingIcon />
+                </ListItemIcon>
+                <ListItemText
+                    classes={{ primary: classes.listItemText }}
+                    primary="List Pekerjaan"
+                />
+            </ListItem>
+            <ListItem
+            activeClassName={classes.activeListItem}
+            className={classes.listItem}
+            component={NavLink}
+            to="/users"
+            >
+                <ListItemIcon className={classes.listItemIcon}>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText
+                    classes={{ primary: classes.listItemText }}
+                    primary="Users"
+                />
+            </ListItem>
+            <ListItem
+            activeClassName={classes.activeListItem}
+            className={classes.listItem}
+            component={NavLink}
+            to="/account"
+            >
+                <ListItemIcon className={classes.listItemIcon}>
+                    <AccountBoxOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                    classes={{ primary: classes.listItemText }}
+                    primary="Account"
+                />
+            </ListItem>
+        </List>
         <Divider className={classes.listDivider} />
         <List
           component="div"

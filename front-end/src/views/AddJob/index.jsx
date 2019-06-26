@@ -13,9 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import DashboardLayout from '../../layouts/Dashboard';
 
 // Custom components
-import AccountProfile from './components/AccountProfile';
-import AccountOverview from './components/AccountOverview';
-import AccountDetails from './components/AccountDetails';
+import JobForm from './components/JobForm';
 
 // Component styles
 const styles = theme => ({
@@ -24,37 +22,19 @@ const styles = theme => ({
   }
 });
 
-class Account extends Component {
+class AddJob extends Component {
   state = { tabIndex: 0 };
 
   render() {
     const { classes } = this.props;
 
     return (
-      <DashboardLayout title="Akun UMKM">
+      <DashboardLayout title="Buat Pekerjaan">
         <div className={classes.root}>
           <Grid
             container
-            spacing={32}
           >
-            <Grid
-              item
-              lg={4}
-              md={6}
-              xl={4}
-              xs={12}
-            >
-              <AccountProfile />
-            </Grid>
-            <Grid
-              item
-              lg={8}
-              md={6}
-              xl={8}
-              xs={12}
-            >
-              <AccountDetails />
-            </Grid>
+            <JobForm />
           </Grid>
         </div>
       </DashboardLayout>
@@ -62,8 +42,8 @@ class Account extends Component {
   }
 }
 
-Account.propTypes = {
+AddJob.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Account);
+export default withStyles(styles)(AddJob);

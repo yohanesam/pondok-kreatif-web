@@ -48,7 +48,7 @@ const signUp = (request) => {
       "email": request.email,
       "password": request.password
     },
-  })
+  });
 };
 
 class SignUp extends Component {
@@ -119,7 +119,7 @@ class SignUp extends Component {
         password: values.password
       });
 
-      history.push('/dashboard');
+      history.push('/sign-in');
     } catch (error) {
       console.log(error);
       
