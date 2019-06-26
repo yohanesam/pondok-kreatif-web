@@ -13,8 +13,10 @@ class CreateQueueTable extends Migration
      */
     public function up()
     {
-        Schema::create('queue', function (Blueprint $table) {
+        Schema::create('user_koneksi', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('user_id')->nullable();
+            $table->string('umkm_id')->nullable();
             $table->timestamps();
         });
     }

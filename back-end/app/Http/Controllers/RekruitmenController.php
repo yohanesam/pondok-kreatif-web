@@ -20,10 +20,8 @@ class RekruitmenController extends Controller
 
     public function index()
     {
-        $rekruitmen = Rekruitmen::all();
-        return response()->json([
-            'data' => $rekruitmen->toArray()
-        ]);
+        $rekruitmen = Rekruitmen::all()->where('umkm_id', $_GET['id']);
+        return response()->json($rekruitmen->toArray());
     }
 
     /**
@@ -69,7 +67,7 @@ class RekruitmenController extends Controller
     public function show($id)
     {
         $rekruitmen = Rekruitmen::find($id);
-        return response()->json(['data' => $rekruitmen->toArray()], 201);
+        return response()->json($rekruitmen->toArray(), 201);
     }
 
     /**

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 // Externals
 import classNames from 'classnames';
@@ -52,10 +52,10 @@ class DashboardLayout extends Component {
     const { history } = this.props;
     if(localStorage.getItem('userInfoState')) {
       const state = JSON.parse(localStorage.getItem('userInfoState'));
-
-      if(state.isLoggedin) {
-        this.setState({ isLoggedin: state.isLoggedin });
-      } else {
+      if(!state.token) {
+        this.setState({
+          isLoggedin: true
+        });
         history.push('/sign-in');
       }
     } else {

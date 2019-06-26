@@ -32,7 +32,7 @@ class TekaController extends Controller
      */
     public function create()
     {
-        
+
         // return Teka::create([
         //     'foto' => $request['foto'],
         //     'nama' => $request['nama'],
@@ -73,9 +73,9 @@ class TekaController extends Controller
             'user_id' => $id_user->id,
             'role_user_id' => $id_teka->id
         ]);
-        
+
         return response()->json($teka);
-        
+
         // $this->guard()->login($user);
 
         // And finally this is the hook that we want. If there is no
@@ -85,7 +85,7 @@ class TekaController extends Controller
         // return $this->registered($request, $user)
         //                 ?: redirect($this->redirectPath());
     }
-    
+
     protected function registered(Request $request, $user)
     {
         $user->generateToken();
@@ -101,7 +101,7 @@ class TekaController extends Controller
      */
     public function show($id)
     {
-        
+
         $teka = Teka::find($id);
         return response()->json(['data' => $teka->toArray()], 201);
     }
@@ -127,7 +127,7 @@ class TekaController extends Controller
     public function update(Request $request, $id)
     {
         $teka = Teka::find($id);
-        
+
         $teka->nama = $request->post('nama');
         $teka->nik = $request->post('nik');
         $teka->alamat = $request->post('alamat');
