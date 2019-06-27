@@ -150,9 +150,9 @@ class UmkmController extends Controller
     public function rekomen(Request $request)
     {
         try{
-            $umkm = DB::table('umkms')->join('keahlian', 'keahlian.bidang_id', '=', 'umkms.bidang_id')->whereIn('umkms.bidang_id', $request);
+            $umkm = DB::table('umkms')->join('keahlian', 'keahlian.bidang_id', '=', 'umkms.bidang_id')->whereIn('umkms.bidang_id', $request)->get();
             return response()->json([
-                'data' => $umkm,
+                'data' => $umkm->toArray()
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -164,17 +164,17 @@ class UmkmController extends Controller
 
     public function search($query)
     {
-        $umkm = DB::table('umkms')->where('bidang_id',"like", $query);
+        $umkm = DB::table('umkms')->where('bidang_id',"like", $query)->get();
         return response()->json([
-            'data' => $umkm,
+            'data' => $umkm->toArray()
         ]);
     }
 
     public function bidang($bidang)
     {
-        $umkm = DB::table('umkms')->where('bidang_id','=', $bidang);
+        $umkm = DB::table('umkms')->where('bidang_id','=', $bidang)->get();
         return response()->json([
-            'data' => $umkm,
+            'data' => $umkm->toArray()
         ]);
     }
 }
