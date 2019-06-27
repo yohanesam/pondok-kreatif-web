@@ -21,9 +21,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import TablePagination from '@material-ui/core/TablePagination';
 
-// Shared helpers
-import getInitials from '../../../../helpers/getInitials';
-
 // Shared components
 import Portlet from '../../../../components/Portlet';
 import PortletContent from '../../../../components/PortletContent';
@@ -31,52 +28,52 @@ import PortletContent from '../../../../components/PortletContent';
 // Component styles
 import styles from './styles';
 
-class UsersTable extends Component {
+class JobsTable extends Component {
   state = {
-    selectedUsers: [],
+    selectedJobs: [],
     rowsPerPage: 10,
     page: 0
   };
 
   handleSelectAll = event => {
-    const { users, onSelect } = this.props;
+    const { jobs, onSelect } = this.props;
 
-    let selectedUsers;
+    let selectedJobs;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
+      selectedJobs = jobs.map(job => job.id);
     } else {
-      selectedUsers = [];
+      selectedJobs = [];
     }
 
-    this.setState({ selectedUsers });
+    this.setState({ selectedJobs });
 
-    onSelect(selectedUsers);
+    onSelect(selectedJobs);
   };
 
   handleSelectOne = (event, id) => {
     const { onSelect } = this.props;
-    const { selectedUsers } = this.state;
+    const { selectedJobs } = this.state;
 
-    const selectedIndex = selectedUsers.indexOf(id);
-    let newSelectedUsers = [];
+    const selectedIndex = selectedJobs.indexOf(id);
+    let newselectedJobs = [];
 
     if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
+      newselectedJobs = newselectedJobs.concat(selectedJobs, id);
     } else if (selectedIndex === 0) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-    } else if (selectedIndex === selectedUsers.length - 1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
+      newselectedJobs = newselectedJobs.concat(selectedJobs.slice(1));
+    } else if (selectedIndex === selectedJobs.length - 1) {
+      newselectedJobs = newselectedJobs.concat(selectedJobs.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedUsers = newSelectedUsers.concat(
-        selectedUsers.slice(0, selectedIndex),
-        selectedUsers.slice(selectedIndex + 1)
+      newselectedJobs = newselectedJobs.concat(
+        selectedJobs.slice(0, selectedIndex),
+        selectedJobs.slice(selectedIndex + 1)
       );
     }
 
-    this.setState({ selectedUsers: newSelectedUsers });
+    this.setState({ selectedJobs: newselectedJobs });
 
-    onSelect(newSelectedUsers);
+    onSelect(newselectedJobs);
   };
 
   handleChangePage = (event, page) => {
@@ -88,8 +85,8 @@ class UsersTable extends Component {
   };
 
   render() {
-    const { classes, className, users } = this.props;
-    const { activeTab, selectedUsers, rowsPerPage, page } = this.state;
+    const { classes, className, jobs } = this.props;
+    const { activeTab, selectedJobs, rowsPerPage, page } = this.state;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -102,11 +99,11 @@ class UsersTable extends Component {
                 <TableRow>
                   <TableCell align="left">
                     <Checkbox
-                      checked={selectedUsers.length === users.length}
+                      checked={selectedJobs.length === jobs.length}
                       color="primary"
                       indeterminate={
-                        selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
+                        selectedJobs.length > 0 &&
+                        selectedJobs.length < jobs.length
                       }
                       onChange={this.handleSelectAll}
                     />
@@ -114,68 +111,68 @@ class UsersTable extends Component {
                   </TableCell>
                   <TableCell align="left">Jenjang Pendidikan</TableCell>
                   <TableCell align="left">Kuota</TableCell>
-                  <TableCell align="left">Phone</TableCell>
-                  <TableCell align="left">Registration date</TableCell>
+                  <TableCell align="left">Gaji</TableCell>
+                  <TableCell align="left">Tanggal</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users
-                  .filter(user => {
+                {jobs
+                  .filter(job => {
                     if (activeTab === 1) {
-                      return !user.returning;
+                      return !job.returning;
                     }
 
                     if (activeTab === 2) {
-                      return user.returning;
+                      return job.returning;
                     }
 
-                    return user;
+                    return job;
                   })
                   .slice(0, rowsPerPage)
-                  .map(user => (
+                  .map(job => (
                     <TableRow
                       className={classes.tableRow}
                       hover
-                      key={user.id}
-                      selected={selectedUsers.indexOf(user.id) !== -1}
+                      key={job.id}
+                      selected={selectedJobs.indexOf(job.id) !== -1}
                     >
                       <TableCell className={classes.tableCell}>
                         <div className={classes.tableCellInner}>
                           <Checkbox
-                            checked={selectedUsers.indexOf(user.id) !== -1}
+                            checked={selectedJobs.indexOf(job.id) !== -1}
                             color="primary"
                             onChange={event =>
-                              this.handleSelectOne(event, user.id)
+                              this.handleSelectOne(event, job.id)
                             }
                             value="true"
                           />
                           {/* <Avatar
                             className={classes.avatar}
-                            src={user.avatarUrl}
+                            src={job.avatarUrl}
                           >
-                            {getInitials(user.name)}
+                            {getInitials(job.name)}
                           </Avatar> */}
                           <Link to="#">
                             <Typography
                               className={classes.nameText}
                               variant="body1"
                             >
-                              {user.posisi}
+                              {job.posisi}
                             </Typography>
                           </Link>
                         </div>
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.jenjang_minimal}
+                        {job.jenjang_minimal}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.kuota}
+                        {job.kuota}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.gaji}
+                        {job.gaji_minimal}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {moment(user.update_at).format('DD/MM/YYYY')}
+                        {moment(job.update_at).format('DD/MM/YYYY')}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -187,7 +184,7 @@ class UsersTable extends Component {
               'aria-label': 'Previous Page'
             }}
             component="div"
-            count={users.length}
+            count={jobs.length}
             nextIconButtonProps={{
               'aria-label': 'Next Page'
             }}
@@ -203,18 +200,18 @@ class UsersTable extends Component {
   }
 }
 
-UsersTable.propTypes = {
+JobsTable.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
   onShowDetails: PropTypes.func,
-  users: PropTypes.array.isRequired
+  jobs: PropTypes.array.isRequired
 };
 
-UsersTable.defaultProps = {
-  users: [],
+JobsTable.defaultProps = {
+  jobs: [],
   onSelect: () => {},
   onShowDetails: () => {}
 };
 
-export default withStyles(styles)(UsersTable);
+export default withStyles(styles)(JobsTable);
