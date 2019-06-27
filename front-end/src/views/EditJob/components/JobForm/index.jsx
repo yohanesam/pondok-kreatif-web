@@ -38,15 +38,15 @@ const skillKey = [
     label: 'Pilih Skill'
   },
   {
-    value: '1',
+    value: 1,
     label: 'Jasa'
   },
   {
-    value: '2',
+    value: 2,
     label: 'Memasak'
   },
   {
-    value: '3',
+    value: 3,
     label: 'Menjahit'
   }
 ];
@@ -92,6 +92,8 @@ const showJobDetail = () => {
 }
 
 const editJob = (request) => {
+  console.log(request);
+  
   return axios({
     method: 'PUT',
     url: `${BASE_URL}${JOB_URI}${request.id}`,
@@ -142,10 +144,10 @@ class JobForm extends Component {
   };
 
   handleSubmit = async () => {
-    const { value } = this.state;
+    const value = { ...this.state.value };
     const { history } = this.props;
     const state = JSON.parse(localStorage.getItem('userInfoState'));
-    const job = JSON.parse(localStorage.getItem('jobId'));
+    const job = JSON.parse(sessionStorage.getItem('jobId'));
 
     try {
       await editJob({
@@ -163,7 +165,7 @@ class JobForm extends Component {
         status: value.status,
       });
 
-      sessionStorage.removeItem('jobId')
+      sessionStorage.removeItem('jobId');
       history.push("/view-pekerjaan");
     } catch(error) {
       this.setState({
@@ -239,7 +241,7 @@ class JobForm extends Component {
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 100 (dalam angka)"
-                onChange={e => {this.handleChange("kuota", e.target.value)}}
+                onChange={e => {this.handleChange("kuota", e.target.valueAsNumber)}}
                 label="Kuota Pegawai"
                 margin="dense"
                 type="number"
@@ -252,7 +254,7 @@ class JobForm extends Component {
                 helperText="Contoh: Memasak"
                 label="Keahlian"
                 margin="dense"
-                onChange={e => {this.handleChange("skillSetKey", e.target.value)}}
+                onChange={e => {this.handleChange("skillSetKey", parseInt(e.target.value, 10))}}
                 required
                 select
                 SelectProps={{
@@ -282,7 +284,7 @@ class JobForm extends Component {
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 1000000 (dalam angka)"
-                onChange={e => {this.handleChange("gajiMinimal", e.target.value)}}
+                onChange={e => {this.handleChange("gajiMinimal", e.target.valueAsNumber)}}
                 label="Gaji Minimal"
                 margin="dense"
                 type="number"
@@ -293,7 +295,7 @@ class JobForm extends Component {
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 1250000 (dalam angka)"
-                onChange={e => {this.handleChange("gajiMaksimal", e.target.value)}}
+                onChange={e => {this.handleChange("gajiMaksimal", e.target.valueAsNumber)}}
                 label="Gaji Maksimal"
                 margin="dense"
                 type="number"
@@ -329,7 +331,7 @@ class JobForm extends Component {
                 helperText="Contoh: Aktif/Tidak Aktif"
                 margin="dense"
                 type="number"
-                onChange={e => {this.handleChange("status", e.target.value)}}
+                onChange={e => {this.handleChange("status", parseInt(e.target.value, 10))}}
                 required
                 select
                 SelectProps={{
