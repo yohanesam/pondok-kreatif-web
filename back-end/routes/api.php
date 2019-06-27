@@ -25,6 +25,8 @@ Route::get('home/rekruitment/{id}', 'HomeController@rekruitmen');
 Route::get('home/queue/{id}', 'HomeController@queue');
 Route::post('rekruitmen/destroys', 'RekruitmenController@destroy');
 Route::post('umkm/rekomen', 'UmkmController@rekomen');
+Route::get('umkm/bidang/{bidang}', 'UmkmController@bidang');
+Route::get('umkm/search/{query}', 'UmkmController@search');
 
 Route::apiResources(
     [
