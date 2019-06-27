@@ -165,9 +165,7 @@ class TekaController extends Controller
     public function detail()
     {
         $detail = DB::table('tenaga_kerja')
-        ->join('jenjang', 'jenjang.id', '=', 'tenaga_kerja.jenjang_id')
-        ->join('kecamatan', 'kecamatan.id', '=', 'tenaga_kerja.kecamatan_id')
-        ->join('kelurahan', 'kelurahan.id', '=', 'tenaga_kerja.kelurahan_id')->get();
+        ->join('jenjang', 'jenjang.id', '=', 'tenaga_kerja.jenjang_id')->get();
         return response()->json([
             'data' => $detail->toArray()
         ]);
