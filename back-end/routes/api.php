@@ -27,6 +27,7 @@ Route::post('rekruitmen/destroys', 'RekruitmenController@destroy');
 Route::post('umkm/rekomen', 'UmkmController@rekomen');
 Route::get('umkm/bidang/{bidang}', 'UmkmController@bidang');
 Route::get('umkm/search/{query}', 'UmkmController@search');
+Route::get('teka/detail', 'TekaController@detail');
 
 Route::apiResources(
     [
