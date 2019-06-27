@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 // Externals
+import axios from 'axios';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -30,9 +31,53 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 // Component styles
 import styles from './styles';
 
+import { 
+  BASE_URL, 
+  PROFILE_URI 
+} from '../../../../config/Apis';
+
+// Service methods
+const getJobList = () => {
+  const userState = JSON.parse(localStorage.getItem('userInfoState'))
+  return axios({
+    method: 'GET',
+    url: `${BASE_URL}${PROFILE_URI}${userState.role_user_id}`,
+  }).then(result => {
+    return result.data;
+  });
+};
+
 class Sidebar extends Component {
+
+  state = {
+    profileImage: '',
+    umkmName: '',
+    serviceError: '',
+  }
+
+  componentDidMount = () => {
+    this.getUserComponent();
+  }
+
+  getUserComponent = async () => {
+    try {
+      const res = await getJobList();
+      this.setState({
+        profileImage: res.gambar,
+        umkmName: res.nama_usaha,
+      })
+    } catch(error) {
+      this.setState({
+        serviceError: error
+      })
+    }
+  }
+
   render() {
-    const { classes, className, roleId } = this.props;
+    
+    const { classes, className } = this.props;
+
+    const { profileImage, umkmName, } = this.state;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -59,20 +104,20 @@ class Sidebar extends Component {
             <Avatar
               alt="Roman Kutepov"
               className={classes.avatar}
-              src="/images/avatars/avatar_1.png"
+              src={profileImage}
             />
           </Link>
           <Typography
             className={classes.nameText}
             variant="h6"
           >
-            Roman Kutepov
+            {umkmName}
           </Typography>
           <Typography
             className={classes.bioText}
             variant="caption"
           >
-            Job Seeker
+            UMKM
           </Typography>
         </div>
         <Divider className={classes.profileDivider} />

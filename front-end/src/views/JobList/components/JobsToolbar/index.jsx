@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 // Externals
+import axios from 'axios';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -21,8 +22,24 @@ import SearchInput from '../../../../components/SearchInput';
 // Component styles
 import styles from './styles';
 
-class JobsToolbar extends Component {
+// URL 
+import { 
+  BASE_URL, 
+  JOB_URI 
+} from '../../../../config/Apis';
 
+// Service methods
+const deleteJobList = (request) => {
+  return axios({
+    method: 'POST',
+    url: `${BASE_URL}${JOB_URI}`,
+    data: request,
+  });
+};
+
+
+class JobsToolbar extends Component {
+  
   handleEditJob = () => {
     const { selectedJobs, history } = this.props;
     if(sessionStorage.getItem('jobId')){
@@ -39,6 +56,12 @@ class JobsToolbar extends Component {
     history.push('/buat-pekerjaan');
   }
 
+  handleDeleteJob = async () => {
+    const { selectedJobs, history } = this.props;
+    await deleteJobList(selectedJobs);
+    history.push('/buat-pekerjaan');
+  }
+
   render() {
     const { classes, className, selectedJobs } = this.props;
 
@@ -51,7 +74,7 @@ class JobsToolbar extends Component {
           {selectedJobs.length > 0 && (
             <IconButton
               className={classes.deleteButton}
-              onClick={this.handleDeleteUsers}
+              onClick={this.handleDeleteJob}
             >
               <DeleteIcon />
             </IconButton>
