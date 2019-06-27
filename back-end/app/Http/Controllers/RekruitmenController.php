@@ -115,7 +115,7 @@ class RekruitmenController extends Controller
      */
     public function destroy(Request $request)
     {
-        try {
+        try{
             rekruitmen::whereIn('id', $request)->delete();
         } catch(Exception $e) {
             return response()->json([
