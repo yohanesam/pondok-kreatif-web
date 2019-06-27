@@ -96,7 +96,7 @@ class RekruitmenController extends Controller
         $rekruitmen->posisi = $request->post('posisi');
         $rekruitmen->skill_set_key = $request->post('skill_set_key');
         $rekruitmen->jenjang_minimal = $request->post('jenjang_minimal');
-        $rekruitmen->gaji = $request->post('gaji');
+        $rekruitmen->gaji_minimal = $request->post('gaji_minimal');
         $rekruitmen->kuota = $request->post('kuota');
         $rekruitmen->tanggal_mulai = $request->post('tanggal_mulai');
         $rekruitmen->tanggal_akhir = $request->post('tanggal_akhir');
@@ -128,6 +128,5 @@ class RekruitmenController extends Controller
             'error' => false,
             'message' =>'Berhasil'
         ]);
-         
     }
 }

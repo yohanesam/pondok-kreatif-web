@@ -53,10 +53,11 @@ class DashboardLayout extends Component {
     if(localStorage.getItem('userInfoState')) {
       const state = JSON.parse(localStorage.getItem('userInfoState'));
       if(!state.token) {
+        history.push('/sign-in');
+      } else {
         this.setState({
           isLoggedin: true
         });
-        history.push('/sign-in');
       }
     } else {
       history.push('/sign-in');
@@ -71,7 +72,7 @@ class DashboardLayout extends Component {
     const isMobile = ['xs', 'sm', 'md'].includes(width);
     const shiftTopbar = isOpen && !isMobile;
     const shiftContent = isOpen && !isMobile;
-
+    
     return (
       <Fragment>
         <Topbar

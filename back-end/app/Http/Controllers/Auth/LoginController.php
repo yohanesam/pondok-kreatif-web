@@ -51,20 +51,22 @@ class LoginController extends Controller
         if ($login) {
             $user = $this->guard()->user();
             $user->generateToken();
-            $role = Role::where('role_user_id', $user->id)->first();
+            $role = Role::select('role_user_id', 'role_id')->where('user_id', $user->id)->first();
+
             return response()->json([
                 'role_user_id' => $role->role_user_id,
                 'role_id' => $role->role_id,
-                'token' => $user->api_token
-            ]);
-
-            return response()->json([
+                'token' => $user->api_token,
                 "error" => false,
                 "message" => "welcome"
             ]);
+
         } else {
 
             return response()->json([
+                'role_user_id' => null,
+                'role_id' => null,
+                'token' => null,
                 "error" => true,
                 "message" => "data tidak sesuai"
             ]);

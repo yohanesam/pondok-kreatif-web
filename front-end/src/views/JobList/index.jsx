@@ -16,9 +16,6 @@ import Typography from '@material-ui/core/Typography';
 // Shared layouts
 import DashboardLayout from '../../layouts/Dashboard';
 
-// Shared services
-import { getUsers } from '../../services/user';
-
 // Custom components
 import JobsToolbar from './components/JobsToolbar';
 import JobsTable from './components/JobsTable';
@@ -43,15 +40,14 @@ const getJobList = () => {
   });
 };
 
-class UserList extends Component {
+class JobList extends Component {
   signal = true;
 
   state = {
     isLoading: false,
     limit: 10,
     jobList: [],
-    users: [],
-    selectedUsers: [],
+    selectedJobs: [],
     error: null
   };
 
@@ -60,9 +56,8 @@ class UserList extends Component {
       this.setState({ isLoading: true });
 
       const { limit } = this.state;
-      // const { users } = await getUsers(limit);
+      
       const jobList = await getJobList();
-      console.log(jobList);
       
       if (this.signal) {
         this.setState({
@@ -81,25 +76,19 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    const { isLoggedin, history } = this.props;
-
-    if(!isLoggedin){
-      history.push("/sign-in")
-    } else {
-      this.signal = true;
-      this.getJobList();
-    }
+    this.signal = true;
+    this.getJobList();
   }
 
   componentWillUnmount() {
     this.signal = false;
   }
 
-  handleSelect = selectedUsers => {
-    this.setState({ selectedUsers });
+  handleSelect = selectedJobs => {
+    this.setState({ selectedJobs });
   };
 
-  renderUsers() {
+  renderJobs() {
     const { classes } = this.props;
     const { isLoading, jobList, error } = this.state;
 
@@ -116,34 +105,34 @@ class UserList extends Component {
     }
 
     if (jobList.length === 0) {
-      return <Typography variant="h6">There are no users</Typography>;
+      return <Typography variant="h6">There are no jobs</Typography>;
     }
 
     return (
       <JobsTable
         //
         onSelect={this.handleSelect}
-        users={jobList}
+        jobs={jobList}
       />
     );
   }
 
   render() {
     const { classes } = this.props;
-    const { selectedUsers } = this.state;
-
+    const { selectedJobs } = this.state;
+    console.log(selectedJobs);
     return (
       <DashboardLayout title="List Pekerjaan">
         <div className={classes.root}>
-          <JobsToolbar selectedUsers={selectedUsers} />
-          <div className={classes.content}>{this.renderUsers()}</div>
+          <JobsToolbar selectedJobs={selectedJobs} />
+          <div className={classes.content}>{this.renderJobs()}</div>
         </div>
       </DashboardLayout>
     );
   }
 }
 
-UserList.propTypes = {
+JobList.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
 };
@@ -151,4 +140,4 @@ UserList.propTypes = {
 export default compose(
   withRouter,
   withStyles(styles)
-)(UserList);
+)(JobList);
