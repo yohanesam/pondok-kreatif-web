@@ -161,4 +161,20 @@ class UmkmController extends Controller
             ]);
         }
     }
+
+    public function search($query)
+    {
+        $umkm = DB::table('umkms')->where('bidang_id',"like", $query);
+        return response()->json([
+            'data' => $umkm,
+        ]);
+    }
+
+    public function bidang($bidang)
+    {
+        $umkm = DB::table('umkms')->where('bidang_id','=', $bidang);
+        return response()->json([
+            'data' => $umkm,
+        ]);
+    }
 }
