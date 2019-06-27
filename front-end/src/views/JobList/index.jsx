@@ -58,7 +58,7 @@ class JobList extends Component {
       const { limit } = this.state;
       
       const jobList = await getJobList();
-      console.log(jobList);
+      
       if (this.signal) {
         this.setState({
           isLoading: false,
@@ -120,7 +120,7 @@ class JobList extends Component {
   render() {
     const { classes } = this.props;
     const { selectedJobs } = this.state;
-    
+    console.log(selectedJobs);
     return (
       <DashboardLayout title="List Pekerjaan">
         <div className={classes.root}>

@@ -57,11 +57,11 @@ const statusKey = [
     label: 'Pilih Status'
   },
   {
-    value: 1,
+    value: "true",
     label: 'Aktif'
   },
   {
-    value: 0,
+    value: "false",
     label: 'Tidak Aktif'
   },
 ];
@@ -331,7 +331,7 @@ class JobForm extends Component {
                 helperText="Contoh: Aktif/Tidak Aktif"
                 margin="dense"
                 type="number"
-                onChange={e => {this.handleChange("status", parseInt(e.target.value, 10))}}
+                onChange={e => {this.handleChange("status", e.target.value)}}
                 required
                 select
                 SelectProps={{
@@ -368,38 +368,6 @@ class JobForm extends Component {
                 variant="outlined"
               />
             </div>
-            
-            {/* <div className={classes.field}>
-              <TextField
-                className={classes.textField}
-                label="Select State"
-                margin="dense"
-                onChange={e => {this.handleChange("state", e.target.value)}}
-                required
-                select
-                SelectProps={{
-                  native: true
-                }}
-                value={state}
-                variant="outlined">
-                {states.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-              <TextField
-                className={classes.textField}
-                label="Country"
-                margin="dense"
-                required
-                value={country}
-                variant="outlined"
-              />
-            </div> */}
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>

@@ -21,7 +21,7 @@ Route::middleware('auth:api')
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 Route::post('umkm/gambar', 'UmkmController@up_gambar');
-
+Route::post('rekruimen/destroy', 'RekriumenController@destroy');
 Route::apiResources(
     [
         'berita' => 'BeritaController',

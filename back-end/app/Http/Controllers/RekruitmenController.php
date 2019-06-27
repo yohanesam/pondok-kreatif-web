@@ -113,9 +113,9 @@ class RekruitmenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $rekruitmen = rekruitmen::find($id);
+        $rekruitmen = rekruitmen::whereIn("id",$request);
         $rekruitmen->delete();
         return true;
     }

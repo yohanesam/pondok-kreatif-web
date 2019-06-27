@@ -37,15 +37,15 @@ const skillKey = [
     label: 'Pilih Skill'
   },
   {
-    value: '1',
+    value: 1,
     label: 'Jasa'
   },
   {
-    value: '2',
+    value: 2,
     label: 'Memasak'
   },
   {
-    value: '3',
+    value: 3,
     label: 'Menjahit'
   }
 ];
@@ -56,11 +56,11 @@ const statusKey = [
     label: 'Pilih Status'
   },
   {
-    value: 1,
+    value: true,
     label: 'Aktif'
   },
   {
-    value: 0,
+    value: false,
     label: 'Tidak Aktif'
   },
 ];
@@ -112,13 +112,14 @@ class JobForm extends Component {
   };
 
   handleSubmit = async () => {
-    const { value } = this.state;
+    const value = { ...this.state.value };
     const { history } = this.props;
     const state = JSON.parse(localStorage.getItem('userInfoState'))
     try {
       await createJob({
         umkmId: state.role_user_id,
         posisi: value.posisi,
+        kuota: value.kuota,
         skillSetKey: value.skillSetKey,
         jenjangMinimal: value.jenjangMinimal,
         gajiMinimal: value.gajiMinimal,
@@ -149,8 +150,10 @@ class JobForm extends Component {
       deskripsi,
       tanggalMulai,
       tanggalAkhir,
-      status, } = this.state;
+      status, } = this.state.value;
     const rootClassName = classNames(classes.root, className);
+    
+    console.log(this.state)
 
     return (
       <Portlet
@@ -159,8 +162,8 @@ class JobForm extends Component {
       >
         <PortletHeader>
           <PortletLabel
-            subtitle="membuat pekerjaan baru"
-            title="Buat Pekerjaan"
+            subtitle="merubah pekerjaan yang diinginkan"
+            title="Edit Pekerjaan"
           />
         </PortletHeader>
         <PortletContent noPadding>
@@ -188,7 +191,7 @@ class JobForm extends Component {
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 100 (dalam angka)"
-                onChange={e => {this.handleChange("kuota", e.target.value)}}
+                onChange={e => {this.handleChange("kuota", e.target.valueAsNumber)}}
                 label="Kuota Pegawai"
                 margin="dense"
                 type="number"
@@ -201,7 +204,7 @@ class JobForm extends Component {
                 helperText="Contoh: Memasak"
                 label="Keahlian"
                 margin="dense"
-                onChange={e => {this.handleChange("skillSetKey", e.target.value)}}
+                onChange={e => {this.handleChange("skillSetKey", parseInt(e.target.value, 10))}}
                 required
                 select
                 SelectProps={{
@@ -231,7 +234,7 @@ class JobForm extends Component {
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 1000000 (dalam angka)"
-                onChange={e => {this.handleChange("gajiMinimal", e.target.value)}}
+                onChange={e => {this.handleChange("gajiMinimal", e.target.valueAsNumber)}}
                 label="Gaji Minimal"
                 margin="dense"
                 type="number"
@@ -242,7 +245,7 @@ class JobForm extends Component {
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 1250000 (dalam angka)"
-                onChange={e => {this.handleChange("gajiMaksimal", e.target.value)}}
+                onChange={e => {this.handleChange("gajiMaksimal", e.target.valueAsNumber)}}
                 label="Gaji Maksimal"
                 margin="dense"
                 type="number"
@@ -257,7 +260,6 @@ class JobForm extends Component {
                 label="Tanggal Mulai"
                 margin="dense"
                 type="date"
-                defaultValue=""
                 required
                 value={tanggalMulai}
                 variant="outlined"
@@ -269,7 +271,6 @@ class JobForm extends Component {
                 label="Tanggal Akhir"
                 margin="dense"
                 type="date"
-                defaultValue=""
                 required
                 value={tanggalAkhir}
                 variant="outlined"
@@ -279,6 +280,7 @@ class JobForm extends Component {
                 label="Status Pekerjaan"
                 helperText="Contoh: Aktif/Tidak Aktif"
                 margin="dense"
+                type="number"
                 onChange={e => {this.handleChange("status", e.target.value)}}
                 required
                 select
@@ -316,38 +318,6 @@ class JobForm extends Component {
                 variant="outlined"
               />
             </div>
-            
-            {/* <div className={classes.field}>
-              <TextField
-                className={classes.textField}
-                label="Select State"
-                margin="dense"
-                onChange={e => {this.handleChange("state", e.target.value)}}
-                required
-                select
-                SelectProps={{
-                  native: true
-                }}
-                value={state}
-                variant="outlined">
-                {states.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-              <TextField
-                className={classes.textField}
-                label="Country"
-                margin="dense"
-                required
-                value={country}
-                variant="outlined"
-              />
-            </div> */}
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
