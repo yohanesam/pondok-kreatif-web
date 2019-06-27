@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 // use Auth;
+use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,43 +37,56 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
 
     public function login(Request $request)
     {
         $this->validateLogin($request);
 
-        if ($this->attemptLogin($request)) {
+        $login = $this->attemptLogin($request);
+
+        if ($login) {
             $user = $this->guard()->user();
             $user->generateToken();
-            $role = Role::where('role_user_id', $user->id)->first();
+            $role = Role::select('role_user_id', 'role_id')->where('user_id', $user->id)->first();
+
             return response()->json([
                 'role_user_id' => $role->role_user_id,
                 'role_id' => $role->role_id,
-                'token' => $user->api_token
+                'token' => $user->api_token,
+                "error" => false,
+                "message" => "welcome"
+            ]);
+
+        } else {
+
+            return response()->json([
+                'role_user_id' => null,
+                'role_id' => null,
+                'token' => null,
+                "error" => true,
+                "message" => "data tidak sesuai"
             ]);
         }
-
-        return response()->json(["error", "data tidak sesuai"]);
     }
 
     public function logout(Request $request)
     {
         // $ror = array();
-        $user = Auth::guard()->user();
+        $user = User::find($request)->first();
         // $ror = $user->toArray();
         // echo $ror;
         if ($user) {
-            echo json_encode($user);
             $user->api_token = null;
             $user->save();
-            $request->session()->flush();
+            // $request->session()->flush();
+            return response()->json(['data' => 'User logged out.'], 200);
         }
-        
 
-        return response()->json(['data' => 'User logged out.'], 200);
+        return response()->json(['error' => $user]);
+
     }
 }

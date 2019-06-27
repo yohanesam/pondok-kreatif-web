@@ -32,7 +32,7 @@ class TekaController extends Controller
      */
     public function create()
     {
-        
+
         // return Teka::create([
         //     'foto' => $request['foto'],
         //     'nama' => $request['nama'],
@@ -73,9 +73,9 @@ class TekaController extends Controller
             'user_id' => $id_user->id,
             'role_user_id' => $id_teka->id
         ]);
-        
+
         return response()->json($teka);
-        
+
         // $this->guard()->login($user);
 
         // And finally this is the hook that we want. If there is no
@@ -85,7 +85,7 @@ class TekaController extends Controller
         // return $this->registered($request, $user)
         //                 ?: redirect($this->redirectPath());
     }
-    
+
     protected function registered(Request $request, $user)
     {
         $user->generateToken();
@@ -101,7 +101,7 @@ class TekaController extends Controller
      */
     public function show($id)
     {
-        
+
         $teka = Teka::find($id);
         return response()->json(['data' => $teka->toArray()], 201);
     }
@@ -127,16 +127,23 @@ class TekaController extends Controller
     public function update(Request $request, $id)
     {
         $teka = Teka::find($id);
-        
+
         $teka->nama = $request->post('nama');
-        $teka->nim = $request->post('nik');
-        $teka->email = $request->post('email');
+        $teka->nik = $request->post('nik');
         $teka->alamat = $request->post('alamat');
-        $teka->no_telp = $request->post('no_telp');
+        $teka->koordinat_alamat = $request->post('koordinat_alamat');
+        $teka->kelurahan_id = $request->post('kelurahan_id');
+        $teka->kecamatan_id = $request->post('kecamatan_id');
+        $teka->rt = $request->post('rt');
+        $teka->rw = $request->post('rw');
+        $teka->jenjang_id = $request->post('jenjang_id');
+        $teka->skill_set_key = $request->post('skill_set_key');
+        $teka->pengalaman = $request->post('pengalaman');
         $teka->deskripsi = $request->post('deskripsi');
         $teka->tempat_lahir = $request->post('tempat_lahir');
         $teka->kelamin = $request->post('kelamin');
-        $teka->pengalaman = $request->post('pengalaman');
+        $teka->email = $request->post('email');
+        $teka->no_telp = $request->post('no_telp');
         $teka->save();
         return $teka;
     }

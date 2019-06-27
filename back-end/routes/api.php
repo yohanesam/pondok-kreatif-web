@@ -33,6 +33,9 @@ Route::apiResources(
         'penduduk' => 'PendudukController',
         'rekruitmen' => 'RekruitmenController',
         'teka' => 'TekaController',
-        'umkm' => 'UmkmController'
+        'umkm' => 'UmkmController',
+        'queue' => 'QueueController'
     ]
 );
+
+Route::get('checking/{nik}', 'SearchController@checkPenduduk');
