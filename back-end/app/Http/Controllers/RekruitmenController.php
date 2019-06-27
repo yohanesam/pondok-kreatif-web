@@ -117,11 +117,11 @@ class RekruitmenController extends Controller
     {
         try{
             rekruitmen::whereIn('id', $request)->delete();
-        }catch(Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'error' => true,
                 'message' => $e
-                ]);
+            ]);
         }
 
         return response()->json([

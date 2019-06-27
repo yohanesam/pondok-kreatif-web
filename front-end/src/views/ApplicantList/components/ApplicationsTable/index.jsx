@@ -28,7 +28,7 @@ import PortletContent from '../../../../components/PortletContent';
 // Component styles
 import styles from './styles';
 
-class JobsTable extends Component {
+class ApplicationsTable extends Component {
   state = {
     selectedJobs: [],
     rowsPerPage: 10,
@@ -152,7 +152,7 @@ class JobsTable extends Component {
                           >
                             {getInitials(job.name)}
                           </Avatar> */}
-                          <Link to={{pathname: `view-pelamar-kerja/${job.id}`}}>
+                          <Link to="#">
                             <Typography
                               className={classes.nameText}
                               variant="body1"
@@ -200,7 +200,7 @@ class JobsTable extends Component {
   }
 }
 
-JobsTable.propTypes = {
+ApplicationsTable.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
@@ -208,10 +208,10 @@ JobsTable.propTypes = {
   jobs: PropTypes.array.isRequired
 };
 
-JobsTable.defaultProps = {
+ApplicationsTable.defaultProps = {
   jobs: [],
   onSelect: () => {},
   onShowDetails: () => {}
 };
 
-export default withStyles(styles)(JobsTable);
+export default withStyles(styles)(ApplicationsTable);

@@ -17,8 +17,8 @@ import Typography from '@material-ui/core/Typography';
 import DashboardLayout from '../../layouts/Dashboard';
 
 // Custom components
-import JobsToolbar from './components/JobsToolbar';
-import JobsTable from './components/JobsTable';
+// import ApplicationToolbar from './components/ApplicationToolbar';
+import ApplicationsTable from './components/ApplicationsTable';
 
 // Component styles
 import styles from './style';
@@ -26,54 +26,43 @@ import styles from './style';
 // URL 
 import { 
   BASE_URL, 
-  JOB_URI,
-  QUEUE_URI,
+  QUEUE_URI 
 } from '../../config/Apis';
 
 // Service methods
-const getJobList = () => {
-  const userState = JSON.parse(localStorage.getItem('userInfoState'))
+const getApplicantList = (params) => {
   return axios({
     method: 'GET',
-    url: `${BASE_URL}${JOB_URI}?id=${userState.role_user_id}`,
+    url: `${BASE_URL}${QUEUE_URI}?id=${params}`,
   }).then(result => {
     return result.data;
   });
 };
 
-// const getApplicant = (request) => {
-//   return axios({
-//     method: 'GET',
-//     url: `${BASE_URL}${QUEUE_URI}?id=${userState.role_user_id}`,
-//   }).then(result => {
-//     return result.data;
-//   });
-// }
-
-class JobList extends Component {
+class ApplicantList extends Component {
   signal = true;
 
   state = {
     isLoading: false,
     limit: 10,
-    jobList: [],
-    selectedApplicant: [],
+    applicantList: [],
     selectedJobs: [],
     error: null
   };
 
-  async getJobList() {
+  async getApplicantList() {
     try {
       this.setState({ isLoading: true });
 
       const { limit } = this.state;
       
-      const jobList = await getJobList();
+      const applicantList = await getApplicantList(this.props.match.params.jobId);
+      console.log(applicantList.data.length);
       
       if (this.signal) {
         this.setState({
           isLoading: false,
-          jobList
+          applicantList
         });
       }
     } catch (error) {
@@ -88,7 +77,7 @@ class JobList extends Component {
 
   componentDidMount() {
     this.signal = true;
-    this.getJobList();
+    this.getApplicantList();
   }
 
   componentWillUnmount() {
@@ -99,10 +88,10 @@ class JobList extends Component {
     this.setState({ selectedJobs });
   };
 
-  renderJobs() {
+  renderApplicants() {
     const { classes } = this.props;
-    const { isLoading, jobList, error } = this.state;
-
+    const { isLoading, applicantList, error } = this.state;
+    console.log(applicantList.data.length);
     if (isLoading) {
       return (
         <div className={classes.progressWrapper}>
@@ -115,34 +104,34 @@ class JobList extends Component {
       return <Typography variant="h6">{error}</Typography>;
     }
 
-    if (jobList.length === 0) {
+    if (applicantList.data.length === 0) {
       return <Typography variant="h6">There are no jobs</Typography>;
     }
 
-    return (
-      <JobsTable
-        //
-        onSelect={this.handleSelect}
-        jobs={jobList}
-      />
-    );
+    // return (
+    //   <ApplicationsTable
+    //     //
+    //     onSelect={this.handleSelect}
+    //     jobs={applicantList}
+    //   />
+    // );
   }
 
   render() {
     const { classes } = this.props;
     const { selectedJobs } = this.state;
     return (
-      <DashboardLayout title="List Pekerjaan">
+      <DashboardLayout title="List Pelamar">
         <div className={classes.root}>
-          <JobsToolbar selectedJobs={selectedJobs} />
-          <div className={classes.content}>{this.renderJobs()}</div>
+          {/* <JobsToolbar selectedJobs={selectedJobs} /> */}
+          <div className={classes.content}>{this.renderApplicants()}</div>
         </div>
       </DashboardLayout>
     );
   }
 }
 
-JobList.propTypes = {
+ApplicantList.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
 };
@@ -150,4 +139,4 @@ JobList.propTypes = {
 export default compose(
   withRouter,
   withStyles(styles)
-)(JobList);
+)(ApplicantList);
