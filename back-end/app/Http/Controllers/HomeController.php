@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Queue;
 use App\Rekruitmen;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,13 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
+    
+    public function queue($id)
+    {
+       $count = Queue::where('umkm_id',$id)->count();
+        
+       return response()->json([$count]);
+    }
     
     public function rekruitmen($id)
     {
