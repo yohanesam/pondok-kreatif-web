@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 // Externals
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -21,9 +22,61 @@ import PortletFooter from '../../../../components/PortletFooter';
 // Component styles
 import styles from './styles';
 
+import { 
+  BASE_URL, 
+  PROFILE_URI 
+} from '../../../../config/Apis';
+
+// Service methods
+const getJobList = () => {
+  const userState = JSON.parse(localStorage.getItem('userInfoState'))
+  return axios({
+    method: 'GET',
+    url: `${BASE_URL}${PROFILE_URI}${userState.role_user_id}`,
+  }).then(result => {
+    return result.data;
+  });
+};
+
 class AccountProfile extends Component {
+
+  state = {
+    profileImage: '',
+    owner: '',
+    umkmName: '',
+    umkmType: '',
+    serviceError: '',
+  }
+
+  componentDidMount = () => {
+    this.getUserComponent();
+  }
+
+  getUserComponent = async () => {
+    try {
+      const res = await getJobList();
+      this.setState({
+        profileImage: res.gambar,
+        owner: res.nama_pemilik || "-",
+        umkmName: res.nama_usaha,
+        umkmType: res.kategori,
+      })
+    } catch(error) {
+      this.setState({
+        serviceError: error
+      })
+    }
+  }
+
   render() {
     const { classes, className, ...rest } = this.props;
+
+    const {
+      profileImage,
+      owner,
+      umkmName,
+      umkmType,
+    } = this.state;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -35,47 +88,26 @@ class AccountProfile extends Component {
         <PortletContent>
           <div className={classes.details}>
             <div className={classes.info}>
-              <Typography variant="h2">John Doe</Typography>
+              <Typography variant="h2">{umkmName}</Typography>
               <Typography
                 className={classes.locationText}
                 variant="body1"
               >
-                Rm. Valcea, Romania
+                Pemilik : {owner}
               </Typography>
               <Typography
                 className={classes.dateText}
                 variant="body1"
               >
-                4:32PM (GMT-4)
+                Kategori : {umkmType}
               </Typography>
             </div>
             <Avatar
               className={classes.avatar}
-              src="/images/avatars/avatar_1.png"
-            />
-          </div>
-          <div className={classes.progressWrapper}>
-            <Typography variant="body1">Profile Completeness: 70%</Typography>
-            <LinearProgress
-              classes={{
-                root: classes.progressRoot,
-                colorPrimary: classes.progressColorPrimary
-              }}
-              value={70}
-              variant="determinate"
+              src={profileImage}
             />
           </div>
         </PortletContent>
-        <PortletFooter>
-          <Button
-            className={classes.uploadButton}
-            color="primary"
-            variant="text"
-          >
-            Upload picture
-          </Button>
-          <Button variant="text">Remove picture</Button>
-        </PortletFooter>
       </Portlet>
     );
   }
