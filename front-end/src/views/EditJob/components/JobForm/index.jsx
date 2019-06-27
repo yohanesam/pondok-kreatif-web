@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 // Externals
+import moment from 'moment'
 import axios from 'axios';
 import compose from 'recompose/compose';
 import classNames from 'classnames';
@@ -56,22 +57,48 @@ const statusKey = [
     label: 'Pilih Status'
   },
   {
-    value: true,
+    value: "true",
     label: 'Aktif'
   },
   {
-    value: false,
+    value: "false",
     label: 'Tidak Aktif'
   },
 ];
 
 // Service methods
-const createJob = (request) => {
-  console.log(request);
+const showJobDetail = () => {
+  const state = JSON.parse(sessionStorage.getItem('jobId'));
+
   return axios({
-    method: 'POST',
-    url: `${BASE_URL}${JOB_URI}`,
+    method: 'GET',
+    url: `${BASE_URL}${JOB_URI}${state.id}`,
+  }).then(res => {
+    return {
+      id: res.data.id,
+      umkmId: res.data.umkm_id,
+      posisi: res.data.posisi,
+      kuota: res.data.kuota,
+      skillSetKey: res.data.skill_set_key,
+      jenjangMinimal: res.data.jenjang_minimal,
+      gajiMinimal: res.data.gaji_minimal,
+      gajiMaksimal: res.data.gaji_maksimal,
+      deskripsi: res.data.deskripsi,
+      tanggalMulai: res.data.tanggal_mulai,
+      tanggalAkhir: res.data.tanggal_akhir,
+      status: res.data.status,
+    }
+  })
+}
+
+const editJob = (request) => {
+  console.log(request);
+  
+  return axios({
+    method: 'PUT',
+    url: `${BASE_URL}${JOB_URI}${request.id}`,
     data: {
+      "id": request.id,
       "umkm_id": request.umkmId,
       "posisi": request.posisi,
       "skill_set_key": request.skillSetKey,
@@ -90,6 +117,7 @@ const createJob = (request) => {
 class JobForm extends Component {
   state = {
     value: {
+      id: '',
       umkmId: '',
       posisi: '',
       kuota: '',
@@ -105,6 +133,10 @@ class JobForm extends Component {
     serviceError: null,
   };
 
+  componentDidMount = () => {
+    this.getSelectedJob();
+  }
+
   handleChange = (field, value) => {
     const newState = { ...this.state };
     newState.value[field] = value;
@@ -114,15 +146,18 @@ class JobForm extends Component {
   handleSubmit = async () => {
     const value = { ...this.state.value };
     const { history } = this.props;
-    const state = JSON.parse(localStorage.getItem('userInfoState'))
+    const state = JSON.parse(localStorage.getItem('userInfoState'));
+    const job = JSON.parse(sessionStorage.getItem('jobId'));
+
     try {
-      await createJob({
+      await editJob({
+        id: job.id,
         umkmId: state.role_user_id,
         posisi: value.posisi,
-        kuota: value.kuota,
         skillSetKey: value.skillSetKey,
         jenjangMinimal: value.jenjangMinimal,
         gajiMinimal: value.gajiMinimal,
+        kuota: value.kuota,
         gajiMaksimal: value.gajiMaksimal,
         deskripsi: value.deskripsi,
         tanggalMulai: value.tanggalMulai,
@@ -130,11 +165,26 @@ class JobForm extends Component {
         status: value.status,
       });
 
+      sessionStorage.removeItem('jobId');
       history.push("/view-pekerjaan");
     } catch(error) {
       this.setState({
         serviceError: error
       });
+    }
+  }
+
+  getSelectedJob = async () => {
+    try {
+      const res = await showJobDetail();
+      let newState = { ...this.state }
+      newState.value = res;
+      this.setState(newState);
+
+    } catch (error) {
+      this.setState({
+        serviceError: error
+      })
     }
   }
 

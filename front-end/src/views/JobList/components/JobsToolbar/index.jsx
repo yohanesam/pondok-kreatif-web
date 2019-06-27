@@ -1,6 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 // Externals
+import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -19,9 +21,26 @@ import SearchInput from '../../../../components/SearchInput';
 // Component styles
 import styles from './styles';
 
-class UsersToolbar extends Component {
+class JobsToolbar extends Component {
+
+  handleEditJob = () => {
+    const { selectedJobs, history } = this.props;
+    if(sessionStorage.getItem('jobId')){
+      sessionStorage.removeItem('jobId');
+    }
+    sessionStorage.setItem('jobId', JSON.stringify({
+      id: selectedJobs[0],
+    }));
+    history.push('/edit-pekerjaan');
+  }
+
+  handleAddJob = () => {
+    const { history } = this.props;
+    history.push('/buat-pekerjaan');
+  }
+
   render() {
-    const { classes, className, selectedUsers } = this.props;
+    const { classes, className, selectedJobs } = this.props;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -29,7 +48,7 @@ class UsersToolbar extends Component {
       <div className={rootClassName}>
         <div className={classes.row}>
           <span className={classes.spacer} />
-          {selectedUsers.length > 0 && (
+          {selectedJobs.length > 0 && (
             <IconButton
               className={classes.deleteButton}
               onClick={this.handleDeleteUsers}
@@ -37,23 +56,23 @@ class UsersToolbar extends Component {
               <DeleteIcon />
             </IconButton>
           )}
-          {selectedUsers.length === 1 && (
-            <Link href="/buat-pekerjaan">
-              <Button 
-                className={classes.EditButton}
-                color="primary"
-                size="small"
-                variant="outlined"
-              >
-                Edit Pekerjaan
-              </Button>
-            </Link>
+          {selectedJobs.length === 1 && (
+            <Button 
+              className={classes.EditButton}
+              color="primary"
+              size="small"
+              variant="outlined"
+              onClick={this.handleEditJob}
+            >
+              Edit Pekerjaan
+            </Button>
           )}
           <Link href="/buat-pekerjaan">
             <Button 
               color="primary"
               size="small"
               variant="outlined"
+              onClick={this.handleAddJob}
             >
               Tambah Pekerjaan
             </Button>
@@ -71,14 +90,17 @@ class UsersToolbar extends Component {
   }
 }
 
-UsersToolbar.propTypes = {
+JobsToolbar.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  selectedUsers: PropTypes.array
+  selectedJobs: PropTypes.array
 };
 
-UsersToolbar.defaultProps = {
-  selectedUsers: []
+JobsToolbar.defaultProps = {
+  selectedJobs: []
 };
 
-export default withStyles(styles)(UsersToolbar);
+export default compose(
+  withRouter,
+  withStyles(styles)
+)(JobsToolbar);
