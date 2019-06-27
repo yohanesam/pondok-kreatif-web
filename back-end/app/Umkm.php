@@ -9,5 +9,5 @@ class Umkm extends Model
     
     protected $table = 'umkms';
 
-    protected $guarded = [];
+        protected $guarded = [];
 }
