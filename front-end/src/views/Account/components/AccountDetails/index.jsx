@@ -207,7 +207,6 @@ class AccountDetails extends Component {
                 onChange={e => {this.handleChange("namaUsaha", e.target.value)}}
                 label="Nama Usaha"
                 margin="dense"
-                multiline={true}
                 required
                 value={namaUsaha}
                 variant="outlined"

@@ -6,11 +6,12 @@ import Dashboard from './views/Dashboard';
 import ProductList from './views/ProductList';
 import UmkmDetail from './views/UmkmDetail';
 import JobList from './views/JobList';
+import AddJob from './views/AddJob';
+import EditJob from './views/EditJob';
 import UserList from './views/UserList';
 import Typography from './views/Typography';
 import Icons from './views/Icons';
 import Account from './views/Account';
-import AddJob from './views/AddJob';
 import Settings from './views/Settings';
 import UmkmSignUp from './views/UmkmSignUp';
 import SignIn from './views/SignIn';
@@ -35,6 +36,16 @@ export default class Routes extends Component {
           component={JobList}
           exact
           path="/view-pekerjaan"
+        />
+        <Route
+          component={AddJob}
+          exact
+          path="/buat-pekerjaan"
+        />
+        <Route
+          component={EditJob}
+          exact
+          path="/edit-pekerjaan"
         />
         <Route
           component={UserList}
@@ -65,11 +76,6 @@ export default class Routes extends Component {
           component={Account}
           exact
           path="/account"
-        />
-        <Route
-          component={AddJob}
-          exact
-          path="/buat-pekerjaan"
         />
         <Route
           component={Settings}
