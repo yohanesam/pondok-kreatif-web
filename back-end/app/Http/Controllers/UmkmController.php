@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Umkm;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -144,5 +145,20 @@ class UmkmController extends Controller
         $umkm = Umkm::find($id);
         $umkm->delete();
         return true;
+    }
+
+    public function rekomen(Request $request)
+    {
+        try{
+            $umkm = DB::table('umkms')->join('keahlian', 'keahlian.bidang_id', '=', 'umkms.bidang_id')->whereIn('umkms.bidang_id', $request);
+            return response()->json([
+                'data' => $umkm,
+            ]);
+        } catch(Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e
+            ]);
+        }
     }
 }
