@@ -25,14 +25,14 @@ import styles from './styles';
 // URL 
 import { 
   BASE_URL, 
-  JOB_URI 
+  DESTROY_JOB_URI 
 } from '../../../../config/Apis';
 
 // Service methods
 const deleteJobList = (request) => {
   return axios({
     method: 'POST',
-    url: `${BASE_URL}${JOB_URI}`,
+    url: `${BASE_URL}${DESTROY_JOB_URI}`,
     data: request,
   });
 };
@@ -48,6 +48,7 @@ class JobsToolbar extends Component {
     sessionStorage.setItem('jobId', JSON.stringify({
       id: selectedJobs[0],
     }));
+
     history.push('/edit-pekerjaan');
   }
 
@@ -58,8 +59,14 @@ class JobsToolbar extends Component {
 
   handleDeleteJob = async () => {
     const { selectedJobs, history } = this.props;
-    await deleteJobList(selectedJobs);
-    history.push('/buat-pekerjaan');
+    try {
+      await deleteJobList(selectedJobs);
+    } catch (error) {
+      console.log(error);
+      
+    }
+    
+    history.replace('/view-pekerjaan');
   }
 
   render() {

@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Dashboard from './views/Dashboard';
 import ProductList from './views/ProductList';
 import UmkmDetail from './views/UmkmDetail';
+import ApplicantList from './views/ApplicantList';
 import JobList from './views/JobList';
 import AddJob from './views/AddJob';
 import EditJob from './views/EditJob';
@@ -31,6 +32,11 @@ export default class Routes extends Component {
           component={Dashboard}
           exact
           path="/beranda"
+        />
+        <Route
+          component={ApplicantList}
+          exact
+          path="/view-pelamar-kerja/:jobId"
         />
         <Route
           component={JobList}
