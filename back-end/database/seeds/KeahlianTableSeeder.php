@@ -50,7 +50,7 @@ class KeahlianTableSeeder extends Seeder
         for ($i = 0; $i < count($keahlian); $i++) {
             DB::table('keahlian')->insert([
                 'nama' => $keahlian[$i][1],
-                'bidang_id' => $keahlian[$i[0]
+                'bidang_id' => $keahlian[$i][0]
             ]);
         }
     }
