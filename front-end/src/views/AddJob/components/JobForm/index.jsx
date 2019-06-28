@@ -22,6 +22,9 @@ import PortletLabel from '../../../../components/PortletLabel';
 import PortletContent from '../../../../components/PortletContent';
 import PortletFooter from '../../../../components/PortletFooter';
 
+// option value
+import jenjang from '../../../../data/jenjang';
+
 // URL 
 import { 
   BASE_URL, 
@@ -31,25 +34,6 @@ import {
 // Component styles
 import styles from './styles';
 
-const skillKey = [
-  {
-    value: null,
-    label: 'Pilih Skill'
-  },
-  {
-    value: 1,
-    label: 'Jasa'
-  },
-  {
-    value: 2,
-    label: 'Memasak'
-  },
-  {
-    value: 3,
-    label: 'Menjahit'
-  }
-];
-
 const statusKey = [
   {
     value: null,
@@ -57,11 +41,11 @@ const statusKey = [
   },
   {
     value: true,
-    label: 'Aktif'
+    label: 'Disabilitas'
   },
   {
     value: false,
-    label: 'Tidak Aktif'
+    label: 'Normal'
   },
 ];
 
@@ -93,7 +77,7 @@ class JobForm extends Component {
       umkmId: '',
       posisi: '',
       kuota: '',
-      skillSetKey: '',
+      // skillSetKey: '',
       jenjangMinimal: '',
       gajiMinimal: '',
       gajiMaksimal: '',
@@ -120,7 +104,7 @@ class JobForm extends Component {
         umkmId: state.role_user_id,
         posisi: value.posisi,
         kuota: value.kuota,
-        skillSetKey: value.skillSetKey,
+        // skillSetKey: value.skillSetKey,
         jenjangMinimal: value.jenjangMinimal,
         gajiMinimal: value.gajiMinimal,
         gajiMaksimal: value.gajiMaksimal,
@@ -143,7 +127,7 @@ class JobForm extends Component {
     const {
       posisi,
       kuota,
-      skillSetKey,
+      // skillSetKey,
       jenjangMinimal,
       gajiMinimal,
       gajiMaksimal,
@@ -201,18 +185,18 @@ class JobForm extends Component {
               />
               <TextField
                 className={classes.textField}
-                helperText="Contoh: Memasak"
-                label="Keahlian"
+                helperText="Contoh: Sekolah Dasar"
+                label="Jenjang Minimal"
                 margin="dense"
-                onChange={e => {this.handleChange("skillSetKey", parseInt(e.target.value, 10))}}
+                onChange={e => {this.handleChange("jenjangMinimal", parseInt(e.target.value, 10))}}
                 required
                 select
                 SelectProps={{
                   native: true
                 }}
-                value={skillSetKey}
+                value={jenjangMinimal}
                 variant="outlined">
-                {skillKey.map(option => (
+                {jenjang.map(option => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -221,16 +205,6 @@ class JobForm extends Component {
                   </option>
                 ))}
               </TextField>
-              <TextField
-                className={classes.textField}
-                helperText="Contoh: SMP/SMA"
-                onChange={e => {this.handleChange("jenjangMinimal", e.target.value)}}
-                label="Jenjang Minimal"
-                margin="dense"
-                required
-                value={jenjangMinimal}
-                variant="outlined"
-              />
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 1000000 (dalam angka)"

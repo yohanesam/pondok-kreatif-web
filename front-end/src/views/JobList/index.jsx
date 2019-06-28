@@ -41,15 +41,6 @@ const getJobList = () => {
   });
 };
 
-// const getApplicant = (request) => {
-//   return axios({
-//     method: 'GET',
-//     url: `${BASE_URL}${QUEUE_URI}?id=${userState.role_user_id}`,
-//   }).then(result => {
-//     return result.data;
-//   });
-// }
-
 class JobList extends Component {
   signal = true;
 
