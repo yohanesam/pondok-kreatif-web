@@ -1,5 +1,5 @@
 // Configuration for backend app
-const BASE_URL = "http://localhost:8000/";
+const BASE_URL = "http://peka.sharkhomedesign.com/";
 const UMKM_REGISTER_URI = "api/umkm/";
 const LOGIN_URI = "api/login/";
 const PROFILE_URI = "api/umkm/";
