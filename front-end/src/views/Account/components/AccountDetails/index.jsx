@@ -22,6 +22,9 @@ import PortletLabel from '../../../../components/PortletLabel';
 import PortletContent from '../../../../components/PortletContent';
 import PortletFooter from '../../../../components/PortletFooter';
 
+// Option value
+import bidang from '../../../../data/bidang'
+
 // Component styles
 import styles from './styles';
 
@@ -63,21 +66,6 @@ const updateUmkm = (request) => {
     }
   });
 }
-
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
 
 class AccountDetails extends Component {
   state = {
@@ -222,6 +210,27 @@ class AccountDetails extends Component {
               />
               <TextField
                 className={classes.textField}
+                label="Bidang"
+                margin="dense"
+                onChange={e => {this.handleChange("bidangId", e.target.value)}}
+                required
+                select
+                SelectProps={{
+                  native: true
+                }}
+                value={bidangId}
+                variant="outlined">
+                {bidang.map(option => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+              <TextField
+                className={classes.textField}
                 onChange={e => {this.handleChange("jamOperasi", e.target.value)}}
                 label="Jam Operasi Usaha"
                 margin="dense"
@@ -236,15 +245,6 @@ class AccountDetails extends Component {
                 margin="dense"
                 required
                 value={namaPemilik}
-                variant="outlined"
-              />
-              <TextField
-                className={classes.textField}
-                onChange={e => {this.handleChange("bidangId", e.target.value)}}
-                label="Bidang"
-                margin="dense"
-                required
-                value={bidangId}
                 variant="outlined"
               />
               <TextField
@@ -353,38 +353,6 @@ class AccountDetails extends Component {
                 variant="outlined"
               />
             </div>
-            
-            {/* <div className={classes.field}>
-              <TextField
-                className={classes.textField}
-                label="Select State"
-                margin="dense"
-                onChange={e => {this.handleChange("state", e.target.value)}}
-                required
-                select
-                SelectProps={{
-                  native: true
-                }}
-                value={state}
-                variant="outlined">
-                {states.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-              <TextField
-                className={classes.textField}
-                label="Country"
-                margin="dense"
-                required
-                value={country}
-                variant="outlined"
-              />
-            </div> */}
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
