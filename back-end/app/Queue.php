@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Queue extends Model
 {
-    protected $table = 'user_koneksi';
+    protected $table = 'transaksi_rekruitmen';
 
 }

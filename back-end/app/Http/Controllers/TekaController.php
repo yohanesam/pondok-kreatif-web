@@ -11,6 +11,9 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+
 class TekaController extends Controller
 {
     /**
@@ -129,6 +132,16 @@ class TekaController extends Controller
     {
         $teka = Teka::find($id);
 
+        $this->validate($request, [
+            'foto' => 'required|image|mimes:jpg,png,jpeg'
+        ]);
+        //Storage::disk('local')->makeDirectory('/public/images/objek');
+        $image = $request->file('foto');
+        $thumbnailPath = storage_path().'/app/public/images/profile/';
+        $imageName = 'teka_' . time(). str_random(15) . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->save($thumbnailPath.$imageName);
+
+
         $teka->nama = $request->post('nama');
         $teka->nik = $request->post('nik');
         $teka->alamat = $request->post('alamat');
@@ -145,6 +158,9 @@ class TekaController extends Controller
         $teka->kelamin = $request->post('kelamin');
         $teka->email = $request->post('email');
         $teka->no_telp = $request->post('no_telp');
+        $teka->foto = $imageName;
+
+
         $teka->save();
         return $teka;
     }

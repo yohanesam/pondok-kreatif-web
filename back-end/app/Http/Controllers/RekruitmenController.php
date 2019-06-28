@@ -11,7 +11,7 @@ class RekruitmenController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */ 
+     */
 
     // public function __construct()
     // {
@@ -20,8 +20,10 @@ class RekruitmenController extends Controller
 
     public function index()
     {
-        $rekruitmen = Rekruitmen::all()->where('umkm_id', $_GET['id']);
-        return response()->json($rekruitmen->toArray());
+        $rekruitmen = Rekruitmen::all();
+        return response()->json([
+            "data" =>  $rekruitmen
+        ]);
     }
 
     /**
@@ -43,9 +45,9 @@ class RekruitmenController extends Controller
     public function store(Request $request)
     {
         $rekruitmen = $request->all();
-        try{
+        try {
             Rekruitmen::create($rekruitmen);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => true,
                 'message' => $e
@@ -54,7 +56,7 @@ class RekruitmenController extends Controller
 
         return response()->json([
             'error' => false,
-            'message' =>'Berhasil'
+            'message' => 'Berhasil'
         ]);
     }
 
@@ -78,7 +80,7 @@ class RekruitmenController extends Controller
      */
     public function edit($id)
     {
-        // 
+        //
     }
 
     /**
@@ -91,7 +93,7 @@ class RekruitmenController extends Controller
     public function update(Request $request, $id)
     {
         $rekruitmen = Rekruitmen::find($id);
-        
+
         $rekruitmen->umkm_id = $request->post('umkm_id');
         $rekruitmen->posisi = $request->post('posisi');
         $rekruitmen->skill_set_key = $request->post('skill_set_key');
@@ -115,9 +117,9 @@ class RekruitmenController extends Controller
      */
     public function destroy(Request $request)
     {
-        try{
+        try {
             rekruitmen::whereIn('id', $request)->delete();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => true,
                 'message' => $e
@@ -126,7 +128,7 @@ class RekruitmenController extends Controller
 
         return response()->json([
             'error' => false,
-            'message' =>'Berhasil'
+            'message' => 'Berhasil'
         ]);
     }
 }
