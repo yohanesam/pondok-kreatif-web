@@ -41,15 +41,6 @@ const getJobList = () => {
   });
 };
 
-// const getApplicant = (request) => {
-//   return axios({
-//     method: 'GET',
-//     url: `${BASE_URL}${QUEUE_URI}?id=${userState.role_user_id}`,
-//   }).then(result => {
-//     return result.data;
-//   });
-// }
-
 class JobList extends Component {
   signal = true;
 
@@ -116,7 +107,7 @@ class JobList extends Component {
     }
 
     if (jobList.length === 0 || jobList.length === undefined) {
-      return <Typography variant="h6">There are no jobs</Typography>;
+      return <Typography variant="h6">Anda belum membuka lowongan pekerjaan</Typography>;
     }
 
     return (
