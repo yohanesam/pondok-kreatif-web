@@ -116,7 +116,7 @@ class JobList extends Component {
     }
 
     if (jobList.length === 0 || jobList.length === undefined) {
-      return <Typography variant="h6">There are no jobs</Typography>;
+      return <Typography variant="h6">Anda belum membuka lowongan pekerjaan</Typography>;
     }
 
     return (
