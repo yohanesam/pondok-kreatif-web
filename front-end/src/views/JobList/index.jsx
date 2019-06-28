@@ -115,7 +115,7 @@ class JobList extends Component {
       return <Typography variant="h6">{error}</Typography>;
     }
 
-    if (jobList.length === 0) {
+    if (jobList.length === 0 || jobList.length === undefined) {
       return <Typography variant="h6">There are no jobs</Typography>;
     }
 

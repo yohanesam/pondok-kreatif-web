@@ -91,8 +91,9 @@ class ApplicantList extends Component {
   renderApplicants() {
     const { classes } = this.props;
     const { isLoading, applicantList, error } = this.state;
-    console.log(applicantList.data.length);
+    
     if (isLoading) {
+      console.log("pertamax");
       return (
         <div className={classes.progressWrapper}>
           <CircularProgress />
@@ -104,17 +105,18 @@ class ApplicantList extends Component {
       return <Typography variant="h6">{error}</Typography>;
     }
 
-    if (applicantList.data.length === 0) {
-      return <Typography variant="h6">There are no jobs</Typography>;
+    if (applicantList.length === 0 || applicantList.length === undefined) {
+      return <Typography variant="h3">Tidak ada pelamar kerja saat ini</Typography>;
     }
 
-    // return (
-    //   <ApplicationsTable
-    //     //
-    //     onSelect={this.handleSelect}
-    //     jobs={applicantList}
-    //   />
-    // );
+    
+    return (
+      <ApplicationsTable
+        //
+        onSelect={this.handleSelect}
+        jobs={applicantList}
+      />
+    );
   }
 
   render() {
