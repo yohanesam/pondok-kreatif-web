@@ -26,9 +26,7 @@ class QueueController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-
-    }
+    { }
 
     /**
      * Store a newly created resource in storage.
@@ -38,12 +36,21 @@ class QueueController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->queue_key = $request->tk_id + $request->rekruitmen_id;
         $queue = Queue::create($request->all());
 
-        return response()->json([
-            'error' => $queue
-        ]);
-
+        if ($queue) {
+            return response()->json([
+                'error' => false,
+                'message' => "sukses"
+            ]);
+        } else {
+            return response()->json([
+                'error' => true,
+                'message' => "gagal"
+            ]);
+        }
     }
 
     /**
