@@ -36,7 +36,7 @@ const getJobList = () => {
     method: 'GET',
     url: `${BASE_URL}${JOB_URI}?id=${userState.role_user_id}`,
   }).then(result => {
-    return result.data;
+    return result.data.data;
   });
 };
 
