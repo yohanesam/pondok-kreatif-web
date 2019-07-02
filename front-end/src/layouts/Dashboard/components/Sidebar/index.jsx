@@ -94,7 +94,7 @@ class Sidebar extends Component {
             <img
               alt="Brainalytica logo"
               className={classes.logoImage}
-              src="/images/logos/brainalytica_logo.svg"
+              src="/images/logos/logo_pondok_kreatif.png"
             />
           </Link>
         </div>
@@ -129,7 +129,7 @@ class Sidebar extends Component {
             activeClassName={classes.activeListItem}
             className={classes.listItem}
             component={NavLink}
-            to="/dashboard"
+            to="/beranda"
             >
                 <ListItemIcon className={classes.listItemIcon}>
                     <DashboardIcon />
