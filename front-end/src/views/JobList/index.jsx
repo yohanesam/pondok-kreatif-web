@@ -27,7 +27,6 @@ import styles from './style';
 import { 
   BASE_URL, 
   JOB_URI,
-  QUEUE_URI,
 } from '../../config/Apis';
 
 // Service methods
@@ -56,8 +55,6 @@ class JobList extends Component {
   async getJobList() {
     try {
       this.setState({ isLoading: true });
-
-      const { limit } = this.state;
       
       const jobList = await getJobList();
       
@@ -94,6 +91,8 @@ class JobList extends Component {
     const { classes } = this.props;
     const { isLoading, jobList, error } = this.state;
 
+    console.log(jobList);
+
     if (isLoading) {
       return (
         <div className={classes.progressWrapper}>
@@ -112,7 +111,6 @@ class JobList extends Component {
 
     return (
       <JobsTable
-        //
         onSelect={this.handleSelect}
         jobs={jobList}
       />
