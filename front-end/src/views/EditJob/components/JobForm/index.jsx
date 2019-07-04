@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 // Externals
-import moment from 'moment'
 import axios from 'axios';
 import compose from 'recompose/compose';
 import classNames from 'classnames';
@@ -23,6 +22,9 @@ import PortletLabel from '../../../../components/PortletLabel';
 import PortletContent from '../../../../components/PortletContent';
 import PortletFooter from '../../../../components/PortletFooter';
 
+// option value
+import jenjang from '../../../../data/jenjang';
+
 // URL 
 import { 
   BASE_URL, 
@@ -32,36 +34,17 @@ import {
 // Component styles
 import styles from './styles';
 
-const skillKey = [
-  {
-    value: null,
-    label: 'Pilih Skill'
-  },
-  {
-    value: 1,
-    label: 'Jasa'
-  },
-  {
-    value: 2,
-    label: 'Memasak'
-  },
-  {
-    value: 3,
-    label: 'Menjahit'
-  }
-];
-
 const statusKey = [
   {
     value: null,
     label: 'Pilih Status'
   },
   {
-    value: "true",
+    value: true,
     label: 'Aktif'
   },
   {
-    value: "false",
+    value: false,
     label: 'Tidak Aktif'
   },
 ];
@@ -72,7 +55,7 @@ const showJobDetail = () => {
 
   return axios({
     method: 'GET',
-    url: `${BASE_URL}${JOB_URI}${state.id}`,
+    url: `${BASE_URL}${JOB_URI}/${state.id}`,
   }).then(res => {
     return {
       id: res.data.id,
@@ -177,6 +160,7 @@ class JobForm extends Component {
   getSelectedJob = async () => {
     try {
       const res = await showJobDetail();
+      console.log(res);
       let newState = { ...this.state }
       newState.value = res;
       this.setState(newState);
@@ -193,7 +177,7 @@ class JobForm extends Component {
     const {
       posisi,
       kuota,
-      skillSetKey,
+      // skillSetKey,
       jenjangMinimal,
       gajiMinimal,
       gajiMaksimal,
@@ -202,8 +186,6 @@ class JobForm extends Component {
       tanggalAkhir,
       status, } = this.state.value;
     const rootClassName = classNames(classes.root, className);
-    
-    console.log(this.state)
 
     return (
       <Portlet
@@ -251,18 +233,18 @@ class JobForm extends Component {
               />
               <TextField
                 className={classes.textField}
-                helperText="Contoh: Memasak"
-                label="Keahlian"
+                helperText="Contoh: Sekolah Dasar"
+                label="Jenjang Minimal"
                 margin="dense"
-                onChange={e => {this.handleChange("skillSetKey", parseInt(e.target.value, 10))}}
+                onChange={e => {this.handleChange("jenjangMinimal", parseInt(e.target.value, 10))}}
                 required
                 select
                 SelectProps={{
                   native: true
                 }}
-                value={skillSetKey}
+                value={jenjangMinimal}
                 variant="outlined">
-                {skillKey.map(option => (
+                {jenjang.map(option => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -271,16 +253,6 @@ class JobForm extends Component {
                   </option>
                 ))}
               </TextField>
-              <TextField
-                className={classes.textField}
-                helperText="Contoh: SMP/SMA"
-                onChange={e => {this.handleChange("jenjangMinimal", e.target.value)}}
-                label="Jenjang Minimal"
-                margin="dense"
-                required
-                value={jenjangMinimal}
-                variant="outlined"
-              />
               <TextField
                 className={classes.textField}
                 helperText="Contoh: 1000000 (dalam angka)"

@@ -31,7 +31,7 @@ import {
 
 // Service methods
 const getJobList = () => {
-  const userState = JSON.parse(localStorage.getItem('userInfoState'))
+  const userState = JSON.parse(localStorage.getItem('userInfoState'));
   return axios({
     method: 'GET',
     url: `${BASE_URL}${JOB_URI}?id=${userState.role_user_id}`,
