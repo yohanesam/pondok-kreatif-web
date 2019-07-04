@@ -41,11 +41,11 @@ const statusKey = [
   },
   {
     value: true,
-    label: 'Disabilitas'
+    label: 'Aktif'
   },
   {
     value: false,
-    label: 'Normal'
+    label: 'Tidak Aktif'
   },
 ];
 
@@ -112,6 +112,7 @@ class JobForm extends Component {
         tanggalMulai: value.tanggalMulai,
         tanggalAkhir: value.tanggalAkhir,
         status: value.status,
+
       });
 
       history.push("/view-pekerjaan");
